@@ -19,7 +19,7 @@ public class Game {
     public void playGame(){
         int termine = 0;
         do{
-            playMove(1);
+            play(1);
             this.changePlayer();
 
 
@@ -27,8 +27,16 @@ public class Game {
         while(termine != 0);
     }
 
-    public void playMove(int cellClicked){
-
+    public void play(int cellClicked) {
+        int seeds = 0;
+        if (board.holes[cellClicked].isAvailable()) { // Si la case est jouable
+            seeds = board.holes[cellClicked].getNbSeeds();
+            board.holes[cellClicked].setNbSeeds(0);
+            for (int i = cellClicked + 1; i <= cellClicked + seeds; i++) {
+                board.holes[i].setNbSeeds(board.holes[i].getNbSeeds() + 1);
+            }
+        }
+        //checkSeedsEarned();
     }
 
     public void changePlayer(){
