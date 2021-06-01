@@ -30,7 +30,7 @@ public class Game {
     public String toString(){
         System.out.println("Plateau : ");
         this.board.printBoard();
-        return "\nJoueur actif :" + this.activePlayer.name + "\nJoueur en attente "+this.passivePlayer.name;
+        return "\nJoueur actif : " + this.activePlayer.name + "\nJoueur en attente : "+this.passivePlayer.name;
     }
 
     public void printBoard(){

@@ -27,6 +27,19 @@ public class Board {
             System.out.print(" "+h.getNbSeeds() + " ");
         }
     }
+    @Override
+    public String toString(){
+       String data = "";
+       for(int i=0; i<sizeBoard; i++){
+           if(i != sizeBoard-1){
+               data += holes[i].getNbSeeds() +"-";
+
+           }else{
+               data += holes[i].getNbSeeds();
+           }
+       }
+       return data;
+    }
     //TODO
     public void updateBoard(){
 

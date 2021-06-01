@@ -10,7 +10,9 @@ public class MancalaApp {
 
         Game g = new Game();
         g.printBoard();
-
+        ManageFile.saveGame("partie",g);
+        Game g2 =ManageFile.loadGame("partie");
+        System.out.println(g2);
     }
 
 }

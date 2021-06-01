@@ -1,13 +1,45 @@
 package ensi.fr.mancala.model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Scanner;
 
 public class ManageFile {
 
     public static void saveGame(String fileName, Game g){
         //TODO respecter format : nomj1 ; granaryj1 ; nomj2 ; granaryj2 ; joueurActif ; board (1-2-3etc)
+        String fileNameC = ".//saves//" + fileName + ".txt";
+
+        try {
+            File saveFile = new File(fileNameC);
+            if (saveFile.createNewFile()) {
+                System.out.println("File saved");
+            } else {
+                System.out.println("\nFile alredy exists");
+            }
+        }catch(IOException e){
+                System.out.println("An error occured");
+                e.printStackTrace();
+        }
+        try{
+            FileWriter saveData = new FileWriter(fileNameC);
+            String prepareData = "";
+
+            if(g.activePlayer.id == 1){
+                prepareData += g.activePlayer.name + ";" + g.activePlayer.granary + ";" + g.passivePlayer.name + ";" + g.passivePlayer.granary;
+            }else{
+                prepareData += g.passivePlayer.name + ";" +g.passivePlayer.granary + ";" + g.activePlayer.name + ";" + g.activePlayer.granary;
+            }
+            prepareData +=";"+ g.activePlayer.id+";";
+            prepareData += g.board.toString();
+            saveData.write(prepareData);
+            saveData.close();
+            System.out.println("Save successfull");
+        }catch(IOException e){
+            System.out.println("An error occured while writing");
+            e.printStackTrace();
+        }
+
+
     }
 
     public static Game loadGame(String fileName){
@@ -29,7 +61,9 @@ public class ManageFile {
                 Player p2 = new Player();
                 p2.name = d[2];
                 p2.granary = Integer.parseInt(d[3]);
-                if(d[4].equals(p1.name)){
+                //TODO add player ID
+                int currentPlayer = Integer.parseInt(d[4]);
+                if(currentPlayer == 1){
                     g.activePlayer = p1;
                     g.passivePlayer = p2;
                 }else{
