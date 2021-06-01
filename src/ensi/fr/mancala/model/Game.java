@@ -16,7 +16,18 @@ public class Game {
         //TODO call load
     }
 
-    public void play(int cellClicked){
+    public void playGame(){
+        int termine = 0;
+        do{
+            playMove(1);
+            this.changePlayer();
+
+
+        }
+        while(termine != 0);
+    }
+
+    public void playMove(int cellClicked){
 
     }
 
