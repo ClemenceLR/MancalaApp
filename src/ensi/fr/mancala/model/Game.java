@@ -13,11 +13,22 @@ public class Game {
     }
 
     public Game(String fileName){
-        //TODO call load
+        Game g =ManageFile.loadGame(fileName);
+        this.activePlayer = g.activePlayer;
+        this.passivePlayer = g.passivePlayer;
+        this.board = g.board;
     }
 
     public void play(int cellClicked){
-
+        int seeds = 0;
+        if(board.holes[cellClicked].isAvailable()){ // Si la case est jouable
+            seeds = board.holes[cellClicked].getNbSeeds();
+            board.holes[cellClicked].setNbSeeds(0);
+            for(int i =cellClicked+1; i<=cellClicked+seeds;i++){
+                board.holes[i].setNbSeeds(board.holes[i].getNbSeeds()+1);
+            }
+        }
+        //checkSeedsEarned();
     }
 
     public void changePlayer(){

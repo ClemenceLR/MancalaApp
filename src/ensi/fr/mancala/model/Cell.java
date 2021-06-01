@@ -5,7 +5,7 @@ public class Cell {
     private boolean available;
 
     public Cell(){
-        this.nbSeeds = 4;
+        this.setNbSeeds(4);
         this.available = true;
     }
 

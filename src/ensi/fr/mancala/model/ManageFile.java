@@ -57,10 +57,12 @@ public class ManageFile {
                 Player p1 = new Player();
                 p1.name = d[0];
                 p1.granary = Integer.parseInt(d[1]);
+                p1.id = 1;
 
                 Player p2 = new Player();
                 p2.name = d[2];
                 p2.granary = Integer.parseInt(d[3]);
+                p2.id = 2;
                 //TODO add player ID
                 int currentPlayer = Integer.parseInt(d[4]);
                 if(currentPlayer == 1){
