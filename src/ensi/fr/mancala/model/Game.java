@@ -8,8 +8,6 @@ public class Game {
     public Game(){
         Player p1 = new Player("P1");
         Player p2 = new Player("P2");
-        this.activePlayer = new Player("P1");
-        this.passivePlayer = new Player("P2");
 
         //TODO voir init des noms des joueurs
         //TODO premier joueur random
