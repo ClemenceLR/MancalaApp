@@ -32,4 +32,8 @@ public class Game {
         this.board.printBoard();
         return "\nJoueur actif :" + this.activePlayer.name + "\nJoueur en attente "+this.passivePlayer.name;
     }
+
+    public void printBoard(){
+        this.board.printBoard();
+    }
 }

@@ -2,11 +2,12 @@ package ensi.fr.mancala.model;
 
 public class Board {
     public static final int sizeBoard = 12;
-    Cell[] holes = new Cell[sizeBoard];
+    public Cell[] holes = new Cell[sizeBoard];
 
     public Board(){
-        for(Cell h:holes){
-           h = new Cell();
+        int i;
+        for(i=0;i<sizeBoard;i++){
+           holes[i] = new Cell();
         }
     }
 
@@ -19,9 +20,7 @@ public class Board {
     }
 
     public Board(Cell[] h){
-        for(int i =0; i<sizeBoard; i++){
-            holes[i] = h[i];
-        }
+        holes = h;
     }
     public void printBoard(){
         for(Cell h:holes){
@@ -32,5 +31,6 @@ public class Board {
     public void updateBoard(){
 
     }
+
 
 }
