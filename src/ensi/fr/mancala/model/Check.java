@@ -1,16 +1,27 @@
 package ensi.fr.mancala.model;
 
 public class Check {
-    public static int setCellAvailable(Board b, Player activePlayer){
+
+    public static int nbCellsAvailable;
+    public static void setCellAvailable(Board b, int idActivePlayer){
         int startHolePlayerId;
+        int startHoleOpponentId;
         int i;
         int nbCellsAvailable;
         Cell cellChecked;
+        boolean isOpponentSideEmpty = true;
 
-        startHolePlayerId = (activePlayer.id == 1?0:6);
+        startHolePlayerId = (idActivePlayer == 1?0:6);
+        startHoleOpponentId = (startHolePlayerId + 6) % 12;
         nbCellsAvailable = 0;
 
-        boolean isOpponentSideEmpty = Check.checkOpponentSideEmpty(b.holes, (startHolePlayerId + 6) % 12);
+        for(i=startHoleOpponentId;i<startHoleOpponentId+6;i++){
+            if(b.holes[i].getNbSeeds() != 0){
+                isOpponentSideEmpty = false;
+            }
+            b.holes[i].setAvailable(false);
+        }
+
         for(i=startHolePlayerId;i<startHolePlayerId+6;i++){
             cellChecked = b.holes[i];
             if(cellChecked.getNbSeeds() == 0){
@@ -33,17 +44,7 @@ public class Check {
             }
         }
 
-        return nbCellsAvailable;
-    }
-
-    private static boolean checkOpponentSideEmpty(Cell[] holes, int opponentHoleStartId){
-        int i;
-        for(i=opponentHoleStartId; i<opponentHoleStartId+6;i++){
-            if(holes[i].getNbSeeds() != 0){
-                return false;
-            }
-        }
-        return true;
+        Check.nbCellsAvailable = nbCellsAvailable;
     }
 
 
