@@ -6,8 +6,15 @@ public class Board {
 
     public Board(){
         for(Cell h:holes){
-            h.setNbSeeds(4);
-            h.setAvailable(true);
+           h = new Cell();
+        }
+    }
+
+    public Board(String b){
+        String[] board = b.split("-");
+        for(int i =0; i<sizeBoard; i++){
+            int value = Integer.parseInt(board[i]);
+            holes[i] = new Cell(value);
         }
     }
 
@@ -16,7 +23,11 @@ public class Board {
             holes[i] = h[i];
         }
     }
-
+    public void printBoard(){
+        for(Cell h:holes){
+            System.out.print(" "+h.getNbSeeds() + " ");
+        }
+    }
     //TODO
     public void updateBoard(){
 

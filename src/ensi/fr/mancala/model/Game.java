@@ -25,4 +25,11 @@ public class Game {
         this.activePlayer = passivePlayer;
         this.passivePlayer = temp;
     }
+
+    @Override
+    public String toString(){
+        System.out.println("Plateau : ");
+        this.board.printBoard();
+        return "\nJoueur actif :" + this.activePlayer.name + "\nJoueur en attente "+this.passivePlayer.name;
+    }
 }
