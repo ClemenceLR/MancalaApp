@@ -6,16 +6,46 @@ public class Game {
     public Player passivePlayer;
 
     public Game(){
-        this.board = new Board();
+        Player p1 = new Player("P1");
+        Player p2 = new Player("P2");
         this.activePlayer = new Player("P1");
         this.passivePlayer = new Player("P2");
+
         //TODO voir init des noms des joueurs
         //TODO premier joueur random
         //TODO enlever les cases non jouables par le premier joueur
+        int rand = (int)(Math.random()*2)+1;
+        if(rand == 1){
+            this.activePlayer = p1;
+            this.passivePlayer = p2;
+        }else{
+            this.activePlayer = p2;
+            this.passivePlayer = p1;
+        }
+        this.board = setPlayerBoard(rand);
+
+    }
+    public Board setPlayerBoard(int playerid){
+        Board b = new Board();
+        int index = (playerid == 1?6:0);
+        int len =0;
+        if(index == 6){
+            len = b.holes.length;
+        }else{
+            len = b.holes.length/2;
+        }
+        for(int i=index; i<len; i++){
+            b.holes[i].setAvailable(false);
+        }
+        return b;
     }
 
     public Game(String fileName){
         //TODO call load
+        Game g = ManageFile.loadGame(fileName);
+        this.activePlayer = g.activePlayer;
+        this.passivePlayer = g.passivePlayer;
+        this.board = g.board;
     }
 
     public void playGame(){
