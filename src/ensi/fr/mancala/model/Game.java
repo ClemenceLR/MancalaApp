@@ -1,17 +1,31 @@
 package ensi.fr.mancala.model;
+/**
+This class is the main core of the project : it is the main part of the model
+Managing the game party
+@author : Guillaume Hasseneyer
+@author : Clémence Le Roux
 
+* */
 public class Game {
     public Board board;
+    public Board previousBoard;
     public Player activePlayer;
     public Player passivePlayer;
 
+    /**
+     * Construct a new game by initializing the board and players
+     * */
     public Game(){
-        Player p1 = new Player("P1");
-        Player p2 = new Player("P2");
+        this(new Player("p1"),new Player("p2"));
 
-        //TODO voir init des noms des joueurs
-        //TODO premier joueur random
-        //TODO enlever les cases non jouables par le premier joueur
+    }
+
+    /**
+     * Construct a new game with given players
+     * @param p1 : player one
+     * @param p2 : player two
+     */
+    public Game(Player p1, Player p2){
         int rand = (int)(Math.random()*2)+1;
         if(rand == 1){
             this.activePlayer = p1;
@@ -21,8 +35,26 @@ public class Game {
             this.passivePlayer = p1;
         }
         this.board = setPlayerBoard(rand);
-
+        this.previousBoard = this.board;
     }
+
+    /**
+     * Load a game using a filename
+     * @param fileName
+     */
+    public Game(String fileName){
+        Game g = ManageFile.loadGame(fileName);
+        this.activePlayer = g.activePlayer;
+        this.passivePlayer = g.passivePlayer;
+        this.board = g.board;
+        this.previousBoard = g.board;
+    }
+
+    /**
+     * Initialize the board of each players
+     * @param playerid
+     * @return the new board
+     */
     public Board setPlayerBoard(int playerid){
         Board b = new Board();
         int index = (playerid == 1?6:0);
@@ -38,33 +70,46 @@ public class Game {
         return b;
     }
 
-    public Game(String fileName){
-        //TODO call load
-        Game g = ManageFile.loadGame(fileName);
-        this.activePlayer = g.activePlayer;
-        this.passivePlayer = g.passivePlayer;
-        this.board = g.board;
-    }
-
+    /**
+     * Play the game
+     */
     public void playGame(){
         boolean termine = false;
         int nbCellsAvailable;
         int cpt = 0;
-        int random;
+        int input;
+        int lastVisitedCell;
+        boolean checkEatable = false;
         do{
+            lastVisitedCell = -1;
             this.printBoard();
-            random = (int)(Math.random() * 12);
-            System.out.print(random + "--------");
-            play(random);
+            System.out.println("turn " + cpt + " - Player " + this.activePlayer.id);
+
+            do{
+                input = activePlayer.getCellClicked();
+                System.out.println("Cell " + input);
+                lastVisitedCell = play(input);
+                //TODO vérifier si on peut manger et manger si ok (adversaire affamé ou pas ? on ne peut pas tout manger si l'adversaire se retrouve affamé) this.activeplayer récupérer
+                //TODO TANT QUE C'EST POSSIBLE ON MANGE et si invalide à la fin on rollback : créer une copie du board
+            }
+            while(lastVisitedCell != -1);
+
+            Check.checkEatableCells(lastVisitedCell,activePlayer, this.board);
+
             this.changePlayer();
             Check.setCellAvailable(this.board,this.activePlayer.id);
             termine = Check.isEndedGame(this);
             cpt++;
         }
-        while(!termine && cpt < 10);
+        while(!termine);
     }
 
-    public void play(int cellClicked) {
+    /**
+     * Allows the player to play
+     * @param cellClicked
+     * @return
+     */
+    public int play(int cellClicked) {
         int seeds = 0;
         int cellUpdated;
         if (board.holes[cellClicked].isAvailable()) { // Si la case est jouable
@@ -84,10 +129,18 @@ public class Game {
                 cellUpdated = i % 12;
                 board.holes[i].setNbSeeds(board.holes[cellUpdated].getNbSeeds() + 1);
             }
+            return cellUpdated; //TODO a vérifier car ne marche peut être pas
         }
+        else{
+            System.out.println("This cell is not playable");
+        }
+        return -1;
         //checkSeedsEarned();
     }
 
+    /**
+     * Change the current player
+     */
     public void changePlayer(){
         Player temp = this.activePlayer;
         this.activePlayer = passivePlayer;
@@ -105,4 +158,5 @@ public class Game {
         this.board.printBoard();
         System.out.println();
     }
+
 }

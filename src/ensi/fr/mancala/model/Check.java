@@ -53,4 +53,18 @@ public class Check {
         return false;
     }
 
+    public static void checkEatableCells(int lastVisitedCell,Player activePlayer, Board b) {
+        boolean lastCaseToActivePlayer = false;
+        Board cpy = b;
+
+        if ((activePlayer.id == 1 && lastVisitedCell < 6) ||(activePlayer.id == 2) && lastVisitedCell >= 6 ){
+            lastCaseToActivePlayer = true;
+        }
+
+        if(lastCaseToActivePlayer){
+            //TODO MANGER LES CELLULES
+            // VERIFIER SI JOUEUR AFFAME (ON ROLLBACK SI C'EST LE CAS)
+        }
+    }
+
 }
