@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Text?>
+<Pane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ensi.fr.mancala.controller.BoardController"
+            layoutY="100.00">
+
+    <Circle onMouseClicked="#play" fill="#ebe5e5" layoutX="97.0" layoutY="80.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+    <Circle onMouseClicked="#play" fill="#ebe5e5" layoutX="175.0" layoutY="80.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+    <Circle onMouseClicked="#play" fill="#ebe5e5" layoutX="253.0" layoutY="80.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+    <Circle onMouseClicked="#play" fill="#ebe5e5" layoutX="331.0" layoutY="80.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+    <Circle onMouseClicked="#play" fill="#ebe5e5" layoutX="409.0" layoutY="80.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+    <Circle onMouseClicked="#play" fill="#ebe5e5" layoutX="487.0" layoutY="80.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+    <Circle onMouseClicked="#play" fill="RED" layoutX="97.0" layoutY="160.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+    <Circle onMouseClicked="#play" fill="RED" layoutX="175.0" layoutY="160.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+    <Circle onMouseClicked="#play" fill="RED" layoutX="253.0" layoutY="160.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+    <Circle onMouseClicked="#play" fill="RED" layoutX="331.0" layoutY="160.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+    <Circle onMouseClicked="#play" fill="RED" layoutX="409.0" layoutY="160.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+    <Circle onMouseClicked="#play" fill="RED" layoutX="487.0" layoutY="160.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+    <Text layoutX="93.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+    <Text layoutX="171.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" wrappingWidth="8.08594822883606" />
+    <Text layoutX="249.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+    <Text layoutX="327.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+    <Text layoutX="405.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+    <Text layoutX="483.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+    <Text layoutX="93.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+    <Text layoutX="171.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+    <Text layoutX="249.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+    <Text layoutX="327.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+    <Text layoutX="405.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+    <Text layoutX="483.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
+
+</Pane>

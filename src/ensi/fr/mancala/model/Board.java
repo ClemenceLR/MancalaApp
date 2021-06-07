@@ -20,9 +20,7 @@ public class Board {
         }
     }
 
-    public Board(Cell[] h){
-        holes = h;
-    }
+    public Board(Cell[] h){holes = h;}
     public void printBoard(){
         for(Cell h:holes){
             System.out.print(" "+h.getNbSeeds() + " ");
