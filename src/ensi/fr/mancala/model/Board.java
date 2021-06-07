@@ -5,7 +5,7 @@ public class Board {
     public Cell[] holes = new Cell[sizeBoard];
 
     public Board(){
-        //TODO modifier l'initialisation pour pour que les cases qui ne sont pas au premier joueur soient non available
+
         int i;
         for(i=0;i<sizeBoard;i++){
            holes[i] = new Cell();

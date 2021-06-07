@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 
@@ -38,6 +39,9 @@ public class MainController {
         mainPane.getChildren().add(boardNode);
 
         this.currentGame = new Game();
+
+        StackPane one = this.boardController.getCellByNumber(1);
+        this.boardController.updateCell(one,true,12);
 
 
     }
