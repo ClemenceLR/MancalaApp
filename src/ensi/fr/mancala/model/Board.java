@@ -20,7 +20,13 @@ public class Board {
         }
     }
 
-    public Board(Cell[] h){holes = h;}
+    public Board(Cell[] h){
+        for(int i=0;i<sizeBoard;i++){
+            this.holes[i] = new Cell(h[i]);
+
+        }
+
+    }
     public void printBoard(){
         for(Cell h:holes){
             System.out.print(" "+h.getNbSeeds() + " ");
@@ -50,5 +56,28 @@ public class Board {
         }
     }
 
+    public int eatCell(int lastVisitedCell, int startHoleOpponentId){
+        boolean stopEating = false;
+        int gain = 0;
+        do{
+            if(this.holes[lastVisitedCell].isEatable()){
+                gain += this.holes[lastVisitedCell].getNbSeeds();
+                this.holes[lastVisitedCell].setNbSeeds(0);
+            }else{
+                stopEating = true;
+            }
+            lastVisitedCell -= 1;
+        }while(lastVisitedCell >= startHoleOpponentId && !stopEating);
+
+        return gain;
+    }
+
+    public int getTotalSeeds(){
+        int totalSeeds = 0;
+        for(Cell h : this.holes){
+            totalSeeds += h.getNbSeeds();
+        }
+        return totalSeeds;
+    }
 
 }
