@@ -18,6 +18,10 @@ public class Cell {
         }
     }
 
+    public Cell(Cell c){
+        this.nbSeeds = c.getNbSeeds();
+        this.available = c.isAvailable();
+    }
     public void setNbSeeds(int s) {
         this.nbSeeds = s;
 
@@ -33,5 +37,12 @@ public class Cell {
 
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+
+    public boolean isEatable(){
+        if(this.getNbSeeds() == 2 || this.getNbSeeds() == 3){
+            return true;
+        }
+        return false;
     }
 }

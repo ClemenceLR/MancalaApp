@@ -74,7 +74,7 @@ public class Game {
      * Play the game
      */
     public void playGame(){
-        boolean termine = false;
+        int termine = -1;
         int nbCellsAvailable;
         int cpt = 0;
         int input;
@@ -92,7 +92,7 @@ public class Game {
                 //TODO vérifier si on peut manger et manger si ok (adversaire affamé ou pas ? on ne peut pas tout manger si l'adversaire se retrouve affamé) this.activeplayer récupérer
                 //TODO TANT QUE C'EST POSSIBLE ON MANGE et si invalide à la fin on rollback : créer une copie du board
             }
-            while(lastVisitedCell != -1);
+            while(lastVisitedCell == -1);
 
             Check.checkEatableCells(lastVisitedCell,activePlayer, this.board);
 
@@ -101,7 +101,9 @@ public class Game {
             termine = Check.isEndedGame(this);
             cpt++;
         }
-        while(!termine);
+        while(termine == -1);
+
+        //switch (termine)
     }
 
     /**

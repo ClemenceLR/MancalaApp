@@ -8,7 +8,7 @@ public class MancalaApp {
     public static void main(String[] args) {
         //TODO récupérer et créer les joueurs en fonction des clients enregistrés
         //Appeler Game g =  Game(p1,p2);
-        Game g = new Game();
+        Game g = new Game("inf_10");
         //g.activePlayer.getCellClicked();
         //g.activePlayer.getCellClicked();
 

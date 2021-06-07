@@ -68,7 +68,38 @@ public class Player {
         this.granary += eatenCell.getNbSeeds();
         eatenCell.setNbSeeds(0);
     }
-    //TODO TANT QUE C'EST POSSIBLE ON MANGE et si invalide à la fin on rollback
+    public boolean getAcceptancy(){
+        int move;
+        boolean cont;
+        String m;
+        Scanner sc = new Scanner(System.in);
 
+        do{
+            System.out.println("What do you want to do ? 1 (continue) / 2 (null) ");
+            m = sc.nextLine();
+            try {
+                move = Integer.parseInt(m);
+            }
+            catch(NumberFormatException e){
+                move = -1;
+                System.out.println("Invalid input please press 1 to continue or 2 to stop the game");
+            }
+
+            if(move !=1 && move != 2){
+                System.out.println("Invalid number please press 1 to continue or 2 to stop the game");
+                cont = false;
+            }
+            else {
+                System.out.println(move);
+                cont = true;
+            }
+        } while(!cont);
+        System.out.println(move);
+        if(move == 1){
+            return false;
+        }else {
+            return true;
+        }
+    }
 
 }
