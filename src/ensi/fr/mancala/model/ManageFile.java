@@ -20,8 +20,8 @@ public class ManageFile {
                 System.out.println("An error occured");
                 e.printStackTrace();
         }
-        try{
-            FileWriter saveData = new FileWriter(fileNameC);
+        try(FileWriter saveData = new FileWriter(fileNameC)){
+            
             String prepareData = "";
 
             if(g.activePlayer.id == 1){
