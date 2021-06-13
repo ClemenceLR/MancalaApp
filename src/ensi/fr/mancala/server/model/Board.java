@@ -45,6 +45,19 @@ public class Board {
        }
        return data;
     }
+
+    public String cellAvailable(){
+        String data = "";
+        for(int i=0; i<sizeBoard; i++){
+            if(i != sizeBoard-1){
+                data += holes[i].isAvailable() +"-";
+
+            }else{
+                data += holes[i].isAvailable();
+            }
+        }
+        return data;
+    }
     //TODO
     public void updateBoard(){
 

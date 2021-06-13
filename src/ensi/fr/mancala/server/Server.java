@@ -1,55 +1,59 @@
 package ensi.fr.mancala.server;
 
+import ensi.fr.mancala.server.model.Check;
 import ensi.fr.mancala.server.model.Game;
+import ensi.fr.mancala.server.model.Player;
+import javafx.beans.value.ObservableIntegerValue;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Server {
     private int port;
     private Game g;
+    private List<Player> playerList;
     private ServerSocket server;
-    private Socket[] clients;
+    private Thread t1, t2;
+
+    private ClientInterface[] clients;
 
     public Server(int port){
         this.port = port;
-        this.clients = new Socket[2];
-        this.g = new Game();
+        this.clients = new ClientInterface[2];
+        this.playerList = new ArrayList<Player>();
     }
 
-    public void start(){
+
+
+    public boolean start(){
         try {
             this.server = new ServerSocket(this.port);
-            this.clients[0] = this.server.accept();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Server.this.handleClient(Server.this.clients[0]);
-                }
-            }).start();
-            this.clients[1] = this.server.accept();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Server.this.handleClient(Server.this.clients[1]);
-                }
-            }).start();
+            this.clients[0] = new ClientInterface(this.server.accept());
+            this.clients[1] = new ClientInterface(this.server.accept());
+
+            this.g = new Game(this.clients[0].getPlayer(), this.clients[1].getPlayer());
+            send(0, this.clients[1].getPlayer().getName());
+            send(0, this.g.board.toString());
+            send(0, this.g.board.cellAvailable());
+
+            send(1, this.clients[0].getPlayer().getName());
+            send(1, this.g.board.toString());
+            send(1, this.g.board.cellAvailable());
+
+            return Integer.parseInt(receive(0)) == 1 && Integer.parseInt(receive(1)) == 1;
+
+
         }catch (IOException e){
             System.err.println("Server failed to start : port " + this.port + " already in use");
             e.printStackTrace();
         }
-    }
 
-    public void handleClient(Socket cli){
-        System.err.println("Client connected !");
-        try {
-            Scanner sc = new Scanner(cli.getInputStream());
-            System.out.println(sc.nextLine());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return false;
     }
 
     //A la connection = Pseudo
@@ -58,8 +62,9 @@ public class Server {
     //Capituler = c
     //Capitulation = y
     //Refus = n -> Send refus de cap rc
-    public String receive(){
-        return "hapl";
+    //rollback = r
+    public String receive(int id){
+        return this.clients[id].getInput().nextLine();
 
     }
     //Init plateau = P:1,Pseudo:playeradversepseudo,0-0-0-0-0-0-0-0 (player num +plateau)
@@ -71,8 +76,40 @@ public class Server {
     //Loose = -
     //Captituler = c
     //Refus de cap = rc
-    public void send(String toSend){
+    //
+    public void send(int id, String toSend){
+        this.clients[id].getOutput().println(toSend);
+    }
 
+    public void playGame(){
+        int termine = -1;
+        int cpt = 0;
+        int input;
+        int lastVisitedCell;
+        do{
+            int cliID = this.g.activePlayer.id-1;
+            send(cliID,this.g.board.toString());
+            System.out.println("turn " + cpt + " - Player " + cliID+1);
+
+            do{
+                send(cliID,"?"); //Demande de choix au client
+                input = Integer.parseInt(receive(cliID));
+                System.out.println("Cell " + input);
+                lastVisitedCell = this.g.play(input);
+
+            }
+            while(lastVisitedCell == -1);
+
+            Check.checkEatableCells(lastVisitedCell,this.g.activePlayer, this.g.board);
+
+            this.g.changePlayer();
+            Check.setCellAvailable(this.g.board,this.g.activePlayer.id);
+            termine = Check.isEndedGame(this.g);
+            cpt++;
+        }
+        while(termine == -1);
+
+        //switch (termine)
     }
 
     public void endConnection(){
@@ -88,5 +125,8 @@ public class Server {
     public static void main(String[] args){
            Server s = new Server(8080);
            s.start();
+           s.playGame();
     }
+
+
 }
