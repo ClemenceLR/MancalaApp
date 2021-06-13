@@ -1,6 +1,5 @@
 package ensi.fr.mancala.server;
 
-import ensi.fr.mancala.client.Client;
 import ensi.fr.mancala.server.model.Player;
 
 import java.io.IOException;

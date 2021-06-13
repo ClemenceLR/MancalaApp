@@ -11,14 +11,7 @@ public class MancalaApp extends Application {
     public static void main(String[] args) {
         launch(args);
         //TODO récupérer et créer les joueurs en fonction des clients enregistrés
-        //Appeler Game g =  Game(p1,p2);
-        //Game g = new Game();
-        //g.activePlayer.getCellClicked();
-        //g.activePlayer.getCellClicked();
 
-
-
-        //g.playGame();
     }
 
     public void start(Stage primaryStage) throws Exception {

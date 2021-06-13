@@ -1,7 +1,5 @@
 package ensi.fr.mancala.server.model;
 
-import ensi.fr.mancala.server.ClientInterface;
-
 /**
 This class is the main core of the project : it is the main part of the model
 Managing the game party

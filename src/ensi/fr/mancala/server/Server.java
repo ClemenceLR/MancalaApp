@@ -2,30 +2,20 @@ package ensi.fr.mancala.server;
 
 import ensi.fr.mancala.server.model.Check;
 import ensi.fr.mancala.server.model.Game;
-import ensi.fr.mancala.server.model.Player;
-import javafx.beans.value.ObservableIntegerValue;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class Server {
     private int port;
     private Game g;
-    private List<Player> playerList;
     private ServerSocket server;
-    private Thread t1, t2;
 
     private ClientInterface[] clients;
 
     public Server(int port){
         this.port = port;
         this.clients = new ClientInterface[2];
-        this.playerList = new ArrayList<Player>();
     }
 
 

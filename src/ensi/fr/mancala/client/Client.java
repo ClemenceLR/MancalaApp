@@ -1,12 +1,13 @@
 package ensi.fr.mancala.client;
 
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Client {
     private InetAddress addr;
@@ -16,6 +17,7 @@ public class Client {
     private Scanner in;
     private PrintStream out;
     private int cellClicked;
+    private Logger logger;
 
     public Client(InetAddress addr, int port, String pseudo){
         this.addr = addr;
@@ -30,14 +32,14 @@ public class Client {
             out = new PrintStream(me.getOutputStream());
             in = new Scanner(me.getInputStream());
         }catch(IOException e){
-            System.err.println("Client failed to connect");
+            logger.log(Level.WARNING,"Client failed to connect");
             e.printStackTrace();
         }
-        out.println(this.pseudo);
+        out.println(this.pseudo);/*
         System.out.println(in.nextLine());
         System.out.println(in.nextLine());
         System.out.println(in.nextLine());
-
+*/
         out.println("1");
         return;
     }
@@ -83,7 +85,6 @@ public class Client {
         }catch(UnknownHostException e){
             System.err.println("Client creation failed");
         }
-        System.out.println();
     }
 
 }
