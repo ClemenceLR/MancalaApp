@@ -69,8 +69,8 @@ public class Server {
     }
     //Init plateau = P:1,Pseudo:playeradversepseudo,0-0-0-0-0-0-0-0 (player num +plateau)
     //Send choix = ?
-    //Mauvais move = x
-    //Bon move = 0-0-0-0-0-00-0-0-0 (plateau)
+
+    //Bon move = B:0-0-0-0-0-00-0-0-0 (plateau)
     //Win = +
     //Eq = =
     //Loose = -
