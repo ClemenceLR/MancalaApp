@@ -1,8 +1,5 @@
-package ensi.fr.mancala;
+package ensi.fr.mancala.client;
 
-import ensi.fr.mancala.model.Check;
-import ensi.fr.mancala.model.Game;
-import ensi.fr.mancala.model.ManageFile;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,7 +22,8 @@ public class MancalaApp extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("view/Game.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("client/view/Game.fxml"));
+
 
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Mancala");
@@ -33,3 +31,4 @@ public class MancalaApp extends Application {
     }
 
 }
+

@@ -1,6 +1,5 @@
-package ensi.fr.mancala.model;
+package ensi.fr.mancala.server.model;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Player {

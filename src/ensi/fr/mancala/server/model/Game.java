@@ -1,4 +1,4 @@
-package ensi.fr.mancala.model;
+package ensi.fr.mancala.server.model;
 /**
 This class is the main core of the project : it is the main part of the model
 Managing the game party
@@ -89,8 +89,7 @@ public class Game {
                 input = activePlayer.getCellClicked();
                 System.out.println("Cell " + input);
                 lastVisitedCell = play(input);
-                //TODO vérifier si on peut manger et manger si ok (adversaire affamé ou pas ? on ne peut pas tout manger si l'adversaire se retrouve affamé) this.activeplayer récupérer
-                //TODO TANT QUE C'EST POSSIBLE ON MANGE et si invalide à la fin on rollback : créer une copie du board
+
             }
             while(lastVisitedCell == -1);
 

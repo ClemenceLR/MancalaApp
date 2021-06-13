@@ -1,6 +1,6 @@
-package ensi.fr.mancala.controller;
+package ensi.fr.mancala.client.controller;
 
-public class GranaryController {
+public class MenuController {
 
     MainController mainController;
 

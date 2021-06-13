@@ -1,4 +1,4 @@
-package ensi.fr.mancala.model;
+package ensi.fr.mancala.server.model;
 
 import java.io.*;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package ensi.fr.mancala.model;
+package ensi.fr.mancala.server.model;
 
 public class Board {
     public static final int sizeBoard = 12;

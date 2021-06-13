@@ -1,6 +1,6 @@
-package ensi.fr.mancala.controller;
+package ensi.fr.mancala.client.controller;
 
-import ensi.fr.mancala.model.Game;
+import ensi.fr.mancala.server.model.Game;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

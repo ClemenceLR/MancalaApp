@@ -1,4 +1,4 @@
-package ensi.fr.mancala.controller;
+package ensi.fr.mancala.client.controller;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
