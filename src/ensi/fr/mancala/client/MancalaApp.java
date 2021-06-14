@@ -15,7 +15,7 @@ public class MancalaApp extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("client/view/Game.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("view/Game.fxml"));
 
 
         primaryStage.setScene(new Scene(root));
