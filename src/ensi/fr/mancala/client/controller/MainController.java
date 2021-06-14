@@ -73,10 +73,6 @@ public class MainController {
         this.client = client;
     }
 
-    //TODO lance la maj des cellules en fonction de si elles ont des graines ou pas
-    public void updateGame(){
-        //update board / player / player score / setCellAvailable
-    }
 
     //TODO Récup filename (voir comment on fait en jfx)
     public void saveGame(String fileName){
@@ -86,5 +82,11 @@ public class MainController {
     //TODO
     public void loadGame(String fileName){
 
+    }
+
+    public void updateGame(String boardSeeds, String boardAvailable, String granaryPlayer0, String granaryPlayer1) {
+        this.granaryController.setGranary(granaryPlayer0,0);
+        this.granaryController.setGranary(granaryPlayer1,1);
+        //TODO update board / player / player score / setCellAvailable
     }
 }

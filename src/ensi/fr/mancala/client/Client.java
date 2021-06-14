@@ -61,6 +61,12 @@ public class Client {
             String r = receive();
             System.out.println(r);
 
+            switch (r){
+                case "B" :
+                    this.updateGame();
+
+            }
+
             if(r.equals("?")){//TODO transfo en switch
                 while(Integer.parseInt(this.cellClicked.label)<0) {
                     //TODO le contrôleur envoie le num de la case cliquée (setCellClicked) Client.setCellClicked()
@@ -70,6 +76,16 @@ public class Client {
             }
 
     }
+
+    public void updateGame(){
+        String boardSeeds = receive();
+        String boardAvailable = receive();
+        String granaryPlayer0 = receive();
+        String granaryPlayer1 = receive();
+
+        this.mainController.updateGame(boardSeeds,boardAvailable,granaryPlayer0,granaryPlayer1);
+    }
+
     public void send(String toSend){
         this.getOutput().println(toSend);
     }
