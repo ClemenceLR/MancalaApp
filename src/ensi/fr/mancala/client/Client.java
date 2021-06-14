@@ -47,9 +47,8 @@ public class Client {
             e.printStackTrace();
         }
         out.println(this.pseudo);
-        this.opponent = in.nextLine();
-        updateGame();
-
+        //this.opponent = in.nextLine();
+        //updateGame();
         out.println("1");
         return;
     }

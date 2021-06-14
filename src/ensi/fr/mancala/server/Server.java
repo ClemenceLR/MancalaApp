@@ -27,9 +27,8 @@ public class Server {
             this.clients[1] = new ClientInterface(this.server.accept());
 
             this.g = new Game(this.clients[0].getPlayer(), this.clients[1].getPlayer());
+
             send(0, this.clients[1].getPlayer().getName());
-
-
             send(1, this.clients[0].getPlayer().getName());
 
             sendUpdateBoard();
@@ -46,11 +45,16 @@ public class Server {
     }
 
     public void sendUpdateBoard(){
+        send(0,"B");//Sending the updated board to first client
         send(0, this.g.board.toString());
         send(0, this.g.board.cellAvailable());
+        send(0,""+this.clients[0].getPlayer().granary);
+        send(0,""+this.clients[1].getPlayer().granary);
+
+        send(1,"B");//Sending the updated board to second client
         send(1, this.g.board.toString());
         send(1, this.g.board.cellAvailable());
-        send(0,""+this.clients[0].getPlayer().granary);
+        send(1,""+this.clients[0].getPlayer().granary);
         send(1,""+this.clients[1].getPlayer().granary);
     }
 
@@ -83,10 +87,11 @@ public class Server {
         int termine = -1;
         int cpt = 0;
         int input;
-        int lastVisitedCell;
+        int lastVisitedCell = -1;
         do{
             int cliID = this.g.activePlayer.id-1;
-            send(cliID,this.g.board.toString());
+
+            //send(cliID,this.g.board.toString());
             System.out.println("turn " + cpt + " - Player " + this.g.activePlayer.id);
 
             do{
@@ -108,7 +113,6 @@ public class Server {
             termine = Check.isEndedGame(this.g);
             cpt++;
 
-            send(cliID,"B");//Sending the updated board to the client
             sendUpdateBoard();
         }
         while(termine == -1);

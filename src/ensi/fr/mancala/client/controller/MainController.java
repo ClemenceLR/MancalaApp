@@ -48,7 +48,7 @@ public class MainController {
         mainPane.getChildren().add(boardNode);
 
         try {
-            this.client = new Client(InetAddress.getLocalHost(), 8080, "B");
+            this.client = new Client(InetAddress.getLocalHost(), 8080, "PseudoCool");
             this.client.connect();
             this.client.setMainController(this);
 
