@@ -8,10 +8,10 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class ClientInterface{
-    private Player player;
+    private final Player player;
     private Scanner in;
     private PrintStream out;
-    private Socket me;
+    private final Socket me;
 
     public ClientInterface(Socket client){
         this.me = client;

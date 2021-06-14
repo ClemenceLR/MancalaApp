@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 public class Server {
-    private int port;
+    private final int port;
     private Game g;
     private ServerSocket server;
 
-    private ClientInterface[] clients;
+    private final ClientInterface[] clients;
 
     public Server(int port){
         this.port = port;
@@ -28,12 +28,11 @@ public class Server {
 
             this.g = new Game(this.clients[0].getPlayer(), this.clients[1].getPlayer());
             send(0, this.clients[1].getPlayer().getName());
-            send(0, this.g.board.toString());
-            send(0, this.g.board.cellAvailable());
+
 
             send(1, this.clients[0].getPlayer().getName());
-            send(1, this.g.board.toString());
-            send(1, this.g.board.cellAvailable());
+
+            sendUpdateBoard();
 
             return Integer.parseInt(receive(0)) == 1 && Integer.parseInt(receive(1)) == 1;
 
@@ -44,6 +43,15 @@ public class Server {
         }
 
         return false;
+    }
+
+    public void sendUpdateBoard(){
+        send(0, this.g.board.toString());
+        send(0, this.g.board.cellAvailable());
+        send(1, this.g.board.toString());
+        send(1, this.g.board.cellAvailable());
+        send(0,""+this.clients[0].getPlayer().granary);
+        send(1,""+this.clients[1].getPlayer().granary);
     }
 
     //A la connection = Pseudo
@@ -79,11 +87,14 @@ public class Server {
         do{
             int cliID = this.g.activePlayer.id-1;
             send(cliID,this.g.board.toString());
-            System.out.println("turn " + cpt + " - Player " + cliID+1);
+            System.out.println("turn " + cpt + " - Player " + this.g.activePlayer.id);
 
             do{
                 send(cliID,"?"); //Demande de choix au client
                 input = Integer.parseInt(receive(cliID));
+                if(input >11){
+                    input = -1;
+                }
                 System.out.println("Cell " + input);
                 lastVisitedCell = this.g.play(input);
 
@@ -96,6 +107,9 @@ public class Server {
             Check.setCellAvailable(this.g.board,this.g.activePlayer.id);
             termine = Check.isEndedGame(this.g);
             cpt++;
+
+            send(cliID,"B");//Sending the updated board to the client
+            sendUpdateBoard();
         }
         while(termine == -1);
 
@@ -115,6 +129,7 @@ public class Server {
     public static void main(String[] args){
            Server s = new Server(8080);
            s.start();
+           //TANT QUE JE N'AI PAS RECU LA VALIDATION DES 2
            s.playGame();
     }
 

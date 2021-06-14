@@ -94,11 +94,7 @@ public class Player {
             }
         } while(!cont);
         System.out.println(move);
-        if(move == 1){
-            return false;
-        }else {
-            return true;
-        }
+        return move != 1;
     }
 
     public String getName() {

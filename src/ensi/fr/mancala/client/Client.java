@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +16,7 @@ public class Client {
     private int port;
     private Socket me;
     private String pseudo;
+    public String opponent;
     private Scanner in;
     private PrintStream out;
     private CellId cellClicked;
@@ -47,32 +47,29 @@ public class Client {
             e.printStackTrace();
         }
         out.println(this.pseudo);
-        /*
-        System.out.println(in.nextLine());
-        System.out.println(in.nextLine());
-        System.out.println(in.nextLine());
-        */
+        this.opponent = in.nextLine();
+        updateGame();
+
         out.println("1");
         return;
     }
 
 
     public void play() {
-            String r = receive();
-            System.out.println(r);
+            String code = receive();
+            System.out.println(code);
 
-            switch (r){
+            switch (code){
+                case "?":
+                    while (Integer.parseInt(this.cellClicked.label) < 0) {
+                        //TODO le contrôleur envoie le num de la case cliquée (setCellClicked) Client.setCellClicked()
+                    }
+                    send("" + this.cellClicked);
+                    this.cellClicked = CellId.MINUSONE;
+                    break;
                 case "B" :
                     this.updateGame();
-
-            }
-
-            if(r.equals("?")){//TODO transfo en switch
-                while(Integer.parseInt(this.cellClicked.label)<0) {
-                    //TODO le contrôleur envoie le num de la case cliquée (setCellClicked) Client.setCellClicked()
-                }
-                send(""+this.cellClicked);
-                this.cellClicked = CellId.MINUSONE;
+                    break;
             }
 
     }

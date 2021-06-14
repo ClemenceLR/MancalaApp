@@ -11,11 +11,7 @@ public class Cell {
 
     public Cell(int nb){
         this.nbSeeds = nb;
-        if(this.nbSeeds != 0) {
-            this.available = true;
-        }else{
-            this.available = false;
-        }
+        this.available = this.nbSeeds != 0;
     }
 
     public Cell(Cell c){
@@ -40,9 +36,6 @@ public class Cell {
     }
 
     public boolean isEatable(){
-        if(this.getNbSeeds() == 2 || this.getNbSeeds() == 3){
-            return true;
-        }
-        return false;
+        return this.getNbSeeds() == 2 || this.getNbSeeds() == 3;
     }
 }
