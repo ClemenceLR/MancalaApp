@@ -9,6 +9,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
+import java.util.Locale;
+
 public class BoardController {
 
     MainController mainController;
@@ -31,7 +33,10 @@ public class BoardController {
     }
 
     public void play(MouseEvent mouseEvent) {
-        System.out.println("TEST");
+        StackPane stackPane = (StackPane) mouseEvent.getSource();
+        String stringToSend = stackPane.getId().toUpperCase(Locale.ROOT);
+        this.mainController.getClient().setCellClicked(stringToSend);
+
     }
 
     public StackPane getCellByNumber(int number){
@@ -64,6 +69,7 @@ public class BoardController {
         }
 
     }
+
 
     public void updateCell(StackPane cellToUpdate, boolean available, int nbSeed){
         ObservableList<Node> childrens = cellToUpdate.getChildren();

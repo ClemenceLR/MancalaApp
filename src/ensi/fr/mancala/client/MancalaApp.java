@@ -15,12 +15,16 @@ public class MancalaApp extends Application {
     }
 
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("view/Game.fxml"));
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Game.fxml"));
+        Parent root = loader.load();
 
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Mancala");
         primaryStage.show();
+
+
+
     }
 
 }

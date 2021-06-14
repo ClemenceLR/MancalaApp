@@ -1,5 +1,7 @@
 package ensi.fr.mancala.client;
 
+import ensi.fr.mancala.client.controller.MainController;
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
@@ -10,20 +12,29 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Client {
+    private MainController mainController;
     private InetAddress addr;
     private int port;
     private Socket me;
     private String pseudo;
     private Scanner in;
     private PrintStream out;
-    private int cellClicked;
+    private CellId cellClicked;
     private Logger logger;
 
     public Client(InetAddress addr, int port, String pseudo){
         this.addr = addr;
         this.port = port;
         this.pseudo = pseudo;
-        this.cellClicked = -1;
+        this.cellClicked = CellId.MINUSONE;
+    }
+
+    public void setCellClicked(String cellClicked){
+        this.cellClicked = CellId.valueOf(cellClicked);
+    }
+
+    public void setMainController(MainController mainController){
+        this.mainController = mainController;
     }
 
     public void connect(){
@@ -35,30 +46,28 @@ public class Client {
             logger.log(Level.WARNING,"Client failed to connect");
             e.printStackTrace();
         }
-        out.println(this.pseudo);/*
+        out.println(this.pseudo);
+        /*
         System.out.println(in.nextLine());
         System.out.println(in.nextLine());
         System.out.println(in.nextLine());
-*/
+        */
         out.println("1");
         return;
     }
 
 
-    private void play() {
-        while(true){
+    public void play() {
             String r = receive();
             System.out.println(r);
+
             if(r.equals("?")){//TODO transfo en switch
-                while(this.cellClicked<0) {
-                    //TODO le contrôleur envoie le num de la case cliquée (setCellClicked) Client.setCellClicked();
-                    Scanner s = new Scanner(System.in);
-                    this.cellClicked = s.nextInt();
+                while(Integer.parseInt(this.cellClicked.label)<0) {
+                    //TODO le contrôleur envoie le num de la case cliquée (setCellClicked) Client.setCellClicked()
                 }
                 send(""+this.cellClicked);
-                this.cellClicked = -1;
+                this.cellClicked = CellId.MINUSONE;
             }
-        }
 
     }
     public void send(String toSend){
@@ -78,13 +87,17 @@ public class Client {
     }
 
     public static void main(String[] args){
-        try {
-            Client c = new Client(InetAddress.getLocalHost(), 8080,"B");
+        /* try {
+            Client c = new Client(InetAddress.getLocalHost(), 8080, "B");
             c.connect();
-            c.play();
-        }catch(UnknownHostException e){
-            System.err.println("Client creation failed");
         }
+        catch(UnknownHostException e){
+            System.err.println("Client creation failed");
+        }*/
+
+        MancalaApp.main(args);
+
+
     }
 
 }

@@ -1,6 +1,8 @@
 package ensi.fr.mancala.client.controller;
 
+import ensi.fr.mancala.client.Client;
 import ensi.fr.mancala.server.model.Game;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -8,14 +10,20 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainController {
     @FXML private Pane mainPane;
 
-    Game currentGame;
     private MenuController menuController;
     private GranaryController granaryController;
     private BoardController boardController;
+
+    private Client client;
+    private Timer timer;
 
     public void initialize() throws IOException {
 
@@ -38,14 +46,32 @@ public class MainController {
         this.boardController.setMainController(this);
         mainPane.getChildren().add(boardNode);
 
-        this.currentGame = new Game();
+        try {
+            this.client = new Client(InetAddress.getLocalHost(), 8080, "B");
+            this.client.connect();
+            this.client.setMainController(this);
 
-        StackPane one = this.boardController.getCellByNumber(1);
-        this.boardController.updateCell(one,true,12);
-
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    client.play();
+                }
+            }, 0, 100);
+        }
+        catch(UnknownHostException e){
+            System.err.println("Client creation failed");
+        }
 
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client){
+        this.client = client;
+    }
 
     //TODO lance la maj des cellules en fonction de si elles ont des graines ou pas
     public void updateGame(){
