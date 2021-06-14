@@ -29,6 +29,7 @@ public class MainController {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/Menu.fxml"));
         Node menuNode = fxmlLoader.load();
+
         this.menuController = fxmlLoader.getController();
         this.menuController.setMainController(this);
         mainPane.getChildren().add(menuNode);
@@ -57,9 +58,9 @@ public class MainController {
                 public void run() {
                     client.play();
                 }
-            }, 0, 100);
+            }, 1000, 1000);
         }
-        catch(UnknownHostException e){
+        catch(Exception e){
             System.err.println("Client creation failed");
         }
 

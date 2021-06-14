@@ -60,16 +60,18 @@ public class Client {
             System.out.println(code);
 
             switch (code){
-                case "?":
+                case "B" :
+                    this.updateGame();
+                    break;
+
+                /*case "?":
                     while (Integer.parseInt(this.cellClicked.label) < 0) {
                         //TODO le contrôleur envoie le num de la case cliquée (setCellClicked) Client.setCellClicked()
                     }
                     send("" + this.cellClicked);
                     this.cellClicked = CellId.MINUSONE;
                     break;
-                case "B" :
-                    this.updateGame();
-                    break;
+                */
             }
 
     }
