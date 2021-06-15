@@ -27,15 +27,15 @@ public class Server {
             this.clients[0] = new ClientInterface(this.server.accept());
             this.clients[1] = new ClientInterface(this.server.accept());
 
-            this.g = new Game(this.clients[0].getPlayer(), this.clients[1].getPlayer());
+            //this.g = new Game(this.clients[0].getPlayer(), this.clients[1].getPlayer());
+            this.g = new Game("end_winner");
 
             send(0, this.clients[1].getPlayer().getName());
             send(1, this.clients[0].getPlayer().getName());
 
             sendUpdateBoard();
-
+            System.out.println("Hello <3");
             return Integer.parseInt(receive(0)) == 1 && Integer.parseInt(receive(1)) == 1;
-
 
         }catch (IOException e){
             System.err.println("Server failed to start : port " + this.port + " already in use");
@@ -69,15 +69,26 @@ public class Server {
     //Capitulation = y
     //Refus = n -> Send refus de cap rc
     //rollback = r
-    public String receive(int id){
+    public String receiveNB(int id){
         Scanner sc = this.clients[id].getInput();
-        if (sc.hasNextLine()) {
-            return sc.nextLine();
-        }else {
+        try {
+            if (this.clients[id].getSocket().getInputStream().available() > 0) {
+                String nextLine = sc.nextLine();
+                System.out.println(nextLine);
+                return nextLine;
+            }
+            return "";
+        }
+
+        catch(IOException e){
             return "";
         }
     }
 
+    public String receive(int id){
+        Scanner sc = this.clients[id].getInput();
+        return sc.nextLine();
+    }
 
     //Init plateau = P:1,Pseudo:playeradversepseudo,0-0-0-0-0-0-0-0 (player num +plateau)
     //Send choix = ?
@@ -94,9 +105,9 @@ public class Server {
     }
 
     public void playGame(){
-        int termine = -1;
+        int winnerId = -1;
         int cpt = 0;
-        int input;
+        int input = -1;
         String activePlayerMessage;
         String opponentPlayerMessage;
         int lastVisitedCell;
@@ -111,45 +122,68 @@ public class Server {
                 lastVisitedCell = -1;
                 send(activePlayerID,"?"); //Demande de choix au client
 
-                activePlayerMessage = receive(activePlayerID);
-                opponentPlayerMessage = receive(opponentPlayerID);
+
+                do {
+                    activePlayerMessage = receiveNB(activePlayerID);
+                    opponentPlayerMessage = receiveNB(opponentPlayerID);
+                }while(activePlayerMessage.equals("") && opponentPlayerMessage.equals(""));
+
 
                 if (!opponentPlayerMessage.equals("")){
                     //control+z
+                    System.out.println("Opponent says: " + opponentPlayerMessage);
                 }
 
-                try{
-                    input = Integer.parseInt(receive(activePlayerID));
-                    if(input >11){
-                        input = -1;
+
+                System.out.println("Meesage reçu: \n" + activePlayerMessage);
+                System.out.println(opponentPlayerMessage);
+
+                if (!activePlayerMessage.equals("")) {
+
+                    try {
+                        input = Integer.parseInt(activePlayerMessage);
+                        if (input > 11) {
+                            input = -1;
+                        }
+                        System.out.println("Cell " + input);
+                        lastVisitedCell = this.g.play(input);
+
+                    } catch (NumberFormatException e) {
+                        System.out.println("error, active player said: " + activePlayerMessage);
+                        //here we treat all the code from the active player;
                     }
-                    System.out.println("Cell " + input);
-                    lastVisitedCell = this.g.play(input);
-
-                } catch (NumberFormatException e){
-                  //here we treat all the code from the active player;
-
                 }
 
-
+                System.out.println(input + " " + lastVisitedCell);
 
 
             }
             while(lastVisitedCell == -1);
-
+            System.out.println("End of do-while loop");
             Check.checkEatableCells(lastVisitedCell,this.g.activePlayer, this.g.board);
 
             this.g.changePlayer();
             Check.setCellAvailable(this.g.board,this.g.activePlayer.id);
-            termine = Check.isEndedGame(this.g);
+            winnerId = Check.isEndedGame(this.g);
 
             cpt++;
 
             sendUpdateBoard();
         }
-        while(termine == -1);
+        while(winnerId == -1);
 
-        //switch (termine)
+        send(0,"R");
+        send(1,"R");
+
+        if (winnerId == 2) {
+            send(0, "=");
+            send(1, "=");
+        } else {
+            send(winnerId, "+");
+            send((winnerId + 1) % 2, "-");
+        }
+
+        endConnection();
     }
 
     public void endConnection(){

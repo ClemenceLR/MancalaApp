@@ -36,6 +36,7 @@ public class Game {
             this.passivePlayer = p1;
         }
         this.board = setPlayerBoard(rand);
+
         this.previousBoard = this.board;
     }
 
@@ -49,6 +50,7 @@ public class Game {
         this.passivePlayer = g.passivePlayer;
         this.board = g.board;
         this.previousBoard = g.board;
+        Check.setCellAvailable(this.board,this.activePlayer.id);
     }
 
     /**

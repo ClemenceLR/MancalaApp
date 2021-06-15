@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Timer;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +23,7 @@ public class Client {
     private PrintStream out;
     private Logger logger;
     private boolean myTurn;
+    private Timer timer;
 
     public Client(InetAddress addr, int port, String pseudo){
         this.addr = addr;
@@ -36,6 +38,10 @@ public class Client {
 
     public void setMyTurn(boolean myTurn) {
         this.myTurn = myTurn;
+    }
+
+    public void setTimer(Timer timer){
+        this.timer = timer;
     }
 
     public void connect(){
@@ -54,10 +60,19 @@ public class Client {
         return;
     }
 
+    public void disconnect() {
+        this.timer.cancel();
+        try {
+            this.me.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
 
     public void play() {
             String code = receive();
-            System.out.println(code);
+            System.out.println("C" + code);
 
             switch (code){
                 case "B" :
@@ -67,7 +82,11 @@ public class Client {
                 case "?":
                     myTurn = true;
                     break;
-
+                case "R":
+                    String r = receive();
+                    System.out.println("Jeu terminé: " + (r.equals("=") ? "Egalité" : (r.equals("+") ? "Gagné !" : "Perdu")));
+                    disconnect();
+                    break;
             }
 
     }

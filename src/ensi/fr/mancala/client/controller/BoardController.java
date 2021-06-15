@@ -36,8 +36,8 @@ public class BoardController {
     public void play(MouseEvent mouseEvent) {
         StackPane stackPane = (StackPane) mouseEvent.getSource();
         String stringToSend = (String) stackPane.getUserData();
-       this.mainController.getClient().send(stringToSend, false);
-
+        this.mainController.getClient().send(stringToSend, false);
+        System.out.println("J'ai joué uwu + " + stringToSend);
     }
 
     public StackPane getCellByNumber(int number){

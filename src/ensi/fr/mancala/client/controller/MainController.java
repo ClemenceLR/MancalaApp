@@ -61,6 +61,7 @@ public class MainController {
                     client.play();
                 }
             }, 0, 10);
+            this.client.setTimer(timer);
         }
         catch(Exception e){
             System.err.println("Client creation failed");

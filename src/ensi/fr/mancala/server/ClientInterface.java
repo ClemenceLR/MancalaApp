@@ -24,6 +24,7 @@ public class ClientInterface{
         this.player = new Player(in.nextLine());
     }
 
+    public Socket getSocket() {return  this.me; }
 
     public Player getPlayer() {
         return this.player;
