@@ -1,6 +1,7 @@
 package ensi.fr.mancala.client;
 
 import ensi.fr.mancala.client.controller.MainController;
+import ensi.fr.mancala.server.model.Cell;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -19,22 +20,22 @@ public class Client {
     public String opponent;
     private Scanner in;
     private PrintStream out;
-    private CellId cellClicked;
     private Logger logger;
+    private boolean myTurn;
 
     public Client(InetAddress addr, int port, String pseudo){
         this.addr = addr;
         this.port = port;
         this.pseudo = pseudo;
-        this.cellClicked = CellId.MINUSONE;
     }
 
-    public void setCellClicked(String cellClicked){
-        this.cellClicked = CellId.valueOf(cellClicked);
-    }
 
     public void setMainController(MainController mainController){
         this.mainController = mainController;
+    }
+
+    public void setMyTurn(boolean myTurn) {
+        this.myTurn = myTurn;
     }
 
     public void connect(){
@@ -84,8 +85,11 @@ public class Client {
         this.mainController.updateGame(boardSeeds,boardAvailable,granaryPlayer0,granaryPlayer1);
     }
 
-    public void send(String toSend){
-        this.getOutput().println(toSend);
+    public void send(String toSend, Boolean isPriority){
+
+        if(myTurn || isPriority){
+            this.getOutput().println(toSend);
+        }
     }
 
     public String receive(){

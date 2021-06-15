@@ -66,8 +66,12 @@ public class Server {
     //Refus = n -> Send refus de cap rc
     //rollback = r
     public String receive(int id){
-        return this.clients[id].getInput().nextLine();
-
+        Scanner sc = this.clients[id].getInput();
+        if (sc.hasNextLine()) {
+            return sc.nextLine();
+        }else {
+            return "";
+        }
     }
     //Init plateau = P:1,Pseudo:playeradversepseudo,0-0-0-0-0-0-0-0 (player num +plateau)
     //Send choix = ?

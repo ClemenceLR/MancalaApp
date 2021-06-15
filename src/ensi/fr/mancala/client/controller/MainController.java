@@ -1,6 +1,7 @@
 package ensi.fr.mancala.client.controller;
 
 import ensi.fr.mancala.client.Client;
+import ensi.fr.mancala.server.model.Board;
 import ensi.fr.mancala.server.model.Game;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.scene.layout.StackPane;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -58,7 +60,7 @@ public class MainController {
                 public void run() {
                     client.play();
                 }
-            }, 1000, 1000);
+            }, 0, 10);
         }
         catch(Exception e){
             System.err.println("Client creation failed");
@@ -86,6 +88,20 @@ public class MainController {
     }
 
     public void updateGame(String boardSeeds, String boardAvailable, String granaryPlayer0, String granaryPlayer1) {
+        int i;
+        StackPane stackPaneToUpdate;
+        int nbSeedsForUpdate;
+        boolean availableForUpdate;
+        String[] boardSeedsArray = boardSeeds.split("-");
+        String[] boardAvailableArray = boardAvailable.split("-");
+
+        for(i=0;i< Board.sizeBoard;i++){
+            stackPaneToUpdate = this.boardController.getCellByNumber(i);
+            nbSeedsForUpdate = Integer.parseInt(boardSeedsArray[i]);
+            availableForUpdate = Boolean.getBoolean(boardAvailableArray[i]);
+            this.boardController.updateCell(stackPaneToUpdate,availableForUpdate,nbSeedsForUpdate);
+        }
+
         this.granaryController.setGranary(granaryPlayer0,0);
         this.granaryController.setGranary(granaryPlayer1,1);
         //TODO update board / player / player score / setCellAvailable

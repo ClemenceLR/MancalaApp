@@ -1,5 +1,6 @@
 package ensi.fr.mancala.client.controller;
 
+import ensi.fr.mancala.client.CellId;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -34,8 +35,8 @@ public class BoardController {
 
     public void play(MouseEvent mouseEvent) {
         StackPane stackPane = (StackPane) mouseEvent.getSource();
-        String stringToSend = stackPane.getId().toUpperCase(Locale.ROOT);
-        this.mainController.getClient().setCellClicked(stringToSend);
+        String stringToSend = (String) stackPane.getUserData();
+       this.mainController.getClient().send(stringToSend, false);
 
     }
 
