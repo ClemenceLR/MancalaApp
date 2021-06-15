@@ -1,6 +1,5 @@
-package ensi.fr.mancala.model;
+package ensi.fr.mancala.server.model;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Player {
@@ -95,11 +94,10 @@ public class Player {
             }
         } while(!cont);
         System.out.println(move);
-        if(move == 1){
-            return false;
-        }else {
-            return true;
-        }
+        return move != 1;
     }
 
+    public String getName() {
+        return this.name;
+    }
 }

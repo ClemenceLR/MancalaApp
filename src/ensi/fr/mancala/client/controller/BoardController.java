@@ -1,5 +1,6 @@
-package ensi.fr.mancala.controller;
+package ensi.fr.mancala.client.controller;
 
+import ensi.fr.mancala.client.CellId;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -8,6 +9,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+
+import java.util.Locale;
 
 public class BoardController {
 
@@ -31,7 +34,10 @@ public class BoardController {
     }
 
     public void play(MouseEvent mouseEvent) {
-        System.out.println("TEST");
+        StackPane stackPane = (StackPane) mouseEvent.getSource();
+        String stringToSend = (String) stackPane.getUserData();
+        this.mainController.getClient().send(stringToSend, false);
+        System.out.println("J'ai joué uwu + " + stringToSend);
     }
 
     public StackPane getCellByNumber(int number){
@@ -64,6 +70,7 @@ public class BoardController {
         }
 
     }
+
 
     public void updateCell(StackPane cellToUpdate, boolean available, int nbSeed){
         ObservableList<Node> childrens = cellToUpdate.getChildren();

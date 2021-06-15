@@ -1,4 +1,4 @@
-package ensi.fr.mancala.model;
+package ensi.fr.mancala.server.model;
 
 public class Board {
     public static final int sizeBoard = 12;
@@ -44,6 +44,23 @@ public class Board {
            }
        }
        return data;
+    }
+
+    public String cellAvailable(){
+        String data = "";
+        for(int i=0; i<sizeBoard; i++){
+            if(i != sizeBoard-1){
+                data += holes[i].isAvailable() +"-";
+
+            }else{
+                data += holes[i].isAvailable();
+            }
+        }
+        return data;
+    }
+
+    public String forbidPlay(){
+        return "false-false-false-false-false-false-false-false-false-false-false-false";
     }
     //TODO
     public void updateBoard(){

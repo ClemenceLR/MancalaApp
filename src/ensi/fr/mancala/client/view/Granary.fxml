@@ -7,19 +7,19 @@
 
 <Pane xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="ensi.fr.mancala.controller.GranaryController"
+      fx:controller="ensi.fr.mancala.client.controller.GranaryController"
       layoutY="32.00">
 
-    <Text layoutX="80.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Granary joueur 2" />
+    <Text fx:id="granaryText0" layoutX="80.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Granary joueur 2" />
     <StackPane layoutX="225.0" layoutY="40.0">
         <Circle fill="WHITE"  radius="29.0" stroke="BLACK" strokeType="INSIDE" />
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+        <Text fx:id="granary0" strokeType="OUTSIDE" strokeWidth="0.0" />
     </StackPane>
 
-    <Text layoutX="80.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Granary joueur 1" />
+    <Text fx:id="granaryText1" layoutX="80.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Granary joueur 1" />
     <StackPane layoutX="225.0" layoutY="265.0">
         <Circle fill="WHITE" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
-        <Text  strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+        <Text  fx:id="granary1" strokeType="OUTSIDE" strokeWidth="0.0" text=""/>
     </StackPane>
 
 

@@ -1,4 +1,6 @@
-package ensi.fr.mancala.controller;
+package ensi.fr.mancala.client.controller;
+
+import javafx.event.ActionEvent;
 
 public class MenuController {
 
@@ -6,5 +8,9 @@ public class MenuController {
 
     public void setMainController(MainController mainController){
         this.mainController = mainController;
+    }
+
+    public void play() {
+        this.mainController.getClient().play();
     }
 }

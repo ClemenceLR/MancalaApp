@@ -1,4 +1,4 @@
-package ensi.fr.mancala.model;
+package ensi.fr.mancala.server.model;
 
 public class Check {
 
@@ -54,48 +54,49 @@ public class Check {
         int startHoleOpponentId = (startHolePlayerId + 6) % 12;
 
         if(g.passivePlayer.granary >= 25){
-            System.out.println(g.passivePlayer.name + " a gagné");
-            return 1;
+            //System.out.println(g.passivePlayer.name + " a gagné");
+            return g.passivePlayer.id-1;
         }
 
         if(Check.nbCellsAvailable == 0){
             g.activePlayer.granary += totalSeeds;
             if(g.activePlayer.granary > g.passivePlayer.granary){
-                System.out.println(g.activePlayer.name + " a gagné : adversaire affamé");
+                //System.out.println(g.activePlayer.name + " a gagné : adversaire affamé");
+                return g.activePlayer.id-1;
             }else if(g.activePlayer.granary == g.passivePlayer.granary){
-                System.out.println(" Match null");
+                //System.out.println(" Match null");
                 return 2;
             }else{
-                System.out.println(g.passivePlayer.name + " a gagné : adversaire affamé");
+                //System.out.println(g.passivePlayer.name + " a gagné : adversaire affamé");
+                return g.passivePlayer.id-1;
             }
-            return 1;
         }
 
         if(totalSeeds <= 6 && ennemyIsHungry(g.board, startHoleOpponentId) && Check.nbCellsAvailable == 0){
-            System.out.println(g.passivePlayer.name + " a gagné");
-            return 1;
+            //System.out.println(g.passivePlayer.name + " a gagné");
+            return g.passivePlayer.id-1;
         }
 
 
         if(totalSeeds < 6 && g.passivePlayer.granary < 24 && g.activePlayer.granary < 24){
-            System.out.println("Match NULL");
+            //System.out.println("Match NULL");
             return 2;
         }
 
-        if(totalSeeds <= 10 ){
-            System.out.println("Est-ce que le match est null ?");
+       /* if(totalSeeds <= 10 ){
+            //System.out.println("Est-ce que le match est null ?");
             if(g.activePlayer.getAcceptancy()){
                 System.out.println("Match NULL");
                 int gainSplit = totalSeeds /2;
                 g.passivePlayer.granary += gainSplit;
                 g.activePlayer.granary += (totalSeeds - gainSplit);
-                System.out.println("Gains finaux : "+ g.activePlayer.name + " a " +g.activePlayer.granary);
-                System.out.println("Gains finaux :" + g.passivePlayer.name + " a " + g.passivePlayer.granary);
+                //System.out.println("Gains finaux : "+ g.activePlayer.name + " a " +g.activePlayer.granary);
+               // System.out.println("Gains finaux :" + g.passivePlayer.name + " a " + g.passivePlayer.granary);
                 return 2;
             }else{
                 return -1;
             }
-        }
+        }*/
 
         return -1;
     }
