@@ -98,7 +98,8 @@ public class MainController {
         for(i=0;i< Board.sizeBoard;i++){
             stackPaneToUpdate = this.boardController.getCellByNumber(i);
             nbSeedsForUpdate = Integer.parseInt(boardSeedsArray[i]);
-            availableForUpdate = Boolean.getBoolean(boardAvailableArray[i]);
+            availableForUpdate = boardAvailableArray[i].equals("true");
+
             this.boardController.updateCell(stackPaneToUpdate,availableForUpdate,nbSeedsForUpdate);
         }
 

@@ -64,14 +64,10 @@ public class Client {
                     this.updateGame();
                     break;
 
-                /*case "?":
-                    while (Integer.parseInt(this.cellClicked.label) < 0) {
-                        //TODO le contrôleur envoie le num de la case cliquée (setCellClicked) Client.setCellClicked()
-                    }
-                    send("" + this.cellClicked);
-                    this.cellClicked = CellId.MINUSONE;
+                case "?":
+                    myTurn = true;
                     break;
-                */
+
             }
 
     }
@@ -89,6 +85,7 @@ public class Client {
 
         if(myTurn || isPriority){
             this.getOutput().println(toSend);
+            myTurn = false;
         }
     }
 
