@@ -2,8 +2,6 @@ package ensi.fr.mancala.server;
 
 import ensi.fr.mancala.server.model.Check;
 import ensi.fr.mancala.server.model.Game;
-import ensi.fr.mancala.server.model.ManageFile;
-import ensi.fr.mancala.server.model.Player;
 
 import java.util.Scanner;
 
@@ -36,7 +34,7 @@ public class Server {
             send(0, this.clients[1].getPlayer().getName());
             send(1, this.clients[0].getPlayer().getName());
 
-            sendUpdateBoard();
+            sendUpdateGame();
             return Integer.parseInt(receive(0)) == 1 && Integer.parseInt(receive(1)) == 1;
 
         }catch (IOException e){
@@ -47,7 +45,7 @@ public class Server {
         return false;
     }
 
-    public void sendUpdateBoard(){
+    public void sendUpdateGame(){
         int playerId = this.g.activePlayer.id - 1;
         int opponentId = (playerId +1) %2;
 
@@ -129,13 +127,13 @@ public class Server {
                     opponentPlayerMessage = receiveNB(opponentPlayerID);
                 }while(activePlayerMessage.equals("") && opponentPlayerMessage.equals(""));
 
-                System.out.println("Message: " + activePlayerMessage);
-                System.out.println("Message: " + opponentPlayerMessage);
-
-
-
                 if (!opponentPlayerMessage.equals("")){
                     //control+z
+                    switch (opponentPlayerMessage) {
+                        case "G":
+                            send(opponentPlayerID,this.g.toString());
+                            break;
+                    }
                 }
 
                 if (!activePlayerMessage.equals("")) {
@@ -150,21 +148,26 @@ public class Server {
                             break;
                         case "L":
                             String file = receive(activePlayerID);
-                            System.out.println("Chargement du fichier: " + file);
                             this.g = new Game(this.g.activePlayer, this.g.passivePlayer, file);
-                            sendUpdateBoard();
+                            sendUpdateGame();
                             break;
                         case "S":
 
                             break;
                         case "F":
-                            send(opponentPlayerID, "ff");
-                            String r = receive(opponentPlayerID);
-                            if (r.equals("f")) {
-                                this.g.splitRemainingSeed();
+                             if(this.g.board.getTotalSeeds() <=10) {
+                                 send(opponentPlayerID, "ff");
+                                 String r = receive(opponentPlayerID);
+                                 if (r.equals("f")) {
+                                     this.g.splitRemainingSeed();
+                                     break;
+                                 }
+                                 send(activePlayerID, "n");
+                             }
                                 break;
-                            }
-                            send(activePlayerID, "n");
+                        case "G":
+                            send(activePlayerID,"G");
+                            send(activePlayerID,this.g.toString());
                             break;
                     }
                 }
@@ -178,7 +181,7 @@ public class Server {
 
             cpt++;
 
-            sendUpdateBoard();
+            sendUpdateGame();
         }
         while(winnerId == -1);
 

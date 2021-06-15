@@ -1,8 +1,11 @@
 package ensi.fr.mancala.client;
 
 import ensi.fr.mancala.client.controller.MainController;
-import ensi.fr.mancala.server.model.Cell;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetAddress;
@@ -24,6 +27,7 @@ public class Client {
     private Logger logger;
     private boolean myTurn;
     private Timer timer;
+    private File file;
 
     public Client(InetAddress addr, int port, String pseudo){
         this.addr = addr;
@@ -83,7 +87,33 @@ public class Client {
                     break;
                 case "R":
                     String r = receive();
-                    System.out.println("Jeu terminé: " + (r.equals("=") ? "Egalité" : (r.equals("+") ? "Gagné !" : "Perdu")));
+                    String result = (r.equals("=") ? "Egalité" : (r.equals("+") ? "Gagné !" : "Perdu..."));
+
+                    Alert a = new Alert(Alert.AlertType.INFORMATION);
+                    a.setContentText(result);
+                    a.setTitle("Jeu Terminé !");
+                    a.showAndWait();
+                    break;
+                case "G":
+                    try {
+                        PrintStream ps = new PrintStream(this.file);
+                        ps.println(receive());
+                    }catch (FileNotFoundException e){
+                        e.printStackTrace();
+                    }
+
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            Alert aa = new Alert(Alert.AlertType.INFORMATION);
+                            aa.setContentText("Save Completed !");
+                            aa.setTitle("File saved under the given file");
+                            aa.showAndWait();
+                        }
+                    });
+
+                    break;
+                case "D":
                     disconnect();
                     break;
                 case "ff":
@@ -105,8 +135,14 @@ public class Client {
     public void send(String toSend, Boolean isPriority){
 
         if(myTurn || isPriority){
-            System.out.println("On envoie: ");
+            System.out.println("On envoie: " + toSend);
             this.getOutput().println(toSend);
+        }
+        else{
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setContentText("Action reserved to actual player !");
+            a.setTitle("Action forbidden");
+            a.showAndWait();
         }
     }
 
@@ -136,4 +172,7 @@ public class Client {
 
     }
 
+    public void setFile(File file) {
+        this.file = file;
+    }
 }

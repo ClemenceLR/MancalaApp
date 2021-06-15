@@ -13,16 +13,22 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                <MenuItem mnemonicParsing="false" text="Save game" />
+                <MenuItem onAction="#saveGame" mnemonicParsing="false" text="Save game" />
                 <MenuItem onAction="#loadGame" mnemonicParsing="false" text="Load game" />
                 <MenuItem mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Options">
             <items>
-              <MenuItem mnemonicParsing="false" text="Undo" />
+                <MenuItem mnemonicParsing="false" text="Undo" />
+                <MenuItem onAction="#forfeit" mnemonicParsing="false" text="Forfeit" />
             </items>
           </Menu>
+        <Menu mnemonicParsing="false" text="About" >
+            <items>
+                <MenuItem onAction="#about" mnemonicParsing="false" text="About" />
+            </items>
+        </Menu>
         </menus>
       </MenuBar>
 </Pane>

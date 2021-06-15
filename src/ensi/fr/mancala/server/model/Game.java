@@ -161,10 +161,8 @@ public class Game {
     }
 
     @Override
-    public String toString(){
-        System.out.println("Plateau : ");
-        this.board.printBoard();
-        return "\nJoueur actif :" + this.activePlayer.name + "\nJoueur en attente "+this.passivePlayer.name;
+    public String toString() {
+        return this.activePlayer.name + ";" + this.activePlayer.granary + ";" + this.passivePlayer.name + ";" + this.passivePlayer.granary + ";" + this.activePlayer.id + ";" + this.board;
     }
 
     public void printBoard(){
@@ -177,7 +175,7 @@ public class Game {
         int gainSplit = totalSeeds /2;
         this.passivePlayer.granary += gainSplit;
         this.activePlayer.granary += (totalSeeds - gainSplit);
-        for(int i=0; i<12; i++){
+        for(int i=0; i< Board.sizeBoard ; i++){
             this.board.holes[i].setNbSeeds(0);
         }
         if(this.passivePlayer.granary > this.activePlayer.granary){

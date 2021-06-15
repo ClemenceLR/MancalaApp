@@ -2,9 +2,12 @@ package ensi.fr.mancala.client.controller;
 
 import ensi.fr.mancala.client.Client;
 import ensi.fr.mancala.server.model.Board;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
@@ -12,7 +15,6 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 
 
 public class MainController {
@@ -22,6 +24,7 @@ public class MainController {
     private GranaryController granaryController;
     private BoardController boardController;
     private ClientConfigScreenController clientConfigScreenController;
+    private ForfeitScreenController forfeitScreenController;
 
     private Client client;
 
@@ -69,15 +72,6 @@ public class MainController {
         return mainPane;
     }
     
-
-    //TODO Récup filename (voir comment on fait en jfx)
-    public void saveGame(String fileName){
-
-    }
-
-    //TODO
-
-
     public void updateGame(String boardSeeds, String boardAvailable, String granaryPlayer0, String granaryPlayer1) {
         int i;
         StackPane stackPaneToUpdate;
@@ -100,5 +94,23 @@ public class MainController {
     }
 
     public void askForfeit() {
+
+        Platform.runLater(new Runnable () {
+
+            @Override
+            public void run() {
+                Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                a.setTitle("Forfeit ?");
+                a.setContentText("Would you like to forfeit ?");
+
+                a.showAndWait();
+                if (a.getResult() == ButtonType.OK) {
+                    MainController.this.getClient().send("f", true);
+                } else {
+                    MainController.this.getClient().send("n", true);
+                }
+            }
+        });
+
     }
 }
