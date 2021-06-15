@@ -2,6 +2,7 @@ package ensi.fr.mancala.server;
 
 import ensi.fr.mancala.server.model.Check;
 import ensi.fr.mancala.server.model.Game;
+import java.util.Scanner;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -45,17 +46,20 @@ public class Server {
     }
 
     public void sendUpdateBoard(){
-        send(0,"B");//Sending the updated board to first client
-        send(0, this.g.board.toString());
-        send(0, this.g.board.cellAvailable());
-        send(0,""+this.clients[0].getPlayer().granary);
-        send(0,""+this.clients[1].getPlayer().granary);
+        int playerId = this.g.activePlayer.id - 1;
+        int opponentId = (playerId +1) %2;
 
-        send(1,"B");//Sending the updated board to second client
-        send(1, this.g.board.toString());
-        send(1, this.g.board.cellAvailable());
-        send(1,""+this.clients[0].getPlayer().granary);
-        send(1,""+this.clients[1].getPlayer().granary);
+        send(playerId, "B");//Sending the updated board to first client
+        send(playerId, this.g.board.toString());
+        send(playerId, this.g.board.cellAvailable());
+        send(playerId, "" + this.clients[0].getPlayer().granary);
+        send(playerId, "" + this.clients[1].getPlayer().granary);
+
+        send(opponentId, "B");//Sending the updated board to second client
+        send(opponentId, this.g.board.toString());
+        send(opponentId, this.g.board.forbidPlay());
+        send(opponentId, "" + this.clients[0].getPlayer().granary);
+        send(opponentId, "" + this.clients[1].getPlayer().granary);
     }
 
     //A la connection = Pseudo
@@ -115,6 +119,7 @@ public class Server {
             this.g.changePlayer();
             Check.setCellAvailable(this.g.board,this.g.activePlayer.id);
             termine = Check.isEndedGame(this.g);
+
             cpt++;
 
             sendUpdateBoard();

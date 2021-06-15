@@ -58,6 +58,10 @@ public class Board {
         }
         return data;
     }
+
+    public String forbidPlay(){
+        return "false-false-false-false-false-false-false-false-false-false-false-false";
+    }
     //TODO
     public void updateBoard(){
 
