@@ -40,6 +40,15 @@ public class Game {
         this.previousBoard = this.board;
     }
 
+    public Game(Player p1, Player p2, String gameToLoad){
+        Game g = ManageFile.loadGameFromString(p1,p2,gameToLoad);
+        this.activePlayer = g.activePlayer;
+        this.passivePlayer = g.passivePlayer;
+        this.board = g.board;
+        this.previousBoard = g.board;
+        Check.setCellAvailable(this.board,this.activePlayer.id);
+    }
+
     /**
      * Load a game using a filename
      * @param fileName
@@ -163,4 +172,21 @@ public class Game {
         System.out.println();
     }
 
+    public int splitRemainingSeed(){
+        int totalSeeds = this.board.getTotalSeeds();
+        int gainSplit = totalSeeds /2;
+        this.passivePlayer.granary += gainSplit;
+        this.activePlayer.granary += (totalSeeds - gainSplit);
+        for(int i=0; i<12; i++){
+            this.board.holes[i].setNbSeeds(0);
+        }
+        if(this.passivePlayer.granary > this.activePlayer.granary){
+            return this.passivePlayer.id-1;
+        }else if(this.activePlayer.granary > this.passivePlayer.granary){
+            return this.activePlayer.id-1;
+        }else{
+            return 2;
+        }
+
+    }
 }

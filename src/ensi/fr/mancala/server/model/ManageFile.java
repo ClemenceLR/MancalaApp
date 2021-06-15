@@ -41,7 +41,32 @@ public class ManageFile {
 
 
     }
+    public static Game loadGameFromString(Player p1, Player p2, String game){
+        Game g = new Game();
+        String[] d = game.split(";");
+        //TODO Parsing des données a modifier avec la logique des matchs
+        p1.name = d[0];
+        p1.granary = Integer.parseInt(d[1]);
+        p1.id = 1;
 
+        p2.name = d[2];
+        p2.granary = Integer.parseInt(d[3]);
+        p2.id = 2;
+        //TODO add player ID
+        int currentPlayer = Integer.parseInt(d[4]);
+        if(currentPlayer == 1){
+            g.activePlayer = p1;
+            g.passivePlayer = p2;
+        }else{
+            g.activePlayer = p2;
+            g.passivePlayer = p1;
+        }
+        Board b = new Board(d[5]);
+        g.board = b;
+
+        return g;
+
+    }
     public static Game loadGame(String fileName){
         Game g = new Game();
         String fName = ".//saves//" + fileName + ".txt";

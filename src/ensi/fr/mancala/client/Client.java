@@ -72,7 +72,6 @@ public class Client {
 
     public void play() {
             String code = receive();
-            System.out.println("C" + code);
 
             switch (code){
                 case "B" :
@@ -86,6 +85,9 @@ public class Client {
                     String r = receive();
                     System.out.println("Jeu terminé: " + (r.equals("=") ? "Egalité" : (r.equals("+") ? "Gagné !" : "Perdu")));
                     disconnect();
+                    break;
+                case "ff":
+                    this.mainController.askForfeit();
                     break;
             }
 
@@ -103,8 +105,8 @@ public class Client {
     public void send(String toSend, Boolean isPriority){
 
         if(myTurn || isPriority){
+            System.out.println("On envoie: ");
             this.getOutput().println(toSend);
-            myTurn = false;
         }
     }
 

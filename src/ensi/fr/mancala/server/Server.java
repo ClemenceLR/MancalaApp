@@ -2,6 +2,9 @@ package ensi.fr.mancala.server;
 
 import ensi.fr.mancala.server.model.Check;
 import ensi.fr.mancala.server.model.Game;
+import ensi.fr.mancala.server.model.ManageFile;
+import ensi.fr.mancala.server.model.Player;
+
 import java.util.Scanner;
 
 import java.io.IOException;
@@ -27,14 +30,13 @@ public class Server {
             this.clients[0] = new ClientInterface(this.server.accept());
             this.clients[1] = new ClientInterface(this.server.accept());
 
-            //this.g = new Game(this.clients[0].getPlayer(), this.clients[1].getPlayer());
-            this.g = new Game("end_winner");
+            this.g = new Game(this.clients[0].getPlayer(), this.clients[1].getPlayer());
+            //this.g = new Game("end_winner");
 
             send(0, this.clients[1].getPlayer().getName());
             send(1, this.clients[0].getPlayer().getName());
 
             sendUpdateBoard();
-            System.out.println("Hello <3");
             return Integer.parseInt(receive(0)) == 1 && Integer.parseInt(receive(1)) == 1;
 
         }catch (IOException e){
@@ -74,7 +76,6 @@ public class Server {
         try {
             if (this.clients[id].getSocket().getInputStream().available() > 0) {
                 String nextLine = sc.nextLine();
-                System.out.println(nextLine);
                 return nextLine;
             }
             return "";
@@ -128,38 +129,47 @@ public class Server {
                     opponentPlayerMessage = receiveNB(opponentPlayerID);
                 }while(activePlayerMessage.equals("") && opponentPlayerMessage.equals(""));
 
+                System.out.println("Message: " + activePlayerMessage);
+                System.out.println("Message: " + opponentPlayerMessage);
+
+
 
                 if (!opponentPlayerMessage.equals("")){
                     //control+z
-                    System.out.println("Opponent says: " + opponentPlayerMessage);
                 }
-
-
-                System.out.println("Meesage reçu: \n" + activePlayerMessage);
-                System.out.println(opponentPlayerMessage);
 
                 if (!activePlayerMessage.equals("")) {
 
-                    try {
-                        input = Integer.parseInt(activePlayerMessage);
-                        if (input > 11) {
-                            input = -1;
-                        }
-                        System.out.println("Cell " + input);
-                        lastVisitedCell = this.g.play(input);
+                    switch(activePlayerMessage) {
+                        case "N":
+                            input = Integer.parseInt(receive(activePlayerID));
+                            if (input > 11) {
+                                input = -1;
+                            }
+                            lastVisitedCell = this.g.play(input);
+                            break;
+                        case "L":
+                            String file = receive(activePlayerID);
+                            System.out.println("Chargement du fichier: " + file);
+                            this.g = new Game(this.g.activePlayer, this.g.passivePlayer, file);
+                            sendUpdateBoard();
+                            break;
+                        case "S":
 
-                    } catch (NumberFormatException e) {
-                        System.out.println("error, active player said: " + activePlayerMessage);
-                        //here we treat all the code from the active player;
+                            break;
+                        case "F":
+                            send(opponentPlayerID, "ff");
+                            String r = receive(opponentPlayerID);
+                            if (r.equals("f")) {
+                                this.g.splitRemainingSeed();
+                                break;
+                            }
+                            send(activePlayerID, "n");
+                            break;
                     }
                 }
-
-                System.out.println(input + " " + lastVisitedCell);
-
-
             }
             while(lastVisitedCell == -1);
-            System.out.println("End of do-while loop");
             Check.checkEatableCells(lastVisitedCell,this.g.activePlayer, this.g.board);
 
             this.g.changePlayer();

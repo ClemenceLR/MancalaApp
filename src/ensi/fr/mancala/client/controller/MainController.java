@@ -2,20 +2,18 @@ package ensi.fr.mancala.client.controller;
 
 import ensi.fr.mancala.client.Client;
 import ensi.fr.mancala.server.model.Board;
-import ensi.fr.mancala.server.model.Game;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Scanner;
+
 
 public class MainController {
     @FXML private Pane mainPane;
@@ -23,9 +21,9 @@ public class MainController {
     private MenuController menuController;
     private GranaryController granaryController;
     private BoardController boardController;
+    private ClientConfigScreenController clientConfigScreenController;
 
     private Client client;
-    private Timer timer;
 
     public void initialize() throws IOException {
 
@@ -49,23 +47,12 @@ public class MainController {
         this.boardController.setMainController(this);
         mainPane.getChildren().add(boardNode);
 
-        try {
-            this.client = new Client(InetAddress.getLocalHost(), 8080, "PseudoCool");
-            this.client.connect();
-            this.client.setMainController(this);
+        fxmlLoader = new FXMLLoader(getClass().getResource("../view/ClientConfigScreen.fxml"));
+        Node configScreenNode = fxmlLoader.load();
+        this.clientConfigScreenController = fxmlLoader.getController();
+        this.clientConfigScreenController.setMainController(this);
+        mainPane.getChildren().add(configScreenNode);
 
-            timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    client.play();
-                }
-            }, 0, 10);
-            this.client.setTimer(timer);
-        }
-        catch(Exception e){
-            System.err.println("Client creation failed");
-        }
 
     }
 
@@ -78,15 +65,18 @@ public class MainController {
     }
 
 
+    public Pane getMainPane() {
+        return mainPane;
+    }
+    
+
     //TODO Récup filename (voir comment on fait en jfx)
     public void saveGame(String fileName){
 
     }
 
     //TODO
-    public void loadGame(String fileName){
 
-    }
 
     public void updateGame(String boardSeeds, String boardAvailable, String granaryPlayer0, String granaryPlayer1) {
         int i;
@@ -107,5 +97,8 @@ public class MainController {
         this.granaryController.setGranary(granaryPlayer0,0);
         this.granaryController.setGranary(granaryPlayer1,1);
         //TODO update board / player / player score / setCellAvailable
+    }
+
+    public void askForfeit() {
     }
 }
