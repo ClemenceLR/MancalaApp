@@ -77,6 +77,8 @@ public class Server {
             return "";
         }
     }
+
+
     //Init plateau = P:1,Pseudo:playeradversepseudo,0-0-0-0-0-0-0-0 (player num +plateau)
     //Send choix = ?
 
@@ -95,21 +97,42 @@ public class Server {
         int termine = -1;
         int cpt = 0;
         int input;
-        int lastVisitedCell = -1;
+        String activePlayerMessage;
+        String opponentPlayerMessage;
+        int lastVisitedCell;
         do{
-            int cliID = this.g.activePlayer.id-1;
+            int activePlayerID = this.g.activePlayer.id-1;
+            int opponentPlayerID = this.g.passivePlayer.id-1;
 
             //send(cliID,this.g.board.toString());
             System.out.println("turn " + cpt + " - Player " + this.g.activePlayer.id);
 
             do{
-                send(cliID,"?"); //Demande de choix au client
-                input = Integer.parseInt(receive(cliID));
-                if(input >11){
-                    input = -1;
+                lastVisitedCell = -1;
+                send(activePlayerID,"?"); //Demande de choix au client
+
+                activePlayerMessage = receive(activePlayerID);
+                opponentPlayerMessage = receive(opponentPlayerID);
+
+                if (!opponentPlayerMessage.equals("")){
+                    //control+z
                 }
-                System.out.println("Cell " + input);
-                lastVisitedCell = this.g.play(input);
+
+                try{
+                    input = Integer.parseInt(receive(activePlayerID));
+                    if(input >11){
+                        input = -1;
+                    }
+                    System.out.println("Cell " + input);
+                    lastVisitedCell = this.g.play(input);
+
+                } catch (NumberFormatException e){
+                  //here we treat all the code from the active player;
+
+                }
+
+
+
 
             }
             while(lastVisitedCell == -1);
