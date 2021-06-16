@@ -37,7 +37,6 @@ public class Server {
             sendNames(0);
             sendNames(1);
 
-            sendUpdateGame();
 
             //return Integer.parseInt(receive(0)) == 1 && Integer.parseInt(receive(1)) == 1;
 
@@ -252,9 +251,11 @@ public class Server {
         Server s = new Server(8080);
         s.start();
         //TANT QUE JE N'AI PAS RECU LA VALIDATION DES 2
-        for(i=0; i< Match.nbGames; i++) {
+        do {
+            s.sendUpdateGame();
             s.play();
         }
+        while(s.match.getMatchNum() < Match.nbGames + 1);
         s.endConnection();
     }
 

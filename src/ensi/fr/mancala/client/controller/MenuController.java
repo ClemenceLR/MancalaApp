@@ -18,7 +18,6 @@ public class MenuController {
         this.mainController = mainController;
     }
 
-
     public void loadGame() {
         FileChooser fc = new FileChooser();
         fc.setTitle("Choose a File Save");
