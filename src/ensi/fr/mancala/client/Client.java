@@ -35,6 +35,10 @@ public class Client {
         this.pseudo = pseudo;
     }
 
+    public Socket getMe(){
+        return this.me;
+    }
+
 
     public void setMainController(MainController mainController){
         this.mainController = mainController;
@@ -55,7 +59,7 @@ public class Client {
             in = new Scanner(me.getInputStream());
         }catch(IOException e){
             logger.log(Level.WARNING,"Client failed to connect");
-            e.printStackTrace();
+            this.me = null;
         }
         out.println(this.pseudo);
         //this.opponent = in.nextLine();

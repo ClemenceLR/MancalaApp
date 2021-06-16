@@ -47,8 +47,8 @@ public class Server {
     public void sendNames(int idCLient){
 
         send(idCLient, "N");
-        send(idCLient, this.clients[1].getPlayer().getName());
         send(idCLient, this.clients[0].getPlayer().getName());
+        send(idCLient, this.clients[1].getPlayer().getName());
 
     }
 

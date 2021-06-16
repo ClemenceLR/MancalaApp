@@ -24,7 +24,6 @@ public class MainController {
     private GranaryController granaryController;
     private BoardController boardController;
     private ClientConfigScreenController clientConfigScreenController;
-    private ForfeitScreenController forfeitScreenController;
 
     private Client client;
 
