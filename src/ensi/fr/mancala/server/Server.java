@@ -1,5 +1,6 @@
 package ensi.fr.mancala.server;
 
+import ensi.fr.mancala.server.model.Board;
 import ensi.fr.mancala.server.model.Check;
 import ensi.fr.mancala.server.model.Game;
 
@@ -12,7 +13,7 @@ public class Server {
     private final int port;
     private Game g;
     private ServerSocket server;
-
+    private Game gameSave;
     private final ClientInterface[] clients;
 
     public Server(int port){
@@ -140,6 +141,18 @@ public class Server {
                         case "G":
                             send(opponentPlayerID,this.g.toString());
                             break;
+                        case "U":
+                            System.out.println("REcieved");
+                            System.out.println(this.gameSave.toString());
+                            this.g = new Game(this.g.passivePlayer, this.g.activePlayer, this.gameSave.toString());
+                            send(activePlayerID,"C");
+                            send(opponentPlayerID,"C");
+                            int invert = activePlayerID;
+                            activePlayerID = opponentPlayerID;
+                            opponentPlayerID = invert;
+                            sendUpdateGame();
+                            continue;
+
                     }
                 }
 
@@ -151,6 +164,11 @@ public class Server {
                             if (input > 11) {
                                 input = -1;
                             }
+                            this.gameSave = new Game();
+                            this.gameSave.board = new Board(this.g.board.getHoles());
+                            System.out.println("BS : " + this.gameSave.board.toString());
+                            this.gameSave.activePlayer = this.g.activePlayer;
+                            this.gameSave.passivePlayer = this.g.passivePlayer;
                             lastVisitedCell = this.g.play(input);
                             break;
                         case "L":

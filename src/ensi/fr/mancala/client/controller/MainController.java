@@ -10,10 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
@@ -83,7 +80,7 @@ public class MainController {
         String[] boardSeedsArray = boardSeeds.split("-");
         String[] boardAvailableArray = boardAvailable.split("-");
 
-        for(i=0;i< Board.sizeBoard;i++){
+        for(i=0; i< Board.SIZE_BOARD; i++){
             stackPaneToUpdate = this.boardController.getCellByNumber(i);
             nbSeedsForUpdate = Integer.parseInt(boardSeedsArray[i]);
             availableForUpdate = boardAvailableArray[i].equals("true");

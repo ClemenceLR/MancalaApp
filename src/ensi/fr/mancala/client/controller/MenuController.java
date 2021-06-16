@@ -74,4 +74,8 @@ public class MenuController {
         a.setTitle("About");
         a.showAndWait();
     }
+
+    public void undo(){
+        this.mainController.getClient().send("U",true);
+    }
 }
