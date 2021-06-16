@@ -2,86 +2,20 @@ package ensi.fr.mancala.server.model;
 
 import java.io.*;
 import java.util.Scanner;
-
+/**
+ * ManageFile contains loading and saving method
+ * @author Guillaume Haseneyer
+ * @author Clemence Le Roux
+ **/
 public class ManageFile {
 
-    public static void saveGame(String fileName, Game g){
-        //TODO respecter format : nomj1 ; granaryj1 ; nomj2 ; granaryj2 ; joueurActif ; board (1-2-3etc)
-        String fileNameC = ".//saves//" + fileName + ".txt";
-
-        try {
-            File saveFile = new File(fileNameC);
-            if (saveFile.createNewFile()) {
-                System.out.println("File saved");
-            } else {
-                System.out.println("\nFile alredy exists");
-            }
-        }catch(IOException e){
-                System.out.println("An error occured");
-                e.printStackTrace();
-        }
-        try(FileWriter saveData = new FileWriter(fileNameC)){
-            
-            String prepareData = "GS;";
-
-            if(g.activePlayer.id == 1){
-                prepareData += g.activePlayer.name + ";" + g.activePlayer.granary + ";" + g.passivePlayer.name + ";" + g.passivePlayer.granary;
-            }else{
-                prepareData += g.passivePlayer.name + ";" +g.passivePlayer.granary + ";" + g.activePlayer.name + ";" + g.activePlayer.granary;
-            }
-            prepareData +=";"+ g.activePlayer.id+";";
-            prepareData += g.board.toString();
-            saveData.write(prepareData);
-            saveData.close();
-            System.out.println("Save successfull");
-        }catch(IOException e){
-            System.out.println("An error occured while writing");
-            e.printStackTrace();
-        }
-
-
-    }
-
-    public static void saveMatch(String fileName, Match m){
-        //TODO respecter format : nomj1 ; granaryj1 ; nomj2 ; granaryj2 ; joueurActif ; board (1-2-3etc)
-        String fileNameC = ".//saves//" + fileName + ".txt";
-
-        try {
-            File saveFile = new File(fileNameC);
-            if (saveFile.createNewFile()) {
-                System.out.println("File saved");
-            } else {
-                System.out.println("\nFile alredy exists");
-            }
-        }catch(IOException e){
-            System.out.println("An error occured");
-            e.printStackTrace();
-        }
-        try(FileWriter saveData = new FileWriter(fileNameC)){
-
-
-            String prepareData = "ME0:"+m.getMatchNum() +":";
-            if(m.getGame().activePlayer.id == 1){
-                prepareData+= m.getScore(0) +":" +m.getScore(1) +":";
-                prepareData += m.getGame().activePlayer.name + ";" + m.getGame().activePlayer.granary + ";" + m.getGame().passivePlayer.name + ";" + m.getGame().passivePlayer.granary;
-            }else{
-                prepareData += m.getScore(1) +":"+m.getScore(0)+":";
-                prepareData += m.getGame().passivePlayer.name + ";" +m.getGame().passivePlayer.granary + ";" + m.getGame().activePlayer.name + ";" + m.getGame().activePlayer.granary;
-            }
-            prepareData +=";"+ m.getGame().activePlayer.id+";";
-            prepareData += m.getGame().board.toString();
-
-            saveData.write(prepareData);
-            saveData.close();
-            System.out.println("Save successfull");
-        }catch(IOException e){
-            System.out.println("An error occured while writing");
-            e.printStackTrace();
-        }
-
-
-    }
-
+    /**
+     * Load game from string
+     * @param p1 : player one
+     * @param p2 : player two
+     * @param game : String representing the current game
+     * @return game
+     */
     public static Game loadGameFromString(Player p1, Player p2, String game){
         Game g = new Game();
         String[] d = game.split(";");
@@ -102,13 +36,17 @@ public class ManageFile {
                 g.activePlayer = p2;
                 g.passivePlayer = p1;
             }
-            Board b = new Board(d[6]);
-            g.board = b;
+        g.board = new Board(d[6]);
 
             return g;
 
     }
 
+    /**
+     * Load match from a string
+     * @param match : string representing the match
+     * @return match loaded
+     */
     public static Match loadMatchFromString(String match){
         Match m = new Match();
         String[] data = match.split(":");
@@ -141,13 +79,18 @@ public class ManageFile {
             g.activePlayer = p2;
             g.passivePlayer = p1;
         }
-        Board b = new Board(d[5]);
-        g.board = b;
+        g.board = new Board(d[5]);
         m.setGame(g);
 
         return m;
 
     }
+
+    /**
+     * Load a game from a string
+     * @param fileName : name of the file
+     * @return game
+     */
     public static Game loadGame(String fileName){
         Game g = new Game();
         String fName = ".//saves//" + fileName + ".txt";
@@ -178,8 +121,7 @@ public class ManageFile {
                     g.activePlayer = p2;
                     g.passivePlayer = p1;
                 }
-                Board b = new Board(d[5]);
-                g.board = b;
+                g.board = new Board(d[5]);
 
 
             }

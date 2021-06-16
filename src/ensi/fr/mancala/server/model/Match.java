@@ -1,5 +1,9 @@
 package ensi.fr.mancala.server.model;
-
+/**
+ * Managing Match
+ * @author Guillaume Haseneyer
+ * @author Clemence Le Roux
+ **/
 public class Match {
 
     public static final int nbGames = 6;
@@ -7,52 +11,77 @@ public class Match {
     private int[] scores;
     private int matchNum;
 
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-
-    public int getScore(int playerId) {
-        return scores[playerId];
-    }
-
-    public void setScore(int playerId, int score) {
-        this.scores[playerId] = score;
-    }
-
-    public void incScore(int playerId){
-        this.scores[playerId]++;
-    }
-
-    public void incMatchNum(){
-        this.matchNum++;
-    }
-
+    /**
+     * Match constructor
+     */
     public Match(){
         this.scores = new int[2];
-        scores[0] = scores[1] = 0;
         this.matchNum =1;
         this.game = new Game();
     }
 
+    /**
+     * Match constructor
+     * @param player1 : player 1
+     * @param player2 : player 2
+     */
     public Match(Player player1, Player player2){
         this.game = new Game(player1,player2);
         this.scores = new int[2];
         this.matchNum =1;
-        scores[0] = scores[1] = 0;
     }
 
-
-    public void print(){
-        System.out.println("J1 : " + this.game.activePlayer.name + "score :" + this.scores[0]);
-        System.out.println("J2 : " + this.game.passivePlayer.name + "score :" + this.scores[1]);
-        System.out.println(this.game);
+    /**
+     * get the game of the match
+     * @return game
+     */
+    public Game getGame() {
+        return game;
     }
 
+    /**
+     * set the game of the match
+     * @param game : game
+     */
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    /**
+     * get the score of the match
+     * @param playerId : player id
+     * @return int
+     */
+    public int getScore(int playerId) {
+        return scores[playerId];
+    }
+
+    /**
+     * set the score of the player
+    */
+    public void setScore(int playerId, int score) {
+        this.scores[playerId] = score;
+    }
+
+    /**
+     * increase the score of a player
+     * @param playerId : int
+     */
+    public void incScore(int playerId){
+        this.scores[playerId]++;
+    }
+
+    /**
+     * increase the score of a player
+     */
+    public void incMatchNum(){
+        this.matchNum++;
+    }
+
+    /**
+     * Return a string to represent the match
+     * @return string
+     */
     public String toString(){
         String prepareData = "ME0:"+this.getMatchNum() +":";
         if(this.getGame().activePlayer.id == 1){
@@ -67,11 +96,18 @@ public class Match {
         return prepareData;
     }
 
-
+    /**
+     * Get the num of the match
+     * @return int
+     */
     public int getMatchNum() {
         return matchNum;
     }
 
+    /**
+     * Set the num of the match
+     * @param matchNum : int number of the match
+     */
     public void setMatchNum(int matchNum) {
         this.matchNum = matchNum;
     }

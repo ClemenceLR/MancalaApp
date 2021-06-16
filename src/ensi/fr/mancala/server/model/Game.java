@@ -40,6 +40,12 @@ public class Game {
         this.previousBoard = this.board;
     }
 
+    /**
+     * Game constructor
+     * @param p1 : player 1
+     * @param p2 : player 2
+     * @param gameToLoad : game we want to load
+     */
     public Game(Player p1, Player p2, String gameToLoad){
         Game g = ManageFile.loadGameFromString(p1,p2,gameToLoad);
         this.activePlayer = g.activePlayer;
@@ -51,7 +57,7 @@ public class Game {
 
     /**
      * Load a game using a filename
-     * @param fileName
+     * @param fileName : file we want to load
      */
     public Game(String fileName){
         Game g = ManageFile.loadGame(fileName);
@@ -64,13 +70,13 @@ public class Game {
 
     /**
      * Initialize the board of each players
-     * @param playerid
+     * @param playerId : id of the current player
      * @return the new board
      */
-    public Board setPlayerBoard(int playerid){
+    public Board setPlayerBoard(int playerId){
         Board b = new Board();
-        int index = (playerid == 1?6:0);
-        int len =0;
+        int index = (playerId == 1?6:0);
+        int len;
         if(index == 6){
             len = b.holes.length;
         }else{
@@ -83,47 +89,12 @@ public class Game {
     }
 
     /**
-     * Play the game
-     */
-    public void playGame(){
-        int termine = -1;
-        int nbCellsAvailable;
-        int cpt = 0;
-        int input;
-        int lastVisitedCell;
-        boolean checkEatable = false;
-        do{
-            lastVisitedCell = -1;
-            this.printBoard();
-            System.out.println("turn " + cpt + " - Player " + this.activePlayer.id);
-
-            do{
-                input = activePlayer.getCellClicked();
-                System.out.println("Cell " + input);
-                lastVisitedCell = play(input);
-
-            }
-            while(lastVisitedCell == -1);
-
-            Check.checkEatableCells(lastVisitedCell,activePlayer, this.board);
-
-            this.changePlayer();
-            Check.setCellAvailable(this.board,this.activePlayer.id);
-            termine = Check.isEndedGame(this);
-            cpt++;
-        }
-        while(termine == -1);
-
-        //switch (termine)
-    }
-
-    /**
-     * Allows the player to play
-     * @param cellClicked
-     * @return
+     * Allows the player to play if he picked a valid cell
+     * @param cellClicked : id of the cell chosen by the player
+     * @return move
      */
     public int play(int cellClicked) {
-        int seeds = 0;
+        int seeds;
         int cellUpdated;
         if (board.holes[cellClicked].isAvailable()) { // Si la case est jouable
             seeds = board.holes[cellClicked].getNbSeeds();
@@ -142,13 +113,9 @@ public class Game {
                 cellUpdated = i % 12;
                 board.holes[i].setNbSeeds(board.holes[cellUpdated].getNbSeeds() + 1);
             }
-            return cellUpdated; //TODO a vérifier car ne marche peut être pas
-        }
-        else{
-            System.out.println("This cell is not playable");
+            return cellUpdated;
         }
         return -1;
-        //checkSeedsEarned();
     }
 
     /**
@@ -160,16 +127,19 @@ public class Game {
         this.passivePlayer = temp;
     }
 
+    /**
+     * Return a string that modelised the game
+     * @return game
+     */
     @Override
     public String toString() {
         return this.activePlayer.name + ";" + this.activePlayer.granary + ";" + this.passivePlayer.name + ";" + this.passivePlayer.granary + ";" + this.activePlayer.id + ";" + this.board;
     }
 
-    public void printBoard(){
-        this.board.printBoard();
-        System.out.println();
-    }
-
+    /**
+     * splitRemainingSeed
+     * @return code
+     */
     public int splitRemainingSeed(){
         int totalSeeds = this.board.getTotalSeeds();
         int gainSplit = totalSeeds /2;
