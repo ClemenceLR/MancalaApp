@@ -15,6 +15,8 @@ public class GranaryController {
     @FXML private Text granaryText0;
     @FXML private Text granaryText1;
 
+    @FXML private Text matchData;
+
     MainController mainController;
 
     public void setMainController(MainController mainController){
@@ -34,5 +36,9 @@ public class GranaryController {
     public void updateNames(String name0, String name1) {
         this.granaryText0.setText(name0 + " granary ");
         this.granaryText1.setText(name1 + " granary ");
+    }
+
+    public void updateMatchData(String scoreP0, String scoreP1, String matchNum){
+        this.matchData.setText("Match " + matchNum + " : score is " + scoreP0 + "-" + scoreP1);
     }
 }

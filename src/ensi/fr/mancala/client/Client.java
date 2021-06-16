@@ -94,7 +94,7 @@ public class Client {
                     String score0 = receive();
                     String score1 = receive();
                     String matchNum = receive();
-                    System.out.println(score0 + "," + score1 + ","+ matchNum);
+                    this.mainController.getGranaryController().updateMatchData(score0,score1,matchNum);
                     break;
 
                 case "C":
