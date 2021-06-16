@@ -4,8 +4,7 @@ public class Match {
 
     public static final int nbGames = 6;
     private Game game;
-    private int scoreJ1;
-    private int scoreJ2;
+    private int[] scores;
     private int matchNum;
 
     public Game getGame() {
@@ -16,54 +15,48 @@ public class Match {
         this.game = game;
     }
 
-    public int getScoreJ1() {
-        return scoreJ1;
+
+    public int getScore(int playerId) {
+        return scores[playerId];
     }
 
-    public void setScoreJ1(int scoreJ1) {
-        this.scoreJ1 = scoreJ1;
-    }
-
-    public int getScoreJ2() {
-        return scoreJ2;
-    }
-
-    public void setScoreJ2(int scoreJ2) {
-        this.scoreJ2 = scoreJ2;
+    public void setScore(int playerId, int score) {
+        this.scores[playerId] = score;
     }
 
     public Match(){
-        this.scoreJ1 = 0;
-        this.scoreJ2 = 0;
+        this.scores = new int[2];
+        scores[0] = scores[1] = 0;
         this.matchNum =1;
         this.game = new Game();
     }
 
     public Match(Player player1, Player player2){
         this.game = new Game(player1,player2);
-        this.scoreJ1 = this.scoreJ2 = 0;
+        this.scores = new int[2];
+        scores[0] = scores[1] = 0;
     }
 
     public Match(String matchString){
         Match m = ManageFile.loadMatchFromString(matchString);
-        this.scoreJ1 = m.getScoreJ1();
-        this.scoreJ2 = m.getScoreJ2();
+        this.scores[0] = m.getScore(0);
+        this.scores[1] = m.getScore(1);
         this.game = m.getGame();
     }
 
     public void print(){
-        System.out.println("J1 : " + this.game.activePlayer.name + "score :" + this.scoreJ1);
-        System.out.println("J2 : " + this.game.passivePlayer.name + "score :" + this.scoreJ2);
+        System.out.println("J1 : " + this.game.activePlayer.name + "score :" + this.scores[0]);
+        System.out.println("J2 : " + this.game.passivePlayer.name + "score :" + this.scores[1]);
         System.out.println(this.game);
     }
 
     public String toString(){
         String prepareData = "ME0:"+this.getMatchNum() +":";
         if(this.getGame().activePlayer.id == 1){
-            prepareData+= this.getScoreJ1() +":" +this.getScoreJ2() +":";
+            prepareData+= this.getScore(0) +":" +this.getScore(1) +":";
             prepareData += this.getGame().activePlayer.name + ";" + this.getGame().activePlayer.granary + ";" + this.getGame().passivePlayer.name + ";" + this.getGame().passivePlayer.granary;
         }else{
-            prepareData += this.getScoreJ2() +":"+this.getScoreJ1()+":";
+            prepareData += this.getScore(1) +":"+this.getScore(0)+":";
             prepareData += this.getGame().passivePlayer.name + ";" +this.getGame().passivePlayer.granary + ";" + this.getGame().activePlayer.name + ";" + this.getGame().activePlayer.granary;
         }
         prepareData +=";"+ this.getGame().activePlayer.id+";";
