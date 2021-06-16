@@ -85,19 +85,17 @@ public class Client {
                 case "B" :
                     this.updateGame();
                     break;
+                case "C":
+                    this.myTurn = !this.myTurn;
+                    break;
+                case "D":
+                    disconnect();
+                    break;
 
-                case "?":
-                    myTurn = true;
+                case "ff":
+                    this.mainController.askForfeit();
                     break;
-                case "R":
-                    String r = receive();
-                    String result = (r.equals("=") ? "Egalité" : (r.equals("+") ? "Gagné !" : "Perdu..."));
-                    //TODO débugger pour ne pas avoir erreur de thread
-                    Alert a = new Alert(Alert.AlertType.INFORMATION);
-                    a.setContentText(result);
-                    a.setTitle("Jeu Terminé !");
-                    a.showAndWait();
-                    break;
+
                 case "G":
                     try {
                         PrintStream ps = new PrintStream(this.file);
@@ -115,18 +113,28 @@ public class Client {
                             aa.showAndWait();
                         }
                     });
+                    break;
 
-                    break;
-                case "D":
-                    disconnect();
-                    break;
-                case "ff":
-                    this.mainController.askForfeit();
-                    break;
                 case "N":
                     String name0 = receive();
                     String name1 = receive();
                     this.mainController.getGranaryController().updateNames(name0, name1);
+                    break;
+
+                case "R":
+                    String r = receive();
+                    String result = (r.equals("=") ? "Egalité" : (r.equals("+") ? "Gagné !" : "Perdu..."));
+                    //TODO débugger pour ne pas avoir erreur de thread
+                    Alert a = new Alert(Alert.AlertType.INFORMATION);
+                    a.setContentText(result);
+                    a.setTitle("Jeu Terminé !");
+                    a.showAndWait();
+                    break;
+
+                case "?":
+                    myTurn = true;
+                    break;
+
             }
 
     }
@@ -178,6 +186,10 @@ public class Client {
         MancalaApp.main(args);
 
 
+    }
+
+    public boolean getMyTurn(){
+        return this.myTurn;
     }
 
     public void setFile(File file) {

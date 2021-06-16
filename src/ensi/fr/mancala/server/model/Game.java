@@ -175,7 +175,7 @@ public class Game {
         int gainSplit = totalSeeds /2;
         this.passivePlayer.granary += gainSplit;
         this.activePlayer.granary += (totalSeeds - gainSplit);
-        for(int i=0; i< Board.sizeBoard ; i++){
+        for(int i = 0; i< Board.SIZE_BOARD; i++){
             this.board.holes[i].setNbSeeds(0);
         }
         if(this.passivePlayer.granary > this.activePlayer.granary){
