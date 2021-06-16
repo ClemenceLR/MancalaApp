@@ -1,9 +1,6 @@
 package ensi.fr.mancala.server;
 
-import ensi.fr.mancala.server.model.Board;
-import ensi.fr.mancala.server.model.Check;
-import ensi.fr.mancala.server.model.Game;
-import ensi.fr.mancala.server.model.Match;
+import ensi.fr.mancala.server.model.*;
 
 import java.util.Scanner;
 
@@ -37,6 +34,7 @@ public class Server {
             sendNames(0);
             sendNames(1);
 
+            sendMatchData();
 
             //return Integer.parseInt(receive(0)) == 1 && Integer.parseInt(receive(1)) == 1;
 
@@ -73,6 +71,22 @@ public class Server {
         send(opponentId, this.match.getGame().board.forbidPlay());
         send(opponentId, "" + this.clients[0].getPlayer().granary);
         send(opponentId, "" + this.clients[1].getPlayer().granary);
+    }
+
+    private void sendMatchData(){
+        String score0String = String.valueOf(this.match.getScore(0));
+        String score1String = String.valueOf(this.match.getScore(1));
+        String matchNumString = String.valueOf(this.match.getMatchNum());
+
+        send(0, "M");//Sending the updated board to first client
+        send(0, score0String);
+        send(0, score1String);
+        send(0, matchNumString);
+
+        send(1, "M");//Sending the updated board to first client
+        send(1, score0String);
+        send(1, score1String);
+        send(1, matchNumString);
     }
 
     //A la connection = Pseudo
@@ -173,9 +187,9 @@ public class Server {
                         case "L":
                             String file = receive(activePlayerID);
                             System.out.println(this.match);
-                            this.match = new Match(file);
-                            System.out.println(this.match);
-                            //TODO ENVOYER SCORES UPDATED ?
+                            this.match = ManageFile.loadMatchFromString(file);
+
+                            sendMatchData();
                             sendUpdateGame();
                             break;
                         case "Q":
@@ -220,15 +234,17 @@ public class Server {
         send(0,"R");
         send(1,"R");
 
-        //TODO stocker les scores dans le match
         if (winnerId == 2) {
             send(0, "=");
             send(1, "=");
         } else {
             send(winnerId, "+");
             send((winnerId + 1) % 2, "-");
+            this.match.incScore(winnerId);
         }
 
+        this.match.incMatchNum();
+        sendMatchData();
 
         Game game = new Game(this.clients[0].getPlayer(),this.clients[1].getPlayer());
         this.match.setGame(game);

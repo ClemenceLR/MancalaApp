@@ -85,6 +85,18 @@ public class Client {
                 case "B" :
                     this.updateGame();
                     break;
+
+                case "?":
+                    myTurn = true;
+                    break;
+
+                case "M":
+                    String score0 = receive();
+                    String score1 = receive();
+                    String matchNum = receive();
+                    System.out.println(score0 + "," + score1 + ","+ matchNum);
+                    break;
+
                 case "C":
                     this.myTurn = !this.myTurn;
                     break;
@@ -142,11 +154,8 @@ public class Client {
                     break;
                 case "S":
                     this.mainController.needSave();
+                    break;
 
-                    break;
-                case "?":
-                    myTurn = true;
-                    break;
 
             }
 

@@ -119,7 +119,7 @@ public class ManageFile {
         Game g = new Game();
         String[] d = data[4].split(";");
 
-        //TODO Parsing des données a modifier avec la logique des matchs
+
         Player p1 = new Player();
         p1.name = d[0];
         p1.granary = Integer.parseInt(d[1]);

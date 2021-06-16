@@ -24,6 +24,14 @@ public class Match {
         this.scores[playerId] = score;
     }
 
+    public void incScore(int playerId){
+        this.scores[playerId]++;
+    }
+
+    public void incMatchNum(){
+        this.matchNum++;
+    }
+
     public Match(){
         this.scores = new int[2];
         scores[0] = scores[1] = 0;
@@ -34,15 +42,10 @@ public class Match {
     public Match(Player player1, Player player2){
         this.game = new Game(player1,player2);
         this.scores = new int[2];
+        this.matchNum =1;
         scores[0] = scores[1] = 0;
     }
 
-    public Match(String matchString){
-        Match m = ManageFile.loadMatchFromString(matchString);
-        this.scores[0] = m.getScore(0);
-        this.scores[1] = m.getScore(1);
-        this.game = m.getGame();
-    }
 
     public void print(){
         System.out.println("J1 : " + this.game.activePlayer.name + "score :" + this.scores[0]);
