@@ -1,5 +1,7 @@
 package ensi.fr.mancala.client.controller;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 
@@ -47,7 +49,8 @@ public class MenuController {
 
         FileChooser fc = new FileChooser();
         fc.setTitle("Choose where to save the file");
-
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TEXT files (*.txt)", "*.txt");
+        fc.getExtensionFilters().add(extFilter);
         File file = fc.showSaveDialog(this.mainController.getMainPane().getScene().getWindow());
 
         if (file != null) {
@@ -78,6 +81,22 @@ public class MenuController {
     public void undo(){
         if(!this.mainController.getClient().getMyTurn()) {
             this.mainController.getClient().send("U", true);
+        }else{
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setContentText("It is already your turn, you can't rollback");
+            a.setTitle("No rollback available");
+            a.showAndWait();
         }
+    }
+
+    public void exit(){
+        //
+        this.mainController.getClient().send("Q",true);
+        Platform.exit();
+        System.exit(0);
+    }
+
+    public void newMatch(ActionEvent actionEvent) {
+        //TODO
     }
 }
