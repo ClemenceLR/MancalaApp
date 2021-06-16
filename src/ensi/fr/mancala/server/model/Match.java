@@ -35,6 +35,7 @@ public class Match {
     public Match(){
         this.scoreJ1 = 0;
         this.scoreJ2 = 0;
+        this.matchNum =1;
         this.game = new Game();
     }
 
