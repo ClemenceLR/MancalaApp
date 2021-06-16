@@ -22,8 +22,9 @@ public class Server {
     }
 
 
+    public void start(){
+    //public boolean start(){
 
-    public boolean start(){
         try {
             this.server = new ServerSocket(this.port);
             this.clients[0] = new ClientInterface(this.server.accept());
@@ -35,21 +36,22 @@ public class Server {
             sendNames(1);
 
             sendUpdateGame();
-            return Integer.parseInt(receive(0)) == 1 && Integer.parseInt(receive(1)) == 1;
+            //return Integer.parseInt(receive(0)) == 1 && Integer.parseInt(receive(1)) == 1;
 
         }catch (IOException e){
             System.err.println("Server failed to start : port " + this.port + " already in use");
             e.printStackTrace();
-        }
 
-        return false;
+        }
+        //return false;
+
     }
 
-    public void sendNames(int idCLient){
+    public void sendNames(int idClient){
 
-        send(idCLient, "N");
-        send(idCLient, this.clients[0].getPlayer().getName());
-        send(idCLient, this.clients[1].getPlayer().getName());
+        send(idClient, "N");
+        send(idClient, this.clients[0].getPlayer().getName());
+        send(idClient, this.clients[1].getPlayer().getName());
 
     }
 
@@ -78,10 +80,11 @@ public class Server {
     //Refus = n -> Send refus de cap rc
     //rollback = r
     public String receiveNB(int id){
+        String nextLine;
         Scanner sc = this.clients[id].getInput();
         try {
             if (this.clients[id].getSocket().getInputStream().available() > 0) {
-                String nextLine = sc.nextLine();
+                nextLine = sc.nextLine();
                 return nextLine;
             }
             return "";
@@ -112,9 +115,9 @@ public class Server {
     }
 
     public void playGame(){
-        int winnerId = -1;
+        int winnerId;
         int cpt = 0;
-        int input = -1;
+        int input;
         String activePlayerMessage;
         String opponentPlayerMessage;
         int lastVisitedCell;
@@ -232,6 +235,8 @@ public class Server {
 
     public void endConnection(){
         try {
+            send(0,"D");
+            send(1,"D");
             this.server.close();
         }catch(IOException e){
             System.err.println("The server failed to close");
