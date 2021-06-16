@@ -30,12 +30,28 @@ public class Match {
         this.scoreJ2 = scoreJ2;
     }
 
+    public Match(){
+        this.scoreJ1 = 0;
+        this.scoreJ2 = 0;
+        this.game = new Game();
+    }
+
     public Match(String name1, String name2){
         this.game = new Game(new Player(name1),new Player(name2));
         this.scoreJ1 = this.scoreJ2 = 0;
     }
 
     public Match(String matchString){
+        Match m = ManageFile.loadMatchFromString(matchString);
+        this.scoreJ1 = m.getScoreJ1();
+        this.scoreJ2 = m.getScoreJ2();
+        this.game = m.getGame();
+    }
+
+    public void print(){
+        System.out.println("J1 : " + this.game.activePlayer.name + "score :" + this.scoreJ1);
+        System.out.println("J2 : " + this.game.passivePlayer.name + "score :" + this.scoreJ2);
+        System.out.println(this.game);
 
     }
 
