@@ -53,7 +53,20 @@ public class Match {
         System.out.println("J1 : " + this.game.activePlayer.name + "score :" + this.scoreJ1);
         System.out.println("J2 : " + this.game.passivePlayer.name + "score :" + this.scoreJ2);
         System.out.println(this.game);
+    }
 
+    public String toString(){
+        String prepareData = "ME0:";
+        if(this.getGame().activePlayer.id == 1){
+            prepareData+= this.getScoreJ1() +":" +this.getScoreJ2() +":";
+            prepareData += this.getGame().activePlayer.name + ";" + this.getGame().activePlayer.granary + ";" + this.getGame().passivePlayer.name + ";" + this.getGame().passivePlayer.granary;
+        }else{
+            prepareData += this.getScoreJ2() +":"+this.getScoreJ1()+":";
+            prepareData += this.getGame().passivePlayer.name + ";" +this.getGame().passivePlayer.granary + ";" + this.getGame().activePlayer.name + ";" + this.getGame().activePlayer.granary;
+        }
+        prepareData +=";"+ this.getGame().activePlayer.id+";";
+        prepareData += this.getGame().board.toString();
+        return prepareData;
     }
 
 

@@ -104,16 +104,6 @@ public class Server {
         return sc.nextLine();
     }
 
-    //Init plateau = P:1,Pseudo:playeradversepseudo,0-0-0-0-0-0-0-0 (player num +plateau)
-    //Send choix = ?
-
-    //Bon move = B:0-0-0-0-0-00-0-0-0 (plateau)
-    //Win = +
-    //Eq = =
-    //Loose = -
-    //Captituler = c
-    //Refus de cap = rc
-    //
     public void send(int id, String toSend){
         this.clients[id].getOutput().println(toSend);
     }
@@ -177,15 +167,16 @@ public class Server {
                             }
                             this.gameSave = new Game();
                             this.gameSave.board = new Board(this.match.getGame().board.getHoles());
-                            System.out.println("BS : " + this.gameSave.board.toString());
                             this.gameSave.activePlayer = this.match.getGame().activePlayer;
                             this.gameSave.passivePlayer = this.match.getGame().passivePlayer;
                             lastVisitedCell = this.match.getGame().play(input);
                             break;
                         case "L":
                             String file = receive(activePlayerID);
-                            Game game = new Game(this.match.getGame().activePlayer, this.match.getGame().passivePlayer, file);
-                            this.match.setGame(game);
+                            System.out.println(this.match);
+                            this.match = new Match(file);
+                            System.out.println(this.match);
+                            //TODO ENVOYER SCORES UPDATED ?
                             sendUpdateGame();
                             break;
                         case "Q":
