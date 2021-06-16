@@ -57,8 +57,12 @@ public class Match {
     }
 
     /**
+     *
      * set the score of the player
-    */
+     *
+     * @param playerId : int player id
+     * @param score : int score
+     */
     public void setScore(int playerId, int score) {
         this.scores[playerId] = score;
     }

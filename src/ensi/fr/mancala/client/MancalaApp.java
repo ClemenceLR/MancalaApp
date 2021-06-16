@@ -23,7 +23,7 @@ public class MancalaApp extends Application {
     /**
      * Initialize the stage
      * @param primaryStage : stage
-     * @throws Exception
+     * @throws Exception : if fails
      */
     public void start(Stage primaryStage) throws Exception {
 

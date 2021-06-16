@@ -76,6 +76,7 @@ public class MainController {
 
     /**
     * Set client
+     * @param client client
      * */
     public void setClient(Client client){
         this.client = client;
@@ -98,8 +99,12 @@ public class MainController {
     }
 
     /**
-     * Update the game
-     **/
+     * Update game
+     * @param boardSeeds : string
+     * @param boardAvailable : string
+     * @param granaryPlayer0 : string granary
+     * @param granaryPlayer1 : string granary
+     */
     public void updateGame(String boardSeeds, String boardAvailable, String granaryPlayer0, String granaryPlayer1) {
         int i;
         StackPane stackPaneToUpdate;
