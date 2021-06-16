@@ -2,6 +2,7 @@ package ensi.fr.mancala.server.model;
 
 public class Match {
 
+    public static final int nbGames = 6;
     private Game game;
     private int scoreJ1;
     private int scoreJ2;
@@ -36,8 +37,8 @@ public class Match {
         this.game = new Game();
     }
 
-    public Match(String name1, String name2){
-        this.game = new Game(new Player(name1),new Player(name2));
+    public Match(Player player1, Player player2){
+        this.game = new Game(player1,player2);
         this.scoreJ1 = this.scoreJ2 = 0;
     }
 
