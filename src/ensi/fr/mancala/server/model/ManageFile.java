@@ -112,6 +112,9 @@ public class ManageFile {
     public static Match loadMatchFromString(String match){
         Match m = new Match();
         String[] data = match.split(":");
+        if(!data[0].equals("ME0")){
+            return m;
+        }
         m.setMatchNum(Integer.parseInt(data[1]));
         m.setScore(0,Integer.parseInt(data[2]));
         m.setScore(1,Integer.parseInt(data[3]));
