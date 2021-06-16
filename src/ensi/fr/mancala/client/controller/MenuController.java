@@ -16,9 +16,6 @@ public class MenuController {
         this.mainController = mainController;
     }
 
-    public void play() {
-        this.mainController.getClient().play();
-    }
 
     public void loadGame() {
         FileChooser fc = new FileChooser();

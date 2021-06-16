@@ -55,7 +55,7 @@ public class ClientConfigScreenController {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    client.play();
+                    client.playGame();
                 }
             }, 0, 10);
             client.setTimer(timer);

@@ -78,7 +78,7 @@ public class Client {
     }
 
 
-    public void play() {
+    public void playGame() {
             String code = receive();
 
             switch (code){
