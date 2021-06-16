@@ -184,6 +184,10 @@ public class Client {
 
     }
 
+    public boolean getMyTurn(){
+        return this.myTurn;
+    }
+
     public void setFile(File file) {
         this.file = file;
     }

@@ -76,6 +76,8 @@ public class MenuController {
     }
 
     public void undo(){
-        this.mainController.getClient().send("U",true);
+        if(!this.mainController.getClient().getMyTurn()) {
+            this.mainController.getClient().send("U", true);
+        }
     }
 }
