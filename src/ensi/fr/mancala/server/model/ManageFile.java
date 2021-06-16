@@ -59,17 +59,18 @@ public class ManageFile {
         }
         try(FileWriter saveData = new FileWriter(fileNameC)){
 
-            String prepareData = "ME0:";
 
+            String prepareData = "ME0:"+m.getMatchNum() +":";
             if(m.getGame().activePlayer.id == 1){
-                prepareData+= m.getScoreJ1() +":" +m.getScoreJ2() +":";
+                prepareData+= m.getScore(0) +":" +m.getScore(1) +":";
                 prepareData += m.getGame().activePlayer.name + ";" + m.getGame().activePlayer.granary + ";" + m.getGame().passivePlayer.name + ";" + m.getGame().passivePlayer.granary;
             }else{
-                prepareData += m.getScoreJ2() +":"+m.getScoreJ1()+":";
+                prepareData += m.getScore(1) +":"+m.getScore(0)+":";
                 prepareData += m.getGame().passivePlayer.name + ";" +m.getGame().passivePlayer.granary + ";" + m.getGame().activePlayer.name + ";" + m.getGame().activePlayer.granary;
             }
             prepareData +=";"+ m.getGame().activePlayer.id+";";
             prepareData += m.getGame().board.toString();
+
             saveData.write(prepareData);
             saveData.close();
             System.out.println("Save successfull");
@@ -112,8 +113,8 @@ public class ManageFile {
         Match m = new Match();
         String[] data = match.split(":");
         m.setMatchNum(Integer.parseInt(data[1]));
-        m.setScoreJ1(Integer.parseInt(data[2]));
-        m.setScoreJ2(Integer.parseInt(data[3]));
+        m.setScore(0,Integer.parseInt(data[2]));
+        m.setScore(1,Integer.parseInt(data[3]));
 
         Game g = new Game();
         String[] d = data[4].split(";");
