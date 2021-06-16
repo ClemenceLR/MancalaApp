@@ -67,9 +67,12 @@ public class MainController {
         this.client = client;
     }
 
-
     public Pane getMainPane() {
         return mainPane;
+    }
+
+    public GranaryController getGranaryController(){
+        return this.granaryController;
     }
     
     public void updateGame(String boardSeeds, String boardAvailable, String granaryPlayer0, String granaryPlayer1) {
@@ -90,7 +93,6 @@ public class MainController {
 
         this.granaryController.setGranary(granaryPlayer0,0);
         this.granaryController.setGranary(granaryPlayer1,1);
-        //TODO update board / player / player score / setCellAvailable
     }
 
     public void askForfeit() {

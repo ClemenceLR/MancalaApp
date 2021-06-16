@@ -30,9 +30,8 @@ public class Server {
 
             this.g = new Game(this.clients[0].getPlayer(), this.clients[1].getPlayer());
             //this.g = new Game("end_winner");
-
-            send(0, this.clients[1].getPlayer().getName());
-            send(1, this.clients[0].getPlayer().getName());
+            sendNames(0);
+            sendNames(1);
 
             sendUpdateGame();
             return Integer.parseInt(receive(0)) == 1 && Integer.parseInt(receive(1)) == 1;
@@ -43,6 +42,14 @@ public class Server {
         }
 
         return false;
+    }
+
+    public void sendNames(int idCLient){
+
+        send(idCLient, "N");
+        send(idCLient, this.clients[1].getPlayer().getName());
+        send(idCLient, this.clients[0].getPlayer().getName());
+
     }
 
     public void sendUpdateGame(){

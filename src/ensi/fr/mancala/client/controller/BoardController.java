@@ -1,6 +1,5 @@
 package ensi.fr.mancala.client.controller;
 
-import ensi.fr.mancala.client.CellId;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -9,8 +8,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-
-import java.util.Locale;
 
 public class BoardController {
 
@@ -82,10 +79,10 @@ public class BoardController {
         text.setText("" + nbSeed);
 
         if(available){
-            circle.setFill(Paint.valueOf("RED"));
+            circle.setFill(Paint.valueOf("LIGHTGREEN"));
         }
         else{
-            circle.setFill(Paint.valueOf("BLUE"));
+            circle.setFill(Paint.valueOf("LIGHTGREY"));
         }
     }
 }

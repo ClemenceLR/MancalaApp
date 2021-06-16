@@ -88,7 +88,7 @@ public class Client {
                 case "R":
                     String r = receive();
                     String result = (r.equals("=") ? "Egalité" : (r.equals("+") ? "Gagné !" : "Perdu..."));
-
+                    //TODO débugger pour ne pas avoir erreur de thread
                     Alert a = new Alert(Alert.AlertType.INFORMATION);
                     a.setContentText(result);
                     a.setTitle("Jeu Terminé !");
@@ -119,6 +119,10 @@ public class Client {
                 case "ff":
                     this.mainController.askForfeit();
                     break;
+                case "N":
+                    String name0 = receive();
+                    String name1 = receive();
+                    this.mainController.getGranaryController().updateNames(name0, name1);
             }
 
     }
