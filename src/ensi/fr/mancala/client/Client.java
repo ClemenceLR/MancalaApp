@@ -124,11 +124,16 @@ public class Client {
                 case "R":
                     String r = receive();
                     String result = (r.equals("=") ? "Egalité" : (r.equals("+") ? "Gagné !" : "Perdu..."));
-                    //TODO débugger pour ne pas avoir erreur de thread
-                    Alert a = new Alert(Alert.AlertType.INFORMATION);
-                    a.setContentText(result);
-                    a.setTitle("Jeu Terminé !");
-                    a.showAndWait();
+
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            Alert a = new Alert(Alert.AlertType.INFORMATION);
+                            a.setContentText(result);
+                            a.setTitle("Jeu Terminé !");
+                            a.showAndWait();
+                        }
+                    });
                     break;
 
                 case "?":
