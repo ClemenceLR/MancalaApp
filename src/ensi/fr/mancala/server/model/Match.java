@@ -6,6 +6,7 @@ public class Match {
     private Game game;
     private int scoreJ1;
     private int scoreJ2;
+    private int matchNum;
 
     public Game getGame() {
         return game;
@@ -56,7 +57,7 @@ public class Match {
     }
 
     public String toString(){
-        String prepareData = "ME0:";
+        String prepareData = "ME0:"+this.getMatchNum() +":";
         if(this.getGame().activePlayer.id == 1){
             prepareData+= this.getScoreJ1() +":" +this.getScoreJ2() +":";
             prepareData += this.getGame().activePlayer.name + ";" + this.getGame().activePlayer.granary + ";" + this.getGame().passivePlayer.name + ";" + this.getGame().passivePlayer.granary;
@@ -70,6 +71,11 @@ public class Match {
     }
 
 
+    public int getMatchNum() {
+        return matchNum;
+    }
 
-
+    public void setMatchNum(int matchNum) {
+        this.matchNum = matchNum;
+    }
 }

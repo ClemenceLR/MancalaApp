@@ -111,11 +111,12 @@ public class ManageFile {
     public static Match loadMatchFromString(String match){
         Match m = new Match();
         String[] data = match.split(":");
+        m.setMatchNum(Integer.parseInt(data[1]));
+        m.setScoreJ1(Integer.parseInt(data[2]));
+        m.setScoreJ2(Integer.parseInt(data[3]));
 
-        m.setScoreJ1(Integer.parseInt(data[1]));
-        m.setScoreJ2(Integer.parseInt(data[2]));
         Game g = new Game();
-        String[] d = data[3].split(";");
+        String[] d = data[4].split(";");
 
         //TODO Parsing des données a modifier avec la logique des matchs
         Player p1 = new Player();
