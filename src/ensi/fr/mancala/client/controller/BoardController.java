@@ -9,6 +9,12 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
+/**
+ * Board controller
+ *  @author : Guillaume Hasseneyer
+ *  @author : Clémence Le Roux
+ *
+ */
 public class BoardController {
 
     MainController mainController;
@@ -26,10 +32,18 @@ public class BoardController {
     @FXML private StackPane ten;
     @FXML private StackPane eleven;
 
+    /**
+     * Access the main controller by stocking it
+     * @param mainController : main controller
+     */
     public void setMainController(MainController mainController){
         this.mainController = mainController;
     }
 
+    /**
+     * Catch the click of the player
+     * @param mouseEvent : click
+     */
     public void play(MouseEvent mouseEvent) {
         StackPane stackPane = (StackPane) mouseEvent.getSource();
         String stringToSend = (String) stackPane.getUserData();
@@ -39,6 +53,11 @@ public class BoardController {
 
     }
 
+    /**
+     * Get the number of the cell
+     * @param number : int number of the cell
+     * @return int
+     */
     public StackPane getCellByNumber(int number){
         switch (number){
             case 0 :
@@ -70,7 +89,12 @@ public class BoardController {
 
     }
 
-
+    /**
+     *  Update Cell
+     * @param cellToUpdate : cell to update
+     * @param available : cell available
+     * @param nbSeed : nb of seed
+     */
     public void updateCell(StackPane cellToUpdate, boolean available, int nbSeed){
         ObservableList<Node> childrens = cellToUpdate.getChildren();
         Circle circle = (Circle) childrens.get(0);

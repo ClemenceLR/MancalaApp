@@ -7,6 +7,12 @@ import java.util.Scanner;
 import java.io.IOException;
 import java.net.ServerSocket;
 
+/**
+ * Class server
+ * @author : Guillaume Hasseneyer
+ * @author : Clémence Le Roux
+ *
+ */
 public class Server {
     private final int port;
     private Match match;
@@ -15,14 +21,19 @@ public class Server {
     private Game gameSave;
     private final ClientInterface[] clients;
 
+    /**
+     * Server constructor
+     * @param port : int port
+     */
     public Server(int port){
         this.port = port;
         this.clients = new ClientInterface[2];
     }
 
-
+    /**
+     * Starting the server
+     */
     public void start(){
-    //public boolean start(){
 
         try {
             this.server = new ServerSocket(this.port);
@@ -30,24 +41,22 @@ public class Server {
             this.clients[1] = new ClientInterface(this.server.accept());
 
             this.match = new Match(this.clients[0].getPlayer(), this.clients[1].getPlayer());
-            //this.g = new Game("end_winner");
             sendNames(0);
             sendNames(1);
-
             sendMatchData();
-
-            //return Integer.parseInt(receive(0)) == 1 && Integer.parseInt(receive(1)) == 1;
 
         }catch (IOException e){
             System.err.println("Server failed to start : port " + this.port + " already in use");
             e.printStackTrace();
 
         }
-        //return false;
 
     }
 
-
+    /**
+     * Send Names
+     * @param idClient : int id of the client we want to send infos to
+     */
     public void sendNames(int idClient){
 
         send(idClient, "N");
@@ -56,6 +65,9 @@ public class Server {
 
     }
 
+    /**
+     * Send board updated
+     */
     public void sendUpdateGame(){
         int playerId = this.match.getGame().activePlayer.id - 1;
         int opponentId = (playerId +1) %2;
@@ -73,6 +85,9 @@ public class Server {
         send(opponentId, "" + this.clients[1].getPlayer().granary);
     }
 
+    /**
+     * Send match data
+     */
     private void sendMatchData(){
         String score0String = String.valueOf(this.match.getScore(0));
         String score1String = String.valueOf(this.match.getScore(1));
@@ -83,19 +98,17 @@ public class Server {
         send(0, score1String);
         send(0, matchNumString);
 
-        send(1, "M");//Sending the updated board to first client
+        send(1, "M");
         send(1, score0String);
         send(1, score1String);
         send(1, matchNumString);
     }
 
-    //A la connection = Pseudo
-    //Num de case = num
-    //Fin de tour = ok
-    //Capituler = c
-    //Capitulation = y
-    //Refus = n -> Send refus de cap rc
-    //rollback = r
+    /**
+     * Receiving number
+     * @param id : int
+     * @return number received
+     */
     public String receiveNB(int id){
         String nextLine;
         Scanner sc = this.clients[id].getInput();
@@ -106,25 +119,35 @@ public class Server {
             }
             return "";
         }
-
         catch(IOException e){
             return "";
         }
     }
 
+    /**
+     * Receiving
+     * @param id : int
+     * @return message received
+     */
     public String receive(int id){
         Scanner sc = this.clients[id].getInput();
         return sc.nextLine();
     }
 
+    /**
+     * Send
+     * @param id : int id
+     * @param toSend : string param to send
+     */
     public void send(int id, String toSend){
         this.clients[id].getOutput().println(toSend);
     }
 
-
+    /**
+     * Play a game
+     */
     public void play(){
         int winnerId;
-        int cpt = 0;
         int input;
         String activePlayerMessage;
         String opponentPlayerMessage;
@@ -133,13 +156,9 @@ public class Server {
             int activePlayerID = this.match.getGame().activePlayer.id-1;
             int opponentPlayerID = this.match.getGame().passivePlayer.id-1;
 
-            //send(cliID,this.g.board.toString());
-            System.out.println("turn " + cpt + " - Player " + this.match.getGame().activePlayer.id);
-
             do{
                 lastVisitedCell = -1;
                 send(activePlayerID,"?"); //Demande de choix au client
-
 
                 do {
                     activePlayerMessage = receiveNB(activePlayerID);
@@ -186,19 +205,26 @@ public class Server {
                             break;
                         case "L":
                             String file = receive(activePlayerID);
+
                             System.out.println(this.match);
                             this.match = ManageFile.loadMatchFromString(file);
-
+                            if(this.match.getGame().activePlayer.id-1 != activePlayerID){
+                                int temp = activePlayerID;
+                                activePlayerID = opponentPlayerID;
+                                opponentPlayerID = temp;
+                                send(activePlayerID,"C");
+                                send(opponentPlayerID,"C");
+                            }
                             sendMatchData();
                             sendUpdateGame();
+
                             break;
                         case "Q":
                             send(opponentPlayerID,"S");
-                            String choice = receive(opponentPlayerID);
+                            //String choice = receive(opponentPlayerID);
                             send(activePlayerID,this.match.toString());
                             break;
                         case "S":
-
                             break;
                         case "F":
                              if(this.match.getGame().board.getTotalSeeds() <=10) {
@@ -225,8 +251,6 @@ public class Server {
             Check.setCellAvailable(this.match.getGame().board,this.match.getGame().activePlayer.id);
             winnerId = Check.isEndedGame(this.match.getGame());
 
-            cpt++;
-
             sendUpdateGame();
         }
         while(winnerId == -1);
@@ -250,6 +274,9 @@ public class Server {
         this.match.setGame(game);
     }
 
+    /**
+     * End the connection with the clients
+     */
     public void endConnection(){
         try {
             send(0,"D");
@@ -262,8 +289,11 @@ public class Server {
         }
 
 
+    /**
+     * Main to launch the server
+     * @param args args
+     */
     public static void main(String[] args){
-        int i;
         Server s = new Server(8080);
         s.start();
         //TANT QUE JE N'AI PAS RECU LA VALIDATION DES 2

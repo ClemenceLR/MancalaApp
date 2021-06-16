@@ -12,6 +12,12 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Client config screen controller
+ *  @author : Guillaume Hasseneyer
+ *  @author : Clémence Le Roux
+ *
+ */
 public class ClientConfigScreenController {
 
     @FXML
@@ -24,10 +30,17 @@ public class ClientConfigScreenController {
 
     MainController mainController;
 
+    /**
+     * Access the main controller by stocking it
+     * @param mainController : main controller
+     */
     public void setMainController(MainController mainController){
         this.mainController = mainController;
     }
 
+    /**
+     * Connect to server
+     */
     @FXML
     private void connectToServer(){
         Client client;
@@ -36,7 +49,6 @@ public class ClientConfigScreenController {
         InetAddress ip;
         int port;
         String pseudo;
-
 
         try {
 

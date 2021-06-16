@@ -7,21 +7,32 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintStream;
 import java.util.Scanner;
 
+/**
+ * Menu controller
+ *  @author : Guillaume Hasseneyer
+ *  @author : Clémence Le Roux
+ *
+ */
 public class MenuController {
 
     MainController mainController;
-
+    /**
+     * Access the main controller by stocking it
+     * @param mainController : main controller
+     */
     public void setMainController(MainController mainController){
         this.mainController = mainController;
     }
 
+    /**
+     * Load a game
+     */
     public void loadGame() {
         FileChooser fc = new FileChooser();
         fc.setTitle("Choose a File Save");
-        String res = "";
+        StringBuilder res = new StringBuilder();
 
         File file = fc.showOpenDialog(this.mainController.getMainPane().getScene().getWindow());
         Scanner sc;
@@ -29,7 +40,7 @@ public class MenuController {
             try {
                 sc = new Scanner(file);
                 while (sc.hasNext()) {
-                    res += sc.nextLine();
+                    res.append(sc.nextLine());
                 }
                 sc.close();
             } catch (FileNotFoundException e) {
@@ -37,10 +48,13 @@ public class MenuController {
             }
 
             this.mainController.getClient().send("L", false);
-            this.mainController.getClient().send(res, false);
+            this.mainController.getClient().send(res.toString(), false);
         }
     }
 
+    /**
+     * Save a game
+     */
     public void saveGame(){
 
         FileChooser fc = new FileChooser();
@@ -52,21 +66,20 @@ public class MenuController {
         if (file != null) {
             this.mainController.getClient().send("G", true);
         }
-        /*
-        try {
-            new PrintStream(file).println("");
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
-        */
         this.mainController.getClient().setFile(file);
     }
 
+    /**
+     * Forfeit
+     */
     public void forfeit() {
         this.mainController.getClient().send("F",false);
         this.mainController.getClient().setMyTurn(false);
     }
 
+    /**
+     * About
+     */
     public void about(){
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setContentText("The Mancala Application was created by Guillaume Haseneyer and Clémence Le Roux\n ENSICAEN students in 1A App");
@@ -74,6 +87,9 @@ public class MenuController {
         a.showAndWait();
     }
 
+    /**
+     * Undo
+     */
     public void undo(){
         if(!this.mainController.getClient().getMyTurn()) {
             this.mainController.getClient().send("U", true);
@@ -85,6 +101,9 @@ public class MenuController {
         }
     }
 
+    /**
+     * Exit
+     */
     public void exit(){
         //
         this.mainController.getClient().send("Q",true);
@@ -92,6 +111,10 @@ public class MenuController {
         System.exit(0);
     }
 
+    /**
+     * New match
+     * @param actionEvent : action event
+     */
     public void newMatch(ActionEvent actionEvent) {
         //TODO
     }

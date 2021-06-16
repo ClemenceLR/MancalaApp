@@ -6,6 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Class in charge to launch the app controllers
+ * @author : Guillaume Hasseneyer
+ *  @author : Clémence Le Roux
+ *
+ */
 public class MancalaApp extends Application {
 
     public static void main(String[] args) {
@@ -14,6 +20,11 @@ public class MancalaApp extends Application {
 
     }
 
+    /**
+     * Initialize the stage
+     * @param primaryStage : stage
+     * @throws Exception
+     */
     public void start(Stage primaryStage) throws Exception {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Game.fxml"));

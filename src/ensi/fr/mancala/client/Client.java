@@ -15,13 +15,18 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Class client
+ * @author : Guillaume Hasseneyer
+ * @author : Clémence Le Roux
+ *
+ */
 public class Client {
     private MainController mainController;
-    private InetAddress addr;
-    private int port;
+    private final InetAddress addr;
+    private final int port;
     private Socket me;
-    private String pseudo;
-    public String opponent;
+    private final String pseudo;
     private Scanner in;
     private PrintStream out;
     private Logger logger;
@@ -29,29 +34,54 @@ public class Client {
     private Timer timer;
     private File file;
     private boolean leave = false;
+
+    /**
+     * Client constructor
+     * @param addr : addr
+     * @param port : port
+     * @param pseudo : pseudo
+     */
     public Client(InetAddress addr, int port, String pseudo){
         this.addr = addr;
         this.port = port;
         this.pseudo = pseudo;
     }
 
+    /**
+     * Get the socket
+     * @return socket
+     */
     public Socket getMe(){
         return this.me;
     }
 
-
+    /**
+     * Set Main Controller
+     * @param mainController main controller
+     */
     public void setMainController(MainController mainController){
         this.mainController = mainController;
     }
 
+    /**
+     * Set My Turn
+     * @param myTurn : boolean that designs if it's my turn to play or no
+     */
     public void setMyTurn(boolean myTurn) {
         this.myTurn = myTurn;
     }
 
+    /**
+     * Set timer
+     * @param timer start the client timer
+     */
     public void setTimer(Timer timer){
         this.timer = timer;
     }
 
+    /**
+     * Connect with the server
+     */
     public void connect(){
         try {
             this.me = new Socket(this.addr, this.port);
@@ -62,12 +92,12 @@ public class Client {
             this.me = null;
         }
         out.println(this.pseudo);
-        //this.opponent = in.nextLine();
-        //updateGame();
         out.println("1");
-        return;
     }
 
+    /**
+     * Disconnect from the server
+     */
     public void disconnect() {
         this.timer.cancel();
         try {
@@ -77,7 +107,9 @@ public class Client {
         }
     }
 
-
+    /**
+     * Intercept server messages
+     */
     public void playGame() {
             String code = receive();
 
@@ -161,6 +193,9 @@ public class Client {
 
     }
 
+    /**
+     * Update of the game
+     */
     public void updateGame(){
         String boardSeeds = receive();
         String boardAvailable = receive();
@@ -170,10 +205,14 @@ public class Client {
         this.mainController.updateGame(boardSeeds,boardAvailable,granaryPlayer0,granaryPlayer1);
     }
 
+    /**
+     * Send the game
+     * @param toSend : string
+     * @param isPriority : boolean
+     */
     public void send(String toSend, Boolean isPriority){
 
         if(myTurn || isPriority){
-            System.out.println("On envoie: " + toSend);
             this.getOutput().println(toSend);
         }
         else{
@@ -184,44 +223,60 @@ public class Client {
         }
     }
 
+    /**
+     * Receive from the server
+     * @return string
+     */
     public String receive(){
         return this.getInput().nextLine();
     }
 
+    /**
+     * Get client input
+     * @return scanner
+     */
     private Scanner getInput() {
         return this.in;
     }
 
+    /**
+     * Get client output
+     * @return print stream
+     */
     public PrintStream getOutput(){
         return this.out;
     }
 
+    /**
+     * Main to launch the client and the view
+     * @param args : args
+     */
     public static void main(String[] args){
-        /* try {
-            Client c = new Client(InetAddress.getLocalHost(), 8080, "B");
-            c.connect();
-        }
-        catch(UnknownHostException e){
-            System.err.println("Client creation failed");
-        }*/
-
         MancalaApp.main(args);
 
 
     }
 
+    /**
+     * Get my turn
+     * @return boolean
+     */
     public boolean getMyTurn(){
         return this.myTurn;
     }
 
+    /**
+     * set file
+     * @param file : file where we will save the data
+     */
     public void setFile(File file) {
         this.file = file;
     }
 
-    public boolean isLeave() {
-        return leave;
-    }
-
+    /**
+     * Set leave if the player is going to quit
+     * @param leave boolean
+     */
     public void setLeave(boolean leave) {
         this.leave = leave;
     }

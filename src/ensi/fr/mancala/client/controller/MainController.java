@@ -15,7 +15,12 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.IOException;
 
-
+/**
+ * Main controller : control all of the apps controller
+ *  @author : Guillaume Hasseneyer
+ *  @author : Clémence Le Roux
+ *
+ */
 public class MainController {
     @FXML private Pane mainPane;
 
@@ -26,6 +31,10 @@ public class MainController {
 
     private Client client;
 
+    /**
+     * Main controller
+     * @throws IOException if initialize
+     */
     public void initialize() throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/Menu.fxml"));
@@ -57,22 +66,40 @@ public class MainController {
 
     }
 
+    /**
+     * Get client
+     * @return client
+     */
     public Client getClient() {
         return client;
     }
 
+    /**
+    * Set client
+     * */
     public void setClient(Client client){
         this.client = client;
     }
 
+    /**
+     * Get main pane
+     * @return pane
+     */
     public Pane getMainPane() {
         return mainPane;
     }
 
+    /**
+     * Get granary controller
+     * @return granary controller
+     */
     public GranaryController getGranaryController(){
         return this.granaryController;
     }
-    
+
+    /**
+     * Update the game
+     **/
     public void updateGame(String boardSeeds, String boardAvailable, String granaryPlayer0, String granaryPlayer1) {
         int i;
         StackPane stackPaneToUpdate;
@@ -93,6 +120,9 @@ public class MainController {
         this.granaryController.setGranary(granaryPlayer1,1);
     }
 
+    /**
+     * Ask for forfeit
+     */
     public void askForfeit() {
 
         Platform.runLater(new Runnable () {
@@ -114,6 +144,9 @@ public class MainController {
 
     }
 
+    /**
+     * Need Save
+     */
     public void needSave() {
 
         Platform.runLater(new Runnable () {
