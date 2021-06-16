@@ -144,9 +144,10 @@ public class Server {
                         case "G":
                             send(opponentPlayerID,this.g.toString());
                             break;
+                        case "Q":
+                            send(activePlayerID,"S");
+                            break;
                         case "U":
-                            System.out.println("REcieved");
-                            System.out.println(this.gameSave.toString());
                             this.g = new Game(this.g.passivePlayer, this.g.activePlayer, this.gameSave.toString());
                             send(activePlayerID,"C");
                             send(opponentPlayerID,"C");
@@ -178,6 +179,11 @@ public class Server {
                             String file = receive(activePlayerID);
                             this.g = new Game(this.g.activePlayer, this.g.passivePlayer, file);
                             sendUpdateGame();
+                            break;
+                        case "Q":
+                            send(opponentPlayerID,"S");
+                            String choice = receive(opponentPlayerID);
+                            send(activePlayerID,this.g.toString());
                             break;
                         case "S":
 

@@ -28,7 +28,7 @@ public class Client {
     private boolean myTurn;
     private Timer timer;
     private File file;
-
+    private boolean leave = false;
     public Client(InetAddress addr, int port, String pseudo){
         this.addr = addr;
         this.port = port;
@@ -111,8 +111,13 @@ public class Client {
                             aa.setContentText("Save Completed !");
                             aa.setTitle("File saved under the given file");
                             aa.showAndWait();
+                            if(leave){
+                                Platform.exit();
+                                System.exit(0);
+                            }
                         }
                     });
+
                     break;
 
                 case "N":
@@ -135,7 +140,10 @@ public class Client {
                         }
                     });
                     break;
+                case "S":
+                    this.mainController.needSave();
 
+                    break;
                 case "?":
                     myTurn = true;
                     break;
@@ -199,5 +207,13 @@ public class Client {
 
     public void setFile(File file) {
         this.file = file;
+    }
+
+    public boolean isLeave() {
+        return leave;
+    }
+
+    public void setLeave(boolean leave) {
+        this.leave = leave;
     }
 }

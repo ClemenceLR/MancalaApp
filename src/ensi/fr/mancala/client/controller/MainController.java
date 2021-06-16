@@ -10,7 +10,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 
 
@@ -106,6 +108,41 @@ public class MainController {
                     MainController.this.getClient().send("f", true);
                 } else {
                     MainController.this.getClient().send("n", true);
+                }
+            }
+        });
+
+    }
+
+    public void needSave() {
+
+        Platform.runLater(new Runnable () {
+
+            @Override
+            public void run() {
+                Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                a.setTitle("The opponent left");
+                a.setContentText("The opponent left the game. \nWould you like to save the game for later ?");
+                a.showAndWait();
+
+                if (a.getResult() == ButtonType.OK) {
+                    FileChooser fc = new FileChooser();
+                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TEXT files (*.txt)", "*.txt");
+                    fc.getExtensionFilters().add(extFilter);
+                    fc.setTitle("Choose where to save the file");
+
+                    File file = fc.showSaveDialog(getMainPane().getScene().getWindow());
+
+                    if (file != null) {
+                        getClient().send("G", true);
+                    }
+                    getClient().setFile(file);
+                    getClient().setLeave(true);
+
+                } else {
+                    getClient().send("N",true);
+                    Platform.exit();
+                    System.exit(0);
                 }
             }
         });
