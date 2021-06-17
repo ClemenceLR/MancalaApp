@@ -21,6 +21,8 @@ public class MenuController {
 
     MainController mainController;
 
+    public static boolean isCellNumbersHide = false;
+
     /**
      * Access the main controller by stocking it
      * @param mainController : main controller
@@ -128,14 +130,30 @@ public class MenuController {
 
     public void changeSeedDisplay(ActionEvent actionEvent) {
         MenuItem menuItem = (MenuItem) actionEvent.getSource();
-        String menuItemText = menuItem.getText();
-        if(!menuItemText.equals("Hide seeds numbers")){
+        if(MenuController.isCellNumbersHide){
             menuItem.setText("Hide seeds numbers");
             this.mainController.getBoardController().changeSeedsDisplay(true);
+            MenuController.isCellNumbersHide = false;
         }
         else{
             menuItem.setText("Show seeds numbers");
             this.mainController.getBoardController().changeSeedsDisplay(false);
+            MenuController.isCellNumbersHide = true;
+        }
+
+    }
+
+
+    public void changeOnMouseEnteredOption(ActionEvent actionEvent) {
+        MenuItem menuItem = (MenuItem) actionEvent.getSource();
+        BoardController.showOnMouseEntered = !BoardController.showOnMouseEntered;
+
+        if(BoardController.showOnMouseEntered){
+            menuItem.setText("Don't show seeds numbers on mouse entered");
+        }
+        else{
+
+            menuItem.setText("Show seed number on mouse entered");
         }
 
     }

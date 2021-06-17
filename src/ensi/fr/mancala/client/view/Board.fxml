@@ -10,64 +10,76 @@
             fx:controller="ensi.fr.mancala.client.controller.BoardController"
             layoutY="100.00">
 
-    <StackPane fx:id="eleven" onMouseClicked="#play" layoutX="65.0" layoutY="50.0" userData="11">
+    <StackPane fx:id="eleven" onMouseClicked="#play"  onMouseEntered="#showSeedNumber" onMouseExited="#hideSeedNumber"
+               layoutX="65.0" layoutY="50.0" userData="11">
         <Circle fill="#ebe5e5"  radius="29.0" stroke="BLACK" strokeType="INSIDE" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
     </StackPane>
 
 
-    <StackPane fx:id="ten" onMouseClicked="#play" layoutX="145.0" layoutY="50.0" userData="10">
+    <StackPane fx:id="ten" onMouseClicked="#play" onMouseEntered="#showSeedNumber" onMouseExited="#hideSeedNumber"
+               layoutX="145.0" layoutY="50.0" userData="10">
         <Circle fill="#ebe5e5"  radius="29.0" stroke="BLACK" strokeType="INSIDE" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
     </StackPane>
 
-    <StackPane fx:id="nine" onMouseClicked="#play" layoutX="225.0" layoutY="50.0" userData="9">
+    <StackPane fx:id="nine" onMouseClicked="#play" onMouseEntered="#showSeedNumber" onMouseExited="#hideSeedNumber"
+               layoutX="225.0" layoutY="50.0" userData="9">
         <Circle fill="#ebe5e5" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
     </StackPane>
 
-    <StackPane fx:id="eight" onMouseClicked="#play" layoutX="305.0" layoutY="50.0" userData="8">
+    <StackPane fx:id="eight" onMouseClicked="#play" onMouseEntered="#showSeedNumber" onMouseExited="#hideSeedNumber"
+               layoutX="305.0" layoutY="50.0" userData="8">
         <Circle fill="#ebe5e5" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
     </StackPane>
 
-    <StackPane fx:id="seven" onMouseClicked="#play" layoutX="385.0" layoutY="50.0" userData="7">
+    <StackPane fx:id="seven" onMouseClicked="#play" onMouseEntered="#showSeedNumber" onMouseExited="#hideSeedNumber"
+               layoutX="385.0" layoutY="50.0" userData="7">
         <Circle  fill="#ebe5e5" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
     </StackPane>
 
-    <StackPane fx:id="six" onMouseClicked="#play" layoutX="465.0" layoutY="50.0" userData="6">
+    <StackPane fx:id="six" onMouseClicked="#play" onMouseEntered="#showSeedNumber" onMouseExited="#hideSeedNumber"
+               layoutX="465.0" layoutY="50.0" userData="6">
         <Circle fill="#ebe5e5" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
     </StackPane>
 
-    <StackPane fx:id="zero" onMouseClicked="#play" layoutX="65.0" layoutY="120.0" userData="0">
+    <StackPane fx:id="zero" onMouseClicked="#play" onMouseEntered="#showSeedNumber" onMouseExited="#hideSeedNumber"
+               layoutX="65.0" layoutY="120.0" userData="0">
         <Circle fill="#ebe5e5"  radius="29.0" stroke="BLACK" strokeType="INSIDE" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
     </StackPane>
 
 
-    <StackPane fx:id="one" onMouseClicked="#play" layoutX="145.0" layoutY="120.0" userData="1">
+    <StackPane fx:id="one" onMouseClicked="#play" onMouseEntered="#showSeedNumber" onMouseExited="#hideSeedNumber"
+               layoutX="145.0" layoutY="120.0" userData="1">
         <Circle fill="#ebe5e5"  radius="29.0" stroke="BLACK" strokeType="INSIDE" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
     </StackPane>
 
-    <StackPane fx:id="two" onMouseClicked="#play" layoutX="225.0" layoutY="120.0" userData="2">
+    <StackPane fx:id="two" onMouseClicked="#play" onMouseEntered="#showSeedNumber" onMouseExited="#hideSeedNumber"
+               layoutX="225.0" layoutY="120.0" userData="2">
         <Circle fill="#ebe5e5" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
     </StackPane>
 
-    <StackPane fx:id="three" onMouseClicked="#play" layoutX="305.0" layoutY="120.0" userData="3">
+    <StackPane fx:id="three" onMouseClicked="#play" onMouseEntered="#showSeedNumber" onMouseExited="#hideSeedNumber"
+               layoutX="305.0" layoutY="120.0" userData="3">
         <Circle fill="#ebe5e5" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
     </StackPane>
 
-    <StackPane fx:id="four" onMouseClicked="#play" layoutX="385.0" layoutY="120.0" userData="4">
+    <StackPane fx:id="four" onMouseClicked="#play" onMouseEntered="#showSeedNumber" onMouseExited="#hideSeedNumber"
+               layoutX="385.0" layoutY="120.0" userData="4">
         <Circle fill="#ebe5e5" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
     </StackPane>
 
-    <StackPane fx:id="five" onMouseClicked="#play" layoutX="465.0" layoutY="120.0" userData="5">
+    <StackPane fx:id="five" onMouseClicked="#play" onMouseEntered="#showSeedNumber" onMouseExited="#hideSeedNumber"
+               layoutX="465.0" layoutY="120.0" userData="5">
         <Circle fill="#ebe5e5" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" />
     </StackPane>

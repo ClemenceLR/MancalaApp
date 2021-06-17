@@ -19,6 +19,8 @@ public class BoardController {
 
     MainController mainController;
 
+    public static boolean showOnMouseEntered = true;
+
     @FXML private StackPane zero;
     @FXML private StackPane one;
     @FXML private StackPane two;
@@ -130,6 +132,22 @@ public class BoardController {
         }
 
 
+
+    }
+
+    public void showSeedNumber(MouseEvent mouseEvent) {
+        if(BoardController.showOnMouseEntered){
+            StackPane stackpane = (StackPane) mouseEvent.getSource();
+            stackpane.getChildren().get(1).setVisible(true);
+        }
+
+    }
+
+    public void hideSeedNumber(MouseEvent mouseEvent) {
+        if(MenuController.isCellNumbersHide){
+            StackPane stackpane = (StackPane) mouseEvent.getSource();
+            stackpane.getChildren().get(1).setVisible(false);
+        }
 
     }
 }
