@@ -27,7 +27,7 @@ public class ClientInterface{
             this.in = new Scanner(this.me.getInputStream());
             this.out = new PrintStream(this.me.getOutputStream());
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Client failed to connect");
         }
         this.player = new Player(in.nextLine());
     }

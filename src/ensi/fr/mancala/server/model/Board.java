@@ -48,7 +48,7 @@ public class Board {
      */
     public Cell[] getHoles(){
         Cell[]h = new Cell[SIZE_BOARD];
-        System.arraycopy(this.holes, 0, h, 0, SIZE_BOARD); //TODO CHECK IF OK
+        System.arraycopy(this.holes, 0, h, 0, SIZE_BOARD);
         return h;
     }
 

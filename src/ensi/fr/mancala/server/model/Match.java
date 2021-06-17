@@ -6,7 +6,7 @@ package ensi.fr.mancala.server.model;
  **/
 public class Match {
 
-    public static final int nbGames = 6;
+    public static final int NB_GAMES = 6;
     private Game game;
     private int[] scores;
     private int matchNum;
@@ -88,14 +88,14 @@ public class Match {
      */
     public String toString(){
         String prepareData = "ME0:"+this.getMatchNum() +":";
-        if(this.getGame().activePlayer.id == 1){
+        if(this.getGame().activePlayer.getId() == 1){
             prepareData+= this.getScore(0) +":" +this.getScore(1) +":";
-            prepareData += this.getGame().activePlayer.name + ";" + this.getGame().activePlayer.granary + ";" + this.getGame().passivePlayer.name + ";" + this.getGame().passivePlayer.granary;
+            prepareData += this.getGame().activePlayer.getName() + ";" + this.getGame().activePlayer.getGranary() + ";" + this.getGame().passivePlayer.getName() + ";" + this.getGame().passivePlayer.getGranary();
         }else{
             prepareData += this.getScore(1) +":"+this.getScore(0)+":";
-            prepareData += this.getGame().passivePlayer.name + ";" +this.getGame().passivePlayer.granary + ";" + this.getGame().activePlayer.name + ";" + this.getGame().activePlayer.granary;
+            prepareData += this.getGame().passivePlayer.getName() + ";" +this.getGame().passivePlayer.getGranary() + ";" + this.getGame().activePlayer.getName() + ";" + this.getGame().activePlayer.getGranary();
         }
-        prepareData +=";"+ this.getGame().activePlayer.id+";";
+        prepareData +=";"+ this.getGame().activePlayer.getId()+";";
         prepareData += this.getGame().board.toString();
         return prepareData;
     }

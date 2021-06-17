@@ -16,7 +16,6 @@ import java.net.ServerSocket;
 public class Server {
     private final int port;
     private Match match;
-    //private Game g;
     private ServerSocket server;
     private Game gameSave;
     private final ClientInterface[] clients;
@@ -47,7 +46,6 @@ public class Server {
 
         }catch (IOException e){
             System.err.println("Server failed to start : port " + this.port + " already in use");
-            e.printStackTrace();
 
         }
 
@@ -69,19 +67,19 @@ public class Server {
      * Send board updated
      */
     public void sendUpdateGame(){
-        int playerId = this.match.getGame().activePlayer.id - 1;
+        int playerId = this.match.getGame().activePlayer.getId() - 1;
         int opponentId = (playerId +1) %2;
         send(playerId, "B");//Sending the updated board to first client
         send(playerId, this.match.getGame().board.toString());
         send(playerId, this.match.getGame().board.cellAvailable());
-        send(playerId, "" + this.clients[0].getPlayer().granary);
-        send(playerId, "" + this.clients[1].getPlayer().granary);
+        send(playerId, "" + this.clients[0].getPlayer().getGranary());
+        send(playerId, "" + this.clients[1].getPlayer().getGranary());
 
         send(opponentId, "B");//Sending the updated board to second client
         send(opponentId, this.match.getGame().board.toString());
         send(opponentId, this.match.getGame().board.forbidPlay());
-        send(opponentId, "" + this.clients[0].getPlayer().granary);
-        send(opponentId, "" + this.clients[1].getPlayer().granary);
+        send(opponentId, "" + this.clients[0].getPlayer().getGranary());
+        send(opponentId, "" + this.clients[1].getPlayer().getGranary());
     }
 
     /**
@@ -152,8 +150,8 @@ public class Server {
         String opponentPlayerMessage;
         int lastVisitedCell;
         do{
-            int activePlayerID = this.match.getGame().activePlayer.id-1;
-            int opponentPlayerID = this.match.getGame().passivePlayer.id-1;
+            int activePlayerID = this.match.getGame().activePlayer.getId()-1;
+            int opponentPlayerID = this.match.getGame().passivePlayer.getId()-1;
 
             do{
                 lastVisitedCell = -1;
@@ -165,7 +163,6 @@ public class Server {
                 }while(activePlayerMessage.equals("") && opponentPlayerMessage.equals(""));
 
                 if (!opponentPlayerMessage.equals("")){
-                    //control+z
                     switch (opponentPlayerMessage) {
                         case "G":
                             send(opponentPlayerID,"G");
@@ -173,6 +170,8 @@ public class Server {
                             break;
                         case "L":
                             loadMatch(opponentPlayerID, opponentPlayerID, activePlayerID);
+                            activePlayerID = this.match.getGame().activePlayer.getId()-1;
+                            opponentPlayerID = this.match.getGame().passivePlayer.getId()-1;
                             break;
                         case "Q":
                             send(activePlayerID,"S");
@@ -188,6 +187,8 @@ public class Server {
                             opponentPlayerID = invert;
                             sendUpdateGame();
                             continue;
+                        default:
+                            break;
 
                     }
                 }
@@ -208,10 +209,11 @@ public class Server {
                             break;
                         case "L":
                             loadMatch(activePlayerID,opponentPlayerID,activePlayerID);
+                            activePlayerID = this.match.getGame().activePlayer.getId()-1;
+                            opponentPlayerID = this.match.getGame().passivePlayer.getId()-1;
                             break;
                         case "Q":
                             send(opponentPlayerID,"S");
-                            //String choice = receive(opponentPlayerID);
                             send(activePlayerID,this.match.toString());
                             break;
                         case "F":
@@ -229,6 +231,14 @@ public class Server {
                             send(activePlayerID,"G");
                             send(activePlayerID,this.match.toString());
                             break;
+
+                        case "R":
+                            this.match = new Match(this.clients[0].getPlayer(), this.clients[1].getPlayer());
+                            sendMatchData();
+                            sendUpdateGame();
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
@@ -236,7 +246,7 @@ public class Server {
             Check.checkEatableCells(lastVisitedCell,this.match.getGame().activePlayer, this.match.getGame().board);
 
             this.match.getGame().changePlayer();
-            Check.setCellAvailable(this.match.getGame().board,this.match.getGame().activePlayer.id);
+            Check.setCellAvailable(this.match.getGame().board,this.match.getGame().activePlayer.getId());
             winnerId = Check.isEndedGame(this.match.getGame());
 
             sendUpdateGame();
@@ -276,10 +286,7 @@ public class Server {
 
         if(m != null) {
             this.match = m;
-            if (this.match.getGame().activePlayer.id - 1 != activePlayerID) {
-                int temp = activePlayerID;
-                activePlayerID = opponentPlayerID;
-                opponentPlayerID = temp;
+            if (this.match.getGame().activePlayer.getId() - 1 != activePlayerID) {
                 send(activePlayerID, "C");
                 send(opponentPlayerID, "C");
             }
@@ -298,7 +305,6 @@ public class Server {
             this.server.close();
         }catch(IOException e){
             System.err.println("The server failed to close");
-            e.printStackTrace();
         }
         }
 
@@ -314,7 +320,7 @@ public class Server {
             s.sendUpdateGame();
             s.play();
         }
-        while(s.match.getMatchNum() < Match.nbGames + 1);
+        while(s.match.getMatchNum() < Match.NB_GAMES + 1);
         s.endConnection();
     }
 

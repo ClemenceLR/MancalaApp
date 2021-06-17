@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 /**
  * Class in charge to launch the app controllers
  * @author : Guillaume Hasseneyer
@@ -16,7 +18,6 @@ public class MancalaApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
-        //TODO récupérer et créer les joueurs en fonction des clients enregistrés
 
     }
 
@@ -25,7 +26,7 @@ public class MancalaApp extends Application {
      * @param primaryStage : stage
      * @throws Exception : if fails
      */
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Game.fxml"));
         Parent root = loader.load();

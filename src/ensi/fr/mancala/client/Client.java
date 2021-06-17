@@ -34,7 +34,6 @@ public class Client {
     private Timer timer;
     private File file;
     private boolean leave = false;
-    private int alreadySend =1;
     /**
      * Client constructor
      * @param addr : addr
@@ -103,7 +102,8 @@ public class Client {
         try {
             this.me.close();
         }catch (IOException e){
-            e.printStackTrace();
+            System.err.println("Disconnection failed");
+
         }
     }
 
@@ -141,11 +141,10 @@ public class Client {
                     break;
 
                 case "G":
-                    try {
-                        PrintStream ps = new PrintStream(this.file);
+                    try (PrintStream ps = new PrintStream(this.file)){
                         ps.println(receive());
                     }catch (FileNotFoundException e){
-                        e.printStackTrace();
+                        System.err.println("Impossible to find the file");
                     }
 
                     Platform.runLater(new Runnable() {
@@ -161,8 +160,8 @@ public class Client {
                             }
                         }
                     });
-
                     break;
+
 
                 case "N":
                     String name0 = receive();
@@ -187,7 +186,8 @@ public class Client {
                 case "S":
                     this.mainController.needSave();
                     break;
-
+                default:
+                    break;
 
             }
 
@@ -223,8 +223,7 @@ public class Client {
                 Alert a = new Alert(Alert.AlertType.INFORMATION);
                 a.setContentText("Action reserved to actual player !");
                 a.setTitle("Action forbidden");
-                a.showAndWait();
-        }
+                a.showAndWait();        }
     }
 
     /**

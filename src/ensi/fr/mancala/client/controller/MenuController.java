@@ -47,7 +47,7 @@ public class MenuController {
                 }
                 sc.close();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                System.err.println("The server failed to close");
             }
 
             this.mainController.getClient().send("L@" + res.toString(), true);

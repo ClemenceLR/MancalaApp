@@ -9,6 +9,10 @@ public class Check {
 
     public static int nbCellsAvailable;
 
+
+    private Check(){
+
+    }
     /**
      * setCellAvailable : go through the board to set which cell is available
      * @param b : board
@@ -65,30 +69,30 @@ public class Check {
      */
     public static int isEndedGame(Game g){
         int totalSeeds = g.board.getTotalSeeds();
-        int startHolePlayerId = (g.passivePlayer.id == 1?0:6);
+        int startHolePlayerId = (g.passivePlayer.getId() == 1?0:6);
         int startHoleOpponentId = (startHolePlayerId + 6) % 12;
 
-        if(g.passivePlayer.granary >= 25){
-            return g.passivePlayer.id-1;
+        if(g.passivePlayer.getGranary() >= 25){
+            return g.passivePlayer.getId()-1;
         }
 
         if(Check.nbCellsAvailable == 0){
-            g.activePlayer.granary += totalSeeds;
-            if(g.activePlayer.granary > g.passivePlayer.granary){
-                return g.activePlayer.id-1;
-            }else if(g.activePlayer.granary == g.passivePlayer.granary){
+            g.activePlayer.addGranary(totalSeeds);
+            if(g.activePlayer.getGranary() > g.passivePlayer.getGranary()){
+                return g.activePlayer.getId()-1;
+            }else if(g.activePlayer.getGranary() == g.passivePlayer.getGranary()){
                 return 2;
             }else{
-                return g.passivePlayer.id-1;
+                return g.passivePlayer.getId()-1;
             }
         }
 
         if(totalSeeds <= 6 && ennemyIsHungry(g.board, startHoleOpponentId) && Check.nbCellsAvailable == 0){
-            return g.passivePlayer.id-1;
+            return g.passivePlayer.getId()-1;
         }
 
 
-        if(totalSeeds < 6 && g.passivePlayer.granary < 24 && g.activePlayer.granary < 24){
+        if(totalSeeds < 6 && g.passivePlayer.getGranary() < 24 && g.activePlayer.getGranary() < 24){
             return 2;
         }
 
@@ -106,18 +110,18 @@ public class Check {
         Board cpy = new Board(b.holes);
         int playerGain;
 
-        if ((activePlayer.id == 1 && lastVisitedCell < 6) ||(activePlayer.id == 2) && lastVisitedCell >= 6 ){
+        if ((activePlayer.getId() == 1 && lastVisitedCell < 6) ||(activePlayer.getId() == 2) && lastVisitedCell >= 6 ){
             lastCaseToActivePlayer = true;
         }
         if(!lastCaseToActivePlayer){
-            int startHolePlayerId = (activePlayer.id == 1?0:6);
+            int startHolePlayerId = (activePlayer.getId() == 1?0:6);
             int startHoleOpponentId = (startHolePlayerId + 6) % 12;
             playerGain = b.eatCell(lastVisitedCell, startHoleOpponentId);
             if(Check.ennemyIsHungry(b, startHoleOpponentId)){
                 b.holes = cpy.holes;
 
             }else{
-                activePlayer.granary += playerGain;
+                activePlayer.addGranary(playerGain);
             }
         }
     }

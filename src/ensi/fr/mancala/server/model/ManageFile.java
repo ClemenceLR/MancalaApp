@@ -9,6 +9,10 @@ import java.util.Scanner;
  **/
 public class ManageFile {
 
+    private ManageFile(){
+
+    }
+
     /**
      * Load game from string
      * @param p1 : player one
@@ -19,15 +23,13 @@ public class ManageFile {
     public static Game loadGameFromString(Player p1, Player p2, String game){
         Game g = new Game();
         String[] d = game.split(";");
-            //TODO Parsing des données a modifier avec la logique des matchs
-            p1.name = d[1];
-            p1.granary = Integer.parseInt(d[2]);
-            p1.id = 1;
+            p1.setName(d[1]);
+            p1.setGranary(Integer.parseInt(d[2]));
+            p1.setId(1);
 
-            p2.name = d[3];
-            p2.granary = Integer.parseInt(d[4]);
-            p2.id = 2;
-            //TODO add player ID
+            p2.setName(d[3]);
+            p2.setGranary(Integer.parseInt(d[4]));
+            p2.setId(2);
             int currentPlayer = Integer.parseInt(d[5]);
             if(currentPlayer == 1){
                 g.activePlayer = p1;
@@ -59,32 +61,14 @@ public class ManageFile {
 
         Game g = new Game();
         String[] d = data[4].split(";");
+        recordGame(g,d);
 
-
-        Player p1 = new Player();
-        p1.name = d[0];
-        p1.granary = Integer.parseInt(d[1]);
-        p1.id = 1;
-
-        Player p2 = new Player();
-        p2.name = d[2];
-        p2.granary = Integer.parseInt(d[3]);
-        p2.id = 2;
-
-        int currentPlayer = Integer.parseInt(d[4]);
-        if(currentPlayer == 1){
-            g.activePlayer = p1;
-            g.passivePlayer = p2;
-        }else{
-            g.activePlayer = p2;
-            g.passivePlayer = p1;
-        }
-        g.board = new Board(d[5]);
         m.setGame(g);
 
         return m;
 
     }
+
 
     /**
      * Load a game from a string
@@ -102,35 +86,37 @@ public class ManageFile {
                 String data = reader.nextLine();
                 System.out.println(data);
                 String[] d = data.split(";");
-
-                Player p1 = new Player();
-                p1.name = d[0];
-                p1.granary = Integer.parseInt(d[1]);
-                p1.id = 1;
-
-                Player p2 = new Player();
-                p2.name = d[2];
-                p2.granary = Integer.parseInt(d[3]);
-                p2.id = 2;
-
-                int currentPlayer = Integer.parseInt(d[4]);
-                if(currentPlayer == 1){
-                    g.activePlayer = p1;
-                    g.passivePlayer = p2;
-                }else{
-                    g.activePlayer = p2;
-                    g.passivePlayer = p1;
-                }
-                g.board = new Board(d[5]);
-
+                recordGame(g,d);
 
             }
             reader.close();
         }catch(FileNotFoundException e){
-            System.out.println("Le fichier n'existe pas");
-            e.printStackTrace();
+            System.err.println("File does not exist");
         }
 
         return g;
+    }
+
+    public static void recordGame(Game g, String[] d){
+        Player p1 = new Player();
+        p1.setName(d[0]);
+        p1.setGranary(Integer.parseInt(d[1]));
+        p1.setId(1);
+
+        Player p2 = new Player();
+        p2.setName(d[2]);
+        p2.setGranary(Integer.parseInt(d[3]));
+        p2.setId(2);
+
+        int currentPlayer = Integer.parseInt(d[4]);
+        if(currentPlayer == 1){
+            g.activePlayer = p1;
+            g.passivePlayer = p2;
+        }else{
+            g.activePlayer = p2;
+            g.passivePlayer = p1;
+        }
+        g.board = new Board(d[5]);
+        Check.setCellAvailable(g.board,g.activePlayer.getId());
     }
 }

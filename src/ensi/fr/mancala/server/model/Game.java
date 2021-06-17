@@ -8,6 +8,7 @@ Managing the game party
 
 * */
 public class Game {
+
     public Board board;
     public Board previousBoard;
     public Player activePlayer;
@@ -52,7 +53,7 @@ public class Game {
         this.passivePlayer = g.passivePlayer;
         this.board = g.board;
         this.previousBoard = g.board;
-        Check.setCellAvailable(this.board,this.activePlayer.id);
+        Check.setCellAvailable(this.board,this.activePlayer.getId());
     }
 
     /**
@@ -65,7 +66,7 @@ public class Game {
         this.passivePlayer = g.passivePlayer;
         this.board = g.board;
         this.previousBoard = g.board;
-        Check.setCellAvailable(this.board,this.activePlayer.id);
+        Check.setCellAvailable(this.board,this.activePlayer.getId());
     }
 
     /**
@@ -133,7 +134,7 @@ public class Game {
      */
     @Override
     public String toString() {
-        return this.activePlayer.name + ";" + this.activePlayer.granary + ";" + this.passivePlayer.name + ";" + this.passivePlayer.granary + ";" + this.activePlayer.id + ";" + this.board;
+        return this.activePlayer.getName() + ";" + this.activePlayer.getGranary() + ";" + this.passivePlayer.getName() + ";" + this.passivePlayer.getGranary() + ";" + this.activePlayer.getId() + ";" + this.board;
     }
 
     /**
@@ -143,18 +144,51 @@ public class Game {
     public int splitRemainingSeed(){
         int totalSeeds = this.board.getTotalSeeds();
         int gainSplit = totalSeeds /2;
-        this.passivePlayer.granary += gainSplit;
-        this.activePlayer.granary += (totalSeeds - gainSplit);
+        this.passivePlayer.addGranary(gainSplit);
+        this.activePlayer.addGranary (totalSeeds - gainSplit);
         for(int i = 0; i< Board.SIZE_BOARD; i++){
             this.board.holes[i].setNbSeeds(0);
         }
-        if(this.passivePlayer.granary > this.activePlayer.granary){
-            return this.passivePlayer.id-1;
-        }else if(this.activePlayer.granary > this.passivePlayer.granary){
-            return this.activePlayer.id-1;
+        if(this.passivePlayer.getGranary() > this.activePlayer.getGranary()){
+            return this.passivePlayer.getId()-1;
+        }else if(this.activePlayer.getGranary() > this.passivePlayer.getGranary()){
+            return this.activePlayer.getId()-1;
         }else{
             return 2;
         }
 
     }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public Board getPreviousBoard() {
+        return previousBoard;
+    }
+
+    public void setPreviousBoard(Board previousBoard) {
+        this.previousBoard = previousBoard;
+    }
+
+    public Player getActivePlayer() {
+        return activePlayer;
+    }
+
+    public void setActivePlayer(Player activePlayer) {
+        this.activePlayer = activePlayer;
+    }
+
+    public Player getPassivePlayer() {
+        return passivePlayer;
+    }
+
+    public void setPassivePlayer(Player passivePlayer) {
+        this.passivePlayer = passivePlayer;
+    }
+
 }

@@ -1,7 +1,6 @@
 package ensi.fr.mancala.client.controller;
 
 import ensi.fr.mancala.client.Client;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -46,20 +45,20 @@ public class ClientConfigScreenController {
         Client client;
         Timer timer;
 
-        InetAddress ip;
-        int port;
-        String pseudo;
+        InetAddress ipValue;
+        int portValue;
+        String pseudoValue;
 
         try {
 
-            ip = this.ip.getText().toLowerCase(Locale.ROOT) == "localhost"
+            ipValue = this.ip.getText().toLowerCase(Locale.ROOT) == "localhost"
                     ?InetAddress.getLocalHost()
                     :InetAddress.getByName(this.ip.getText());
 
-            port = Integer.parseInt(this.port.getText());
-            pseudo = this.pseudo.getText();
+            portValue = Integer.parseInt(this.port.getText());
+            pseudoValue = this.pseudo.getText();
 
-            client = new Client(ip, port, pseudo);
+            client = new Client(ipValue, portValue, pseudoValue);
             client.connect();
             client.setMainController(this.mainController);
 

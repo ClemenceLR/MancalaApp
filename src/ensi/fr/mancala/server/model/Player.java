@@ -1,6 +1,5 @@
 package ensi.fr.mancala.server.model;
 
-import java.util.Scanner;
 
 /**
  * Managing the player
@@ -8,9 +7,9 @@ import java.util.Scanner;
  * @author : Clémence Le Roux
  */
 public class Player {
-    public String name;
-    public int granary;
-    public int id;
+    private String name;
+    private int granary;
+    private int id;
     public static int nbJoueurs = 1;
 
     /**
@@ -52,5 +51,42 @@ public class Player {
      */
     public String getName() {
         return this.name;
+    }
+
+    /**
+     * Sets the player name
+     */
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public int getGranary() {
+        return granary;
+    }
+
+    public void setGranary(int granary) {
+        this.granary = granary;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public static int getNbJoueurs() {
+        return nbJoueurs;
+    }
+
+
+
+    /**
+     * Add given seeds to granary
+     * @param totalSeeds : seeds to add
+     */
+    public void addGranary(int totalSeeds) {
+        this.granary += totalSeeds;
     }
 }
