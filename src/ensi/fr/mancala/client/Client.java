@@ -34,7 +34,7 @@ public class Client {
     private Timer timer;
     private File file;
     private boolean leave = false;
-
+    private int alreadySend =1;
     /**
      * Client constructor
      * @param addr : addr
@@ -216,10 +216,15 @@ public class Client {
             this.getOutput().println(toSend);
         }
         else{
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("Action reserved to actual player !");
-            a.setTitle("Action forbidden");
-            a.showAndWait();
+            if(alreadySend ==1) {
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setContentText("Action reserved to actual player !");
+                a.setTitle("Action forbidden");
+                a.showAndWait();
+                alreadySend +=1;
+            }else{
+                alreadySend =1;
+            }
         }
     }
 

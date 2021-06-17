@@ -25,7 +25,7 @@
                 <MenuItem onAction="#forfeit" mnemonicParsing="false" text="Forfeit" />
             </items>
           </Menu>
-        <Menu mnemonicParsing="false" text="About" >
+        <Menu mnemonicParsing="false" text="System" >
             <items>
                 <MenuItem onAction="#about" mnemonicParsing="false" text="About" />
             </items>

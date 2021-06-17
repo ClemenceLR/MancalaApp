@@ -82,7 +82,7 @@ public class MenuController {
      */
     public void about(){
         Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setContentText("The Mancala Application was created by Guillaume Haseneyer and Clémence Le Roux\n ENSICAEN students in 1A App");
+        a.setContentText("The Mancala Application was created by Guillaume Haseneyer and Clémence Le Roux\n ENSICAEN students in 1A App\n 2020-2021");
         a.setTitle("About");
         a.showAndWait();
     }
