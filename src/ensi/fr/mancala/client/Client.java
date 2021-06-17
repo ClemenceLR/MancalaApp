@@ -213,7 +213,10 @@ public class Client {
     public void send(String toSend, Boolean isPriority){
 
         if(myTurn || isPriority){
-            this.getOutput().println(toSend);
+            for(i=0;i < messages.length;i++){
+                this.getOutput().println(messages[i]);
+            }
+
         }
         else{
             if(alreadySend ==1) {

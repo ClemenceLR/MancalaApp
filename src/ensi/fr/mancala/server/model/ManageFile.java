@@ -70,7 +70,7 @@ public class ManageFile {
         p2.name = d[2];
         p2.granary = Integer.parseInt(d[3]);
         p2.id = 2;
-        //TODO add player ID
+
         int currentPlayer = Integer.parseInt(d[4]);
         if(currentPlayer == 1){
             g.activePlayer = p1;
@@ -102,7 +102,7 @@ public class ManageFile {
                 String data = reader.nextLine();
                 System.out.println(data);
                 String[] d = data.split(";");
-                //TODO Parsing des données a modifier avec la logique des matchs
+
                 Player p1 = new Player();
                 p1.name = d[0];
                 p1.granary = Integer.parseInt(d[1]);
@@ -112,7 +112,7 @@ public class ManageFile {
                 p2.name = d[2];
                 p2.granary = Integer.parseInt(d[3]);
                 p2.id = 2;
-                //TODO add player ID
+
                 int currentPlayer = Integer.parseInt(d[4]);
                 if(currentPlayer == 1){
                     g.activePlayer = p1;

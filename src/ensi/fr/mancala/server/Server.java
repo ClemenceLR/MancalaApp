@@ -168,6 +168,7 @@ public class Server {
                     //control+z
                     switch (opponentPlayerMessage) {
                         case "G":
+                            send(opponentPlayerID,"G");
                             send(opponentPlayerID,this.match.toString());
                             break;
                         case "L":
@@ -309,9 +310,8 @@ public class Server {
      * @param args args
      */
     public static void main(String[] args){
-        Server s = new Server(8080);
+        Server s = new Server(42000);
         s.start();
-        //TANT QUE JE N'AI PAS RECU LA VALIDATION DES 2
         do {
             s.sendUpdateGame();
             s.play();
