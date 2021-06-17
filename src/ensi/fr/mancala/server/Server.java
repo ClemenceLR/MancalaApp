@@ -189,6 +189,7 @@ public class Server {
                                 sendUpdateGame();
                                 continue;
                             }
+                            break;
                         default:
                             break;
 
