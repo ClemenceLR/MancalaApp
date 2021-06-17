@@ -11,18 +11,20 @@
 
       <MenuBar prefHeight="32.0" prefWidth="600.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Mancala">
             <items>
                 <MenuItem  onAction="#newMatch" mnemonicParsing="false" text="New Match" />
                 <MenuItem onAction="#saveGame" mnemonicParsing="false" text="Save game" />
                 <MenuItem onAction="#loadGame" mnemonicParsing="false" text="Load game" />
+                <MenuItem onAction="#undo" mnemonicParsing="false" text="Undo" />
+                <MenuItem onAction="#forfeit" mnemonicParsing="false" text="Forfeit" />
                 <MenuItem onAction="#exit" mnemonicParsing="false" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Options">
             <items>
-                <MenuItem onAction="#undo" mnemonicParsing="false" text="Undo" />
-                <MenuItem onAction="#forfeit" mnemonicParsing="false" text="Forfeit" />
+                <MenuItem fx:id="seedDisplayOption" onAction="#changeSeedDisplay" mnemonicParsing="false"
+                          text="Hide seeds numbers" />
             </items>
           </Menu>
         <Menu mnemonicParsing="false" text="System" >

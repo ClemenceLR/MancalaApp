@@ -39,7 +39,6 @@ public class MainController {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/Menu.fxml"));
         Node menuNode = fxmlLoader.load();
-
         this.menuController = fxmlLoader.getController();
         this.menuController.setMainController(this);
         mainPane.getChildren().add(menuNode);
@@ -62,6 +61,7 @@ public class MainController {
         this.clientConfigScreenController = fxmlLoader.getController();
         this.clientConfigScreenController.setMainController(this);
         mainPane.getChildren().add(configScreenNode);
+
 
 
     }
@@ -96,6 +96,10 @@ public class MainController {
      */
     public GranaryController getGranaryController(){
         return this.granaryController;
+    }
+
+    public BoardController getBoardController(){
+        return this.boardController;
     }
 
     /**

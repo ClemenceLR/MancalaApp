@@ -213,7 +213,6 @@ public class Client {
     public void send(String toSend, Boolean isPriority){
         int i;
         String[] messages = toSend.split("@");
-
         if(myTurn || isPriority){
             for(i=0;i < messages.length;i++){
                 this.getOutput().println(messages[i]);

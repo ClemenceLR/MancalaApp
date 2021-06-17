@@ -3,6 +3,8 @@ package ensi.fr.mancala.client.controller;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -18,6 +20,7 @@ import java.util.Scanner;
 public class MenuController {
 
     MainController mainController;
+
     /**
      * Access the main controller by stocking it
      * @param mainController : main controller
@@ -110,11 +113,30 @@ public class MenuController {
         System.exit(0);
     }
 
-    /**
-     * New match
-     * @param actionEvent : action event
-     */
-    public void newMatch(ActionEvent actionEvent) {
-        //TODO
+    public void newMatch() {
+
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+        a.setTitle("Save ?");
+        a.setContentText("Would you like to save ?");
+
+        a.showAndWait();
+        if (a.getResult() == ButtonType.OK) {
+            this.saveGame();
+        }
+        this.mainController.getClient().send("R", false);
+    }
+
+    public void changeSeedDisplay(ActionEvent actionEvent) {
+        MenuItem menuItem = (MenuItem) actionEvent.getSource();
+        String menuItemText = menuItem.getText();
+        if(!menuItemText.equals("Hide seeds numbers")){
+            menuItem.setText("Hide seeds numbers");
+            this.mainController.getBoardController().changeSeedsDisplay(true);
+        }
+        else{
+            menuItem.setText("Show seeds numbers");
+            this.mainController.getBoardController().changeSeedsDisplay(false);
+        }
+
     }
 }

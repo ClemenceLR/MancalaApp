@@ -108,4 +108,27 @@ public class BoardController {
             circle.setFill(Paint.valueOf("LIGHTGREY"));
         }
     }
+
+    public void changeSeedsDisplay(boolean display){
+        try{
+            zero.getChildren().get(1).setVisible(display);
+            one.getChildren().get(1).setVisible(display);
+            two.getChildren().get(1).setVisible(display);
+            three.getChildren().get(1).setVisible(display);
+            four.getChildren().get(1).setVisible(display);
+            five.getChildren().get(1).setVisible(display);
+            six.getChildren().get(1).setVisible(display);
+            seven.getChildren().get(1).setVisible(display);
+            eight.getChildren().get(1).setVisible(display);
+            nine.getChildren().get(1).setVisible(display);
+            ten.getChildren().get(1).setVisible(display);
+            eleven.getChildren().get(1).setVisible(display);
+        }
+        catch(IndexOutOfBoundsException e){
+
+        }
+
+
+
+    }
 }
