@@ -214,8 +214,6 @@ public class Server {
                             //String choice = receive(opponentPlayerID);
                             send(activePlayerID,this.match.toString());
                             break;
-                        case "S":
-                            break;
                         case "F":
                              if(this.match.getGame().board.getTotalSeeds() <=10) {
                                  send(opponentPlayerID, "ff");

@@ -211,6 +211,8 @@ public class Client {
      * @param isPriority : boolean
      */
     public void send(String toSend, Boolean isPriority){
+        int i;
+        String[] messages = toSend.split("@");
 
         if(myTurn || isPriority){
             for(i=0;i < messages.length;i++){
@@ -219,15 +221,10 @@ public class Client {
 
         }
         else{
-            if(alreadySend ==1) {
                 Alert a = new Alert(Alert.AlertType.INFORMATION);
                 a.setContentText("Action reserved to actual player !");
                 a.setTitle("Action forbidden");
                 a.showAndWait();
-                alreadySend +=1;
-            }else{
-                alreadySend =1;
-            }
         }
     }
 
