@@ -52,9 +52,7 @@ public class Player {
         return this.name;
     }
 
-    /**
-     * Sets the player name
-     */
+
     public void setName(String name){
         this.name = name;
     }

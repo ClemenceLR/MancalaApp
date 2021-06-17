@@ -24,7 +24,7 @@ public class MancalaApp extends Application {
     /**
      * Initialize the stage
      * @param primaryStage : stage
-     * @throws Exception : if fails
+     * @throws IOException : if fails
      */
     public void start(Stage primaryStage) throws IOException {
 

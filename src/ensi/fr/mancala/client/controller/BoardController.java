@@ -111,6 +111,7 @@ public class BoardController {
         }
     }
 
+
     public void changeSeedsDisplay(boolean display){
         try{
             zero.getChildren().get(1).setVisible(display);
