@@ -23,14 +23,14 @@ public class ManageFile {
     public static Game loadGameFromString(Player p1, Player p2, String game){
         Game g = new Game();
         String[] d = game.split(";");
-            p1.setName(d[1]);
-            p1.setGranary(Integer.parseInt(d[2]));
+            p1.setName(d[0]);
+            p1.setGranary(Integer.parseInt(d[1]));
             p1.setId(1);
 
-            p2.setName(d[3]);
-            p2.setGranary(Integer.parseInt(d[4]));
+            p2.setName(d[2]);
+            p2.setGranary(Integer.parseInt(d[3]));
             p2.setId(2);
-            int currentPlayer = Integer.parseInt(d[5]);
+            int currentPlayer = Integer.parseInt(d[4]);
             if(currentPlayer == 1){
                 g.setActivePlayer(p1);
                 g.setPassivePlayer(p2);
@@ -38,7 +38,7 @@ public class ManageFile {
                 g.setActivePlayer(p2);
                 g.setPassivePlayer(p1);
             }
-        g.setBoard(new Board(d[6]));
+            g.setBoard(new Board(d[5]));
 
             return g;
 

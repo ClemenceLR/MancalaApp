@@ -30,7 +30,11 @@ public class Game {
      */
     public Game(Player p1, Player p2){
         Random r = new Random();
-        int rand = r.nextInt(1)+1;
+        int rand = r.nextInt(2)+1;
+
+        p1.setGranary(0);
+        p2.setGranary(0);
+
         if(rand == 1){
             this.activePlayer = p1;
             this.passivePlayer = p2;
@@ -39,6 +43,7 @@ public class Game {
             this.passivePlayer = p1;
         }
         this.board = setPlayerBoard(rand);
+
 
     }
 
@@ -65,6 +70,13 @@ public class Game {
         this.activePlayer = g.activePlayer;
         this.passivePlayer = g.passivePlayer;
         this.board = g.board;
+        Check.setCellAvailable(this.board,this.activePlayer.getId());
+    }
+
+    public Game(Game game){
+        this.activePlayer = game.activePlayer;
+        this.passivePlayer = game.passivePlayer;
+        this.board = game.board;
         Check.setCellAvailable(this.board,this.activePlayer.getId());
     }
 

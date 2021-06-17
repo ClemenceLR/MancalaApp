@@ -44,6 +44,12 @@ public class Player {
         nbPlayers ++;
     }
 
+    public Player(Player p){
+        this.name = p.name;
+        this.granary = p.granary;
+        this.id = p.id;
+    }
+
     /**
      * Get the player name
      * @return player name

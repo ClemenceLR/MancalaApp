@@ -69,6 +69,7 @@ public class Server {
     public void sendUpdateGame(){
         int playerId = this.match.getGame().getActivePlayer().getId() - 1;
         int opponentId = (playerId +1) %2;
+
         send(playerId, "B");//Sending the updated board to first client
         send(playerId, this.match.getGame().getBoard().toString());
         send(playerId, this.match.getGame().getBoard().cellAvailable());
@@ -178,16 +179,15 @@ public class Server {
                             break;
                         case "U":
                             if(gameSave != null) {
-                                Game game = new Game(this.match.getGame().getPassivePlayer(), this.match.getGame().getActivePlayer(),
-                                        this.gameSave.toString());
-                                this.match.setGame(game);
+                                this.match.setGame(new Game(gameSave));
                                 send(activePlayerID, "C");
                                 send(opponentPlayerID, "C");
                                 int invert = activePlayerID;
                                 activePlayerID = opponentPlayerID;
                                 opponentPlayerID = invert;
+                                updatePlayerInClients();
                                 sendUpdateGame();
-                                continue;
+                                this.gameSave = null;
                             }
                             break;
                         default:
@@ -195,55 +195,60 @@ public class Server {
 
                     }
                 }
+                else{
+                    if (!activePlayerMessage.equals("")) {
 
-                if (!activePlayerMessage.equals("")) {
-
-                    switch(activePlayerMessage) {
-                        case "N":
-                            input = Integer.parseInt(receive(activePlayerID));
-                            if (input > 11) {
-                                input = -1;
-                            }
-                            this.gameSave = new Game();
-                            this.gameSave.setBoard(new Board(this.match.getGame().getBoard().getHoles()));
-                            this.gameSave.setActivePlayer(this.match.getGame().getActivePlayer());
-                            this.gameSave.setPassivePlayer(this.match.getGame().getPassivePlayer());
-                            lastVisitedCell = this.match.getGame().play(input);
-                            break;
-                        case "L":
-                            loadMatch(activePlayerID,opponentPlayerID,activePlayerID);
-                            activePlayerID = this.match.getGame().getActivePlayer().getId()-1;
-                            opponentPlayerID = this.match.getGame().getPassivePlayer().getId()-1;
-                            break;
-                        case "Q":
-                            send(opponentPlayerID,"S");
-                            send(activePlayerID,this.match.toString());
-                            break;
-                        case "F":
-                             if(this.match.getGame().getBoard().getTotalSeeds() <=10) {
-                                 send(opponentPlayerID, "ff");
-                                 String r = receive(opponentPlayerID);
-                                 if (r.equals("f")) {
-                                     this.match.getGame().splitRemainingSeed();
-                                     break;
-                                 }
-                                 send(activePlayerID, "n");
-                             }
+                        switch(activePlayerMessage) {
+                            case "N":
+                                input = Integer.parseInt(receive(activePlayerID));
+                                if (input > 11) {
+                                    input = -1;
+                                }
+                                this.gameSave = new Game();
+                                this.gameSave.setBoard(new Board(this.match.getGame().getBoard().getHoles()));
+                                this.gameSave.setActivePlayer(new Player(this.match.getGame().getActivePlayer()));
+                                this.gameSave.setPassivePlayer(new Player(this.match.getGame().getPassivePlayer()));
+                                lastVisitedCell = this.match.getGame().play(input);
+                                System.out.println("Play : " + this.match.getGame().toString());
                                 break;
-                        case "G":
-                            send(activePlayerID,"G");
-                            send(activePlayerID,this.match.toString());
-                            break;
+                            case "L":
+                                loadMatch(activePlayerID,opponentPlayerID,activePlayerID);
+                                activePlayerID = this.match.getGame().getActivePlayer().getId()-1;
+                                opponentPlayerID = this.match.getGame().getPassivePlayer().getId()-1;
+                                break;
+                            case "Q":
+                                send(opponentPlayerID,"S");
+                                send(activePlayerID,this.match.toString());
+                                break;
+                            case "F":
+                                if(this.match.getGame().getBoard().getTotalSeeds() <=10) {
+                                    send(opponentPlayerID, "ff");
+                                    String r = receive(opponentPlayerID);
+                                    if (r.equals("f")) {
+                                        this.match.getGame().splitRemainingSeed();
+                                        break;
+                                    }
+                                    send(activePlayerID, "n");
+                                }
+                                break;
+                            case "G":
+                                send(activePlayerID,"G");
+                                send(activePlayerID,this.match.toString());
+                                break;
 
-                        case "R":
-                            this.match = new Match(this.clients[0].getPlayer(), this.clients[1].getPlayer());
-                            sendMatchData();
-                            sendUpdateGame();
-                            break;
-                        default:
-                            break;
+                            case "R":
+                                this.match = new Match(this.clients[0].getPlayer(), this.clients[1].getPlayer());
+                                sendMatchData();
+                                sendUpdateGame();
+                                break;
+                            default:
+                                break;
+                        }
                     }
+
                 }
+
+
             }
             while(lastVisitedCell == -1);
             Check.checkEatableCells(lastVisitedCell,this.match.getGame().getActivePlayer(), this.match.getGame().getBoard());
@@ -273,6 +278,19 @@ public class Server {
 
         Game game = new Game(this.clients[0].getPlayer(),this.clients[1].getPlayer());
         this.match.setGame(game);
+        this.gameSave = null;
+    }
+
+    private void updatePlayerInClients() {
+        Player activePlayer = this.match.getGame().getActivePlayer();
+        Player passivePlayer = this.match.getGame().getActivePlayer();
+
+        int activePlayerClientId = (this.match.getGame().getActivePlayer().getId() +1)%2;
+        int passivePlayerClientId = (this.match.getGame().getActivePlayer().getId()+1)%2;
+
+        this.clients[activePlayerClientId].setPlayer(activePlayer);
+        this.clients[passivePlayerClientId].setPlayer(passivePlayer);
+
     }
 
     /**

@@ -12,7 +12,7 @@ import java.util.Scanner;
  * @author : Clémence Le Roux
  */
 public class ClientInterface{
-    private final Player player;
+    private Player player;
     private Scanner in;
     private PrintStream out;
     private final Socket me;
@@ -44,6 +44,10 @@ public class ClientInterface{
      */
     public Player getPlayer() {
         return this.player;
+    }
+
+    public void setPlayer(Player player){
+        this.player = player;
     }
 
     /**
