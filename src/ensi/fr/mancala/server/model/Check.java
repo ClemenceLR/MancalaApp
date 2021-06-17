@@ -68,31 +68,31 @@ public class Check {
      * @return ending code (2 : match null, player id, -1 : game continues)
      */
     public static int isEndedGame(Game g){
-        int totalSeeds = g.board.getTotalSeeds();
-        int startHolePlayerId = (g.passivePlayer.getId() == 1?0:6);
+        int totalSeeds = g.getBoard().getTotalSeeds();
+        int startHolePlayerId = (g.getPassivePlayer().getId() == 1?0:6);
         int startHoleOpponentId = (startHolePlayerId + 6) % 12;
 
-        if(g.passivePlayer.getGranary() >= 25){
-            return g.passivePlayer.getId()-1;
+        if(g.getPassivePlayer().getGranary() >= 25){
+            return g.getPassivePlayer().getId()-1;
         }
 
         if(Check.nbCellsAvailable == 0){
-            g.activePlayer.addGranary(totalSeeds);
-            if(g.activePlayer.getGranary() > g.passivePlayer.getGranary()){
-                return g.activePlayer.getId()-1;
-            }else if(g.activePlayer.getGranary() == g.passivePlayer.getGranary()){
+            g.getActivePlayer().addGranary(totalSeeds);
+            if(g.getActivePlayer().getGranary() > g.getPassivePlayer().getGranary()){
+                return g.getActivePlayer().getId()-1;
+            }else if(g.getActivePlayer().getGranary() == g.getPassivePlayer().getGranary()){
                 return 2;
             }else{
-                return g.passivePlayer.getId()-1;
+                return g.getPassivePlayer().getId()-1;
             }
         }
 
-        if(totalSeeds <= 6 && ennemyIsHungry(g.board, startHoleOpponentId) && Check.nbCellsAvailable == 0){
-            return g.passivePlayer.getId()-1;
+        if(totalSeeds <= 6 && ennemyIsHungry(g.getBoard(), startHoleOpponentId) && Check.nbCellsAvailable == 0){
+            return g.getPassivePlayer().getId()-1;
         }
 
 
-        if(totalSeeds < 6 && g.passivePlayer.getGranary() < 24 && g.activePlayer.getGranary() < 24){
+        if(totalSeeds < 6 && g.getPassivePlayer().getGranary() < 24 && g.getActivePlayer().getGranary() < 24){
             return 2;
         }
 

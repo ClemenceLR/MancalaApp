@@ -32,13 +32,13 @@ public class ManageFile {
             p2.setId(2);
             int currentPlayer = Integer.parseInt(d[5]);
             if(currentPlayer == 1){
-                g.activePlayer = p1;
-                g.passivePlayer = p2;
+                g.setActivePlayer(p1);
+                g.setPassivePlayer(p2);
             }else{
-                g.activePlayer = p2;
-                g.passivePlayer = p1;
+                g.setActivePlayer(p2);
+                g.setPassivePlayer(p1);
             }
-        g.board = new Board(d[6]);
+        g.setBoard(new Board(d[6]));
 
             return g;
 
@@ -110,13 +110,13 @@ public class ManageFile {
 
         int currentPlayer = Integer.parseInt(d[4]);
         if(currentPlayer == 1){
-            g.activePlayer = p1;
-            g.passivePlayer = p2;
+            g.setActivePlayer(p1);
+            g.setPassivePlayer(p2);
         }else{
-            g.activePlayer = p2;
-            g.passivePlayer = p1;
+            g.setActivePlayer(p2);
+            g.setPassivePlayer(p1);
         }
-        g.board = new Board(d[5]);
-        Check.setCellAvailable(g.board,g.activePlayer.getId());
+        g.setBoard(new Board(d[5]));
+        Check.setCellAvailable(g.getBoard(),g.getActivePlayer().getId());
     }
 }

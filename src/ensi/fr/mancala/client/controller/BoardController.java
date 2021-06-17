@@ -125,6 +125,7 @@ public class BoardController {
             eleven.getChildren().get(1).setVisible(display);
         }
         catch(IndexOutOfBoundsException e){
+            System.err.println("Failed seeds display");
 
         }
 

@@ -16,7 +16,7 @@ import java.net.ServerSocket;
 public class Server {
     private final int port;
     private Match match;
-    private ServerSocket server;
+    private ServerSocket serverSocket;
     private Game gameSave;
     private final ClientInterface[] clients;
 
@@ -35,9 +35,9 @@ public class Server {
     public void start(){
 
         try {
-            this.server = new ServerSocket(this.port);
-            this.clients[0] = new ClientInterface(this.server.accept());
-            this.clients[1] = new ClientInterface(this.server.accept());
+            this.serverSocket = new ServerSocket(this.port);
+            this.clients[0] = new ClientInterface(this.serverSocket.accept());
+            this.clients[1] = new ClientInterface(this.serverSocket.accept());
 
             this.match = new Match(this.clients[0].getPlayer(), this.clients[1].getPlayer());
             sendNames(0);
@@ -67,17 +67,17 @@ public class Server {
      * Send board updated
      */
     public void sendUpdateGame(){
-        int playerId = this.match.getGame().activePlayer.getId() - 1;
+        int playerId = this.match.getGame().getActivePlayer().getId() - 1;
         int opponentId = (playerId +1) %2;
         send(playerId, "B");//Sending the updated board to first client
-        send(playerId, this.match.getGame().board.toString());
-        send(playerId, this.match.getGame().board.cellAvailable());
+        send(playerId, this.match.getGame().getBoard().toString());
+        send(playerId, this.match.getGame().getBoard().cellAvailable());
         send(playerId, "" + this.clients[0].getPlayer().getGranary());
         send(playerId, "" + this.clients[1].getPlayer().getGranary());
 
         send(opponentId, "B");//Sending the updated board to second client
-        send(opponentId, this.match.getGame().board.toString());
-        send(opponentId, this.match.getGame().board.forbidPlay());
+        send(opponentId, this.match.getGame().getBoard().toString());
+        send(opponentId, this.match.getGame().getBoard().forbidPlay());
         send(opponentId, "" + this.clients[0].getPlayer().getGranary());
         send(opponentId, "" + this.clients[1].getPlayer().getGranary());
     }
@@ -150,8 +150,8 @@ public class Server {
         String opponentPlayerMessage;
         int lastVisitedCell;
         do{
-            int activePlayerID = this.match.getGame().activePlayer.getId()-1;
-            int opponentPlayerID = this.match.getGame().passivePlayer.getId()-1;
+            int activePlayerID = this.match.getGame().getActivePlayer().getId()-1;
+            int opponentPlayerID = this.match.getGame().getPassivePlayer().getId()-1;
 
             do{
                 lastVisitedCell = -1;
@@ -170,23 +170,25 @@ public class Server {
                             break;
                         case "L":
                             loadMatch(opponentPlayerID, opponentPlayerID, activePlayerID);
-                            activePlayerID = this.match.getGame().activePlayer.getId()-1;
-                            opponentPlayerID = this.match.getGame().passivePlayer.getId()-1;
+                            activePlayerID = this.match.getGame().getActivePlayer().getId()-1;
+                            opponentPlayerID = this.match.getGame().getPassivePlayer().getId()-1;
                             break;
                         case "Q":
                             send(activePlayerID,"S");
                             break;
                         case "U":
-                            Game game = new Game(this.match.getGame().passivePlayer, this.match.getGame().activePlayer,
-                                    this.gameSave.toString());
-                            this.match.setGame(game);
-                            send(activePlayerID,"C");
-                            send(opponentPlayerID,"C");
-                            int invert = activePlayerID;
-                            activePlayerID = opponentPlayerID;
-                            opponentPlayerID = invert;
-                            sendUpdateGame();
-                            continue;
+                            if(gameSave != null) {
+                                Game game = new Game(this.match.getGame().getPassivePlayer(), this.match.getGame().getActivePlayer(),
+                                        this.gameSave.toString());
+                                this.match.setGame(game);
+                                send(activePlayerID, "C");
+                                send(opponentPlayerID, "C");
+                                int invert = activePlayerID;
+                                activePlayerID = opponentPlayerID;
+                                opponentPlayerID = invert;
+                                sendUpdateGame();
+                                continue;
+                            }
                         default:
                             break;
 
@@ -202,22 +204,22 @@ public class Server {
                                 input = -1;
                             }
                             this.gameSave = new Game();
-                            this.gameSave.board = new Board(this.match.getGame().board.getHoles());
-                            this.gameSave.activePlayer = this.match.getGame().activePlayer;
-                            this.gameSave.passivePlayer = this.match.getGame().passivePlayer;
+                            this.gameSave.setBoard(new Board(this.match.getGame().getBoard().getHoles()));
+                            this.gameSave.setActivePlayer(this.match.getGame().getActivePlayer());
+                            this.gameSave.setPassivePlayer(this.match.getGame().getPassivePlayer());
                             lastVisitedCell = this.match.getGame().play(input);
                             break;
                         case "L":
                             loadMatch(activePlayerID,opponentPlayerID,activePlayerID);
-                            activePlayerID = this.match.getGame().activePlayer.getId()-1;
-                            opponentPlayerID = this.match.getGame().passivePlayer.getId()-1;
+                            activePlayerID = this.match.getGame().getActivePlayer().getId()-1;
+                            opponentPlayerID = this.match.getGame().getPassivePlayer().getId()-1;
                             break;
                         case "Q":
                             send(opponentPlayerID,"S");
                             send(activePlayerID,this.match.toString());
                             break;
                         case "F":
-                             if(this.match.getGame().board.getTotalSeeds() <=10) {
+                             if(this.match.getGame().getBoard().getTotalSeeds() <=10) {
                                  send(opponentPlayerID, "ff");
                                  String r = receive(opponentPlayerID);
                                  if (r.equals("f")) {
@@ -243,10 +245,10 @@ public class Server {
                 }
             }
             while(lastVisitedCell == -1);
-            Check.checkEatableCells(lastVisitedCell,this.match.getGame().activePlayer, this.match.getGame().board);
+            Check.checkEatableCells(lastVisitedCell,this.match.getGame().getActivePlayer(), this.match.getGame().getBoard());
 
             this.match.getGame().changePlayer();
-            Check.setCellAvailable(this.match.getGame().board,this.match.getGame().activePlayer.getId());
+            Check.setCellAvailable(this.match.getGame().getBoard(),this.match.getGame().getActivePlayer().getId());
             winnerId = Check.isEndedGame(this.match.getGame());
 
             sendUpdateGame();
@@ -286,7 +288,7 @@ public class Server {
 
         if(m != null) {
             this.match = m;
-            if (this.match.getGame().activePlayer.getId() - 1 != activePlayerID) {
+            if (this.match.getGame().getActivePlayer().getId() - 1 != activePlayerID) {
                 send(activePlayerID, "C");
                 send(opponentPlayerID, "C");
             }
@@ -302,7 +304,7 @@ public class Server {
         try {
             send(0,"D");
             send(1,"D");
-            this.server.close();
+            this.serverSocket.close();
         }catch(IOException e){
             System.err.println("The server failed to close");
         }

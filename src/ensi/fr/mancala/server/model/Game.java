@@ -1,5 +1,7 @@
 package ensi.fr.mancala.server.model;
 
+import java.util.Random;
+
 /**
 This class is the main core of the project : it is the main part of the model
 Managing the game party
@@ -9,10 +11,9 @@ Managing the game party
 * */
 public class Game {
 
-    public Board board;
-    public Board previousBoard;
-    public Player activePlayer;
-    public Player passivePlayer;
+    private Board board;
+    private Player activePlayer;
+    private Player passivePlayer;
 
     /**
      * Construct a new game by initializing the board and players
@@ -28,7 +29,8 @@ public class Game {
      * @param p2 : player two
      */
     public Game(Player p1, Player p2){
-        int rand = (int)(Math.random()*2)+1;
+        Random r = new Random();
+        int rand = r.nextInt(1)+1;
         if(rand == 1){
             this.activePlayer = p1;
             this.passivePlayer = p2;
@@ -38,7 +40,6 @@ public class Game {
         }
         this.board = setPlayerBoard(rand);
 
-        this.previousBoard = this.board;
     }
 
     /**
@@ -52,7 +53,6 @@ public class Game {
         this.activePlayer = g.activePlayer;
         this.passivePlayer = g.passivePlayer;
         this.board = g.board;
-        this.previousBoard = g.board;
         Check.setCellAvailable(this.board,this.activePlayer.getId());
     }
 
@@ -65,7 +65,6 @@ public class Game {
         this.activePlayer = g.activePlayer;
         this.passivePlayer = g.passivePlayer;
         this.board = g.board;
-        this.previousBoard = g.board;
         Check.setCellAvailable(this.board,this.activePlayer.getId());
     }
 
@@ -167,13 +166,6 @@ public class Game {
         this.board = board;
     }
 
-    public Board getPreviousBoard() {
-        return previousBoard;
-    }
-
-    public void setPreviousBoard(Board previousBoard) {
-        this.previousBoard = previousBoard;
-    }
 
     public Player getActivePlayer() {
         return activePlayer;

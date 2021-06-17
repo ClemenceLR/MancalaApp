@@ -10,16 +10,15 @@ public class Player {
     private String name;
     private int granary;
     private int id;
-    public static int nbJoueurs = 1;
-
+    private static int  nbPlayers = 1;
     /**
      * Player constructor
      */
     public Player(){
-        this.name = "toto"+nbJoueurs;
-        this.id = nbJoueurs;
+        this.name = "toto"+nbPlayers;
+        this.id = nbPlayers;
         this.granary = 0;
-        nbJoueurs +=1;
+        nbPlayers ++;
     }
 
     /**
@@ -28,9 +27,9 @@ public class Player {
      */
     public Player(String n){
         this.name = n;
-        this.id = nbJoueurs;
+        this.id = nbPlayers;
         this.granary = 0;
-        nbJoueurs +=1;
+        nbPlayers ++;
     }
 
     /**
@@ -41,8 +40,8 @@ public class Player {
     public Player(String n, int g){
         this.name = n;
         this.granary = g;
-        this.id = nbJoueurs;
-        nbJoueurs +=1;
+        this.id = nbPlayers;
+        nbPlayers ++;
     }
 
     /**
@@ -75,11 +74,6 @@ public class Player {
     public void setId(int id) {
         this.id = id;
     }
-
-    public static int getNbJoueurs() {
-        return nbJoueurs;
-    }
-
 
 
     /**

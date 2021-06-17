@@ -53,15 +53,6 @@ public class Board {
     }
 
     /**
-     * Print the board
-     */
-    public void printBoard() {
-        for (Cell h : holes) {
-            System.out.print(" " + h.getNbSeeds() + " ");
-        }
-    }
-
-    /**
      * Return the board in the string format in order to save it
      * @return data : string representing the board with int values
      */

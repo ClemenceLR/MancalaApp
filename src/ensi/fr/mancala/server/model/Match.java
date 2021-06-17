@@ -88,15 +88,15 @@ public class Match {
      */
     public String toString(){
         String prepareData = "ME0:"+this.getMatchNum() +":";
-        if(this.getGame().activePlayer.getId() == 1){
+        if(this.getGame().getActivePlayer().getId() == 1){
             prepareData+= this.getScore(0) +":" +this.getScore(1) +":";
-            prepareData += this.getGame().activePlayer.getName() + ";" + this.getGame().activePlayer.getGranary() + ";" + this.getGame().passivePlayer.getName() + ";" + this.getGame().passivePlayer.getGranary();
+            prepareData += this.getGame().getActivePlayer().getName() + ";" + this.getGame().getActivePlayer().getGranary() + ";" + this.getGame().getPassivePlayer().getName() + ";" + this.getGame().getPassivePlayer().getGranary();
         }else{
             prepareData += this.getScore(1) +":"+this.getScore(0)+":";
-            prepareData += this.getGame().passivePlayer.getName() + ";" +this.getGame().passivePlayer.getGranary() + ";" + this.getGame().activePlayer.getName() + ";" + this.getGame().activePlayer.getGranary();
+            prepareData += this.getGame().getPassivePlayer().getName() + ";" +this.getGame().getPassivePlayer().getGranary() + ";" + this.getGame().getActivePlayer().getName() + ";" + this.getGame().getActivePlayer().getGranary();
         }
-        prepareData +=";"+ this.getGame().activePlayer.getId()+";";
-        prepareData += this.getGame().board.toString();
+        prepareData +=";"+ this.getGame().getActivePlayer().getId()+";";
+        prepareData += this.getGame().getBoard().toString();
         return prepareData;
     }
 
