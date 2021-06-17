@@ -71,7 +71,6 @@ public class Server {
     public void sendUpdateGame(){
         int playerId = this.match.getGame().activePlayer.id - 1;
         int opponentId = (playerId +1) %2;
-        System.out.println("ALORS" + playerId + "POURQUOI" + opponentId);
         send(playerId, "B");//Sending the updated board to first client
         send(playerId, this.match.getGame().board.toString());
         send(playerId, this.match.getGame().board.cellAvailable());
@@ -172,24 +171,7 @@ public class Server {
                             send(opponentPlayerID,this.match.toString());
                             break;
                         case "L":
-                            String file = receive(opponentPlayerID);
-
-                            System.out.println(this.match);
-
-                            this.match = ManageFile.loadMatchFromString(file);
-                            System.out.println(this.match);
-
-                            System.out.println("AP ID : " + activePlayerID + "OID :"+opponentPlayerID);
-
-                            if(this.match.getGame().activePlayer.id-1 != activePlayerID){
-                                int temp = activePlayerID;
-                                activePlayerID = opponentPlayerID;
-                                opponentPlayerID = temp;
-                                send(activePlayerID,"C");
-                                send(opponentPlayerID,"C");
-                            }
-                            sendMatchData();
-                            sendUpdateGame();
+                            loadMatch(opponentPlayerID, opponentPlayerID, activePlayerID);
                             break;
                         case "Q":
                             send(activePlayerID,"S");
@@ -224,19 +206,7 @@ public class Server {
                             lastVisitedCell = this.match.getGame().play(input);
                             break;
                         case "L":
-                            String file = receive(activePlayerID);
-
-                            System.out.println(this.match);
-                            this.match = ManageFile.loadMatchFromString(file);
-                            if(this.match.getGame().activePlayer.id-1 != activePlayerID){
-                                int temp = activePlayerID;
-                                activePlayerID = opponentPlayerID;
-                                opponentPlayerID = temp;
-                                send(activePlayerID,"C");
-                                send(opponentPlayerID,"C");
-                            }
-                            sendMatchData();
-                            sendUpdateGame();
+                            loadMatch(activePlayerID,opponentPlayerID,activePlayerID);
                             break;
                         case "Q":
                             send(opponentPlayerID,"S");
@@ -291,6 +261,32 @@ public class Server {
 
         Game game = new Game(this.clients[0].getPlayer(),this.clients[1].getPlayer());
         this.match.setGame(game);
+    }
+
+    /**
+     * Load a match from received data
+    * @param idP1 : trigger Id
+     * @param opponentPlayerID : current opponent id
+     * @param activePlayerID : current active player id
+     */
+    public void loadMatch(int idP1, int opponentPlayerID, int activePlayerID){
+        String file = receive(idP1);
+        Match m;
+
+        m = ManageFile.loadMatchFromString(file);
+
+        if(m != null) {
+            this.match = m;
+            if (this.match.getGame().activePlayer.id - 1 != activePlayerID) {
+                int temp = activePlayerID;
+                activePlayerID = opponentPlayerID;
+                opponentPlayerID = temp;
+                send(activePlayerID, "C");
+                send(opponentPlayerID, "C");
+            }
+            sendMatchData();
+            sendUpdateGame();
+        }
     }
 
     /**

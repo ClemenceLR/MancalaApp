@@ -51,7 +51,7 @@ public class ManageFile {
         Match m = new Match();
         String[] data = match.split(":");
         if(!data[0].equals("ME0")){
-            return m;
+            return null;
         }
         m.setMatchNum(Integer.parseInt(data[1]));
         m.setScore(0,Integer.parseInt(data[2]));
