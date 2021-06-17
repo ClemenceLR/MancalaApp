@@ -47,8 +47,8 @@ public class MenuController {
                 e.printStackTrace();
             }
 
-            this.mainController.getClient().send("L", false);
-            this.mainController.getClient().send(res.toString(), false);
+            this.mainController.getClient().send("L", true);
+            this.mainController.getClient().send(res.toString(), true);
         }
     }
 

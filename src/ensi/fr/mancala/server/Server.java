@@ -71,7 +71,7 @@ public class Server {
     public void sendUpdateGame(){
         int playerId = this.match.getGame().activePlayer.id - 1;
         int opponentId = (playerId +1) %2;
-
+        System.out.println("ALORS" + playerId + "POURQUOI" + opponentId);
         send(playerId, "B");//Sending the updated board to first client
         send(playerId, this.match.getGame().board.toString());
         send(playerId, this.match.getGame().board.cellAvailable());
@@ -171,6 +171,26 @@ public class Server {
                         case "G":
                             send(opponentPlayerID,this.match.toString());
                             break;
+                        case "L":
+                            String file = receive(opponentPlayerID);
+
+                            System.out.println(this.match);
+
+                            this.match = ManageFile.loadMatchFromString(file);
+                            System.out.println(this.match);
+
+                            System.out.println("AP ID : " + activePlayerID + "OID :"+opponentPlayerID);
+
+                            if(this.match.getGame().activePlayer.id-1 != activePlayerID){
+                                int temp = activePlayerID;
+                                activePlayerID = opponentPlayerID;
+                                opponentPlayerID = temp;
+                                send(activePlayerID,"C");
+                                send(opponentPlayerID,"C");
+                            }
+                            sendMatchData();
+                            sendUpdateGame();
+                            break;
                         case "Q":
                             send(activePlayerID,"S");
                             break;
@@ -217,7 +237,6 @@ public class Server {
                             }
                             sendMatchData();
                             sendUpdateGame();
-
                             break;
                         case "Q":
                             send(opponentPlayerID,"S");
