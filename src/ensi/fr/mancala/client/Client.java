@@ -3,6 +3,7 @@ package ensi.fr.mancala.client;
 import ensi.fr.mancala.client.controller.MainController;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -44,6 +45,7 @@ public class Client {
         this.addr = addr;
         this.port = port;
         this.pseudo = pseudo;
+        this.myTurn = false;
     }
 
     /**
@@ -101,6 +103,11 @@ public class Client {
         this.timer.cancel();
         try {
             this.me.close();
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setContentText("Rematch has not been accepted by both players. You had been disconnected from server");
+            a.setTitle("End of match !");
+            a.showAndWait();
+
         }catch (IOException e){
             System.err.println("Disconnection failed");
 
@@ -185,6 +192,38 @@ public class Client {
                     break;
                 case "S":
                     this.mainController.needSave();
+                    break;
+                case "U":
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            Alert a = new Alert(Alert.AlertType.INFORMATION);
+                            a.setContentText("Would you like to rematch ?");
+                            a.setTitle("Rematch ?");
+                            a.showAndWait();
+
+                            if (a.getResult() == ButtonType.OK) {
+                                send("Y",true);
+                            }
+                            else{
+                                send("N",true);
+                            }
+
+                        }
+                    });
+                    break;
+                case "r":
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                            a.setContentText("Your opponent has rollback his moove");
+                            a.setTitle("Rollback");
+                            a.showAndWait();
+
+
+                        }
+                    });
                     break;
                 default:
                     break;
