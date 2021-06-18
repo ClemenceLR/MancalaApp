@@ -44,7 +44,8 @@ public class Match {
      * @param game : game
      */
     public void setGame(Game game) {
-        this.game = game;
+        this.game.setBoard(game.getBoard());
+        this.game.updatePlayers(game.getActivePlayer(), game.getPassivePlayer());
     }
 
     /**

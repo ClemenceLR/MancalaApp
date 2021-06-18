@@ -195,4 +195,9 @@ public class Game {
         this.passivePlayer = passivePlayer;
     }
 
+    public void updatePlayers(Player activePlayer, Player passivePlayer){
+        this.activePlayer.update(activePlayer);
+        this.passivePlayer.update(passivePlayer);
+    }
+
 }

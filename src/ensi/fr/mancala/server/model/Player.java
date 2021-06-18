@@ -50,6 +50,12 @@ public class Player {
         this.id = p.id;
     }
 
+    public void update(Player p){
+        this.name = p.name;
+        this.granary = p.granary;
+        this.id = p.id;
+    }
+
     /**
      * Get the player name
      * @return player name

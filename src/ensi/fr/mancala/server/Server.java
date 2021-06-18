@@ -178,14 +178,16 @@ public class Server {
                             send(activePlayerID,"S");
                             break;
                         case "U":
+                            System.out.println("coucou");
                             if(gameSave != null) {
-                                this.match.setGame(new Game(gameSave));
+                                System.out.println("cici");
+                                this.match.setGame(gameSave);
                                 send(activePlayerID, "C");
                                 send(opponentPlayerID, "C");
+                                send(activePlayerID, "U");
                                 int invert = activePlayerID;
                                 activePlayerID = opponentPlayerID;
                                 opponentPlayerID = invert;
-                                updatePlayerInClients();
                                 sendUpdateGame();
                                 this.gameSave = null;
                             }
@@ -281,18 +283,6 @@ public class Server {
         this.gameSave = null;
     }
 
-    private void updatePlayerInClients() {
-        Player activePlayer = this.match.getGame().getActivePlayer();
-        Player passivePlayer = this.match.getGame().getActivePlayer();
-
-        int activePlayerClientId = (this.match.getGame().getActivePlayer().getId() +1)%2;
-        int passivePlayerClientId = (this.match.getGame().getActivePlayer().getId()+1)%2;
-
-        this.clients[activePlayerClientId].setPlayer(activePlayer);
-        this.clients[passivePlayerClientId].setPlayer(passivePlayer);
-
-    }
-
     /**
      * Load a match from received data
     * @param idP1 : trigger Id
@@ -335,13 +325,31 @@ public class Server {
      * @param args args
      */
     public static void main(String[] args){
+        boolean replay;
+
         Server s = new Server(42000);
         s.start();
-        do {
-            s.sendUpdateGame();
-            s.play();
+        do{
+            replay = false;
+            do {
+                s.sendUpdateGame();
+                s.play();
+            }
+            while(s.match.getMatchNum() < Match.NB_GAMES + 1);
+
+            s.send(0, "r");
+            s.send(1, "r");
+
+            String answerPlayer0 = s.receive(0);
+            String answerPlayer1 = s.receive(1);
+
+            if(answerPlayer0 == "Y" && answerPlayer1 == "Y"){
+                replay = true;
+            }
         }
-        while(s.match.getMatchNum() < Match.NB_GAMES + 1);
+        while(replay);
+
+
         s.endConnection();
     }
 
