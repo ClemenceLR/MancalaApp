@@ -133,6 +133,7 @@ public class Client {
                     String score1 = receive();
                     String matchNum = receive();
                     this.mainController.getGranaryController().updateMatchData(score0,score1,matchNum);
+                    this.mainController.getGranaryController().updateTurnData("Opponent turn");
                     break;
 
                 case "C":

@@ -97,6 +97,7 @@ public class Server {
         send(0, score1String);
         send(0, matchNumString);
 
+
         send(1, "M");
         send(1, score0String);
         send(1, score1String);

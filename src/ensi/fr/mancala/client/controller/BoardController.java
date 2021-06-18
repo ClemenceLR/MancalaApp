@@ -57,7 +57,6 @@ public class BoardController {
         String stringToSend = (String) stackPane.getUserData();
         this.mainController.getClient().send("N@" + stringToSend, false);
         this.mainController.getClient().setMyTurn(false);
-        this.mainController.getGranaryController().updateTurnData("Opponent turn");
 
     }
 
