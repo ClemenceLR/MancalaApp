@@ -26,6 +26,8 @@
                 <MenuItem onAction="#changeSeedDisplay" mnemonicParsing="false" text="Hide seeds numbers"/>
                 <MenuItem onAction="#changeOnMouseEnteredOption" mnemonicParsing="false"
                           text="Don't show seeds numbers on mouse entered"/>
+                <MenuItem onAction="#playSound" mnemonicParsing="false" text="PlaySound" />
+
             </items>
           </Menu>
         <Menu mnemonicParsing="false" text="System" >

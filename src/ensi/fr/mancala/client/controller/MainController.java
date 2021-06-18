@@ -10,10 +10,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * Main controller : control all of the apps controller
@@ -28,7 +33,7 @@ public class MainController {
     private GranaryController granaryController;
     private BoardController boardController;
     private ClientConfigScreenController clientConfigScreenController;
-
+    private MediaPlayer ambiantSound;
     private Client client;
 
     /**
@@ -37,32 +42,43 @@ public class MainController {
      */
     public void initialize() throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/Menu.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/Menu.fxml"));
         Node menuNode = fxmlLoader.load();
         this.menuController = fxmlLoader.getController();
         this.menuController.setMainController(this);
         mainPane.getChildren().add(menuNode);
 
 
-        fxmlLoader = new FXMLLoader(getClass().getResource("../view/Granary.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource("/view/Granary.fxml"));
         Node granaryNode = fxmlLoader.load();
         this.granaryController = fxmlLoader.getController();
         this.granaryController.setMainController(this);
         mainPane.getChildren().add(granaryNode);
 
-        fxmlLoader = new FXMLLoader(getClass().getResource("../view/Board.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource("/view/Board.fxml"));
         Node boardNode = fxmlLoader.load();
         this.boardController = fxmlLoader.getController();
         this.boardController.setMainController(this);
         mainPane.getChildren().add(boardNode);
 
-        fxmlLoader = new FXMLLoader(getClass().getResource("../view/ClientConfigScreen.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource("/view/ClientConfigScreen.fxml"));
         Node configScreenNode = fxmlLoader.load();
         this.clientConfigScreenController = fxmlLoader.getController();
         this.clientConfigScreenController.setMainController(this);
         mainPane.getChildren().add(configScreenNode);
 
+        URL musicFile = getClass().getResource("/sounds/eeeaaaooo_loop.mp3");
 
+        Media sound = null;
+        try {
+            sound = new Media(musicFile.toURI().toString());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        this.ambiantSound = mediaPlayer;
+        getAmbiantSound().setVolume(0.1);
+        getAmbiantSound().setCycleCount(AudioClip.INDEFINITE);
 
     }
 
@@ -189,5 +205,13 @@ public class MainController {
             }
         });
 
+    }
+
+    public MediaPlayer getAmbiantSound() {
+        return ambiantSound;
+    }
+
+    public void setAmbiantSound(MediaPlayer ambiantSound) {
+        this.ambiantSound = ambiantSound;
     }
 }

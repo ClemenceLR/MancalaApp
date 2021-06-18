@@ -76,6 +76,9 @@ public class ClientConfigScreenController {
                 this.mainController.getMainPane().getChildren().remove(configScreenPane);
             }
 
+            this.mainController.getAmbiantSound().play();
+
+
         }
         catch(Exception e){
             System.err.println("Client creation failed");

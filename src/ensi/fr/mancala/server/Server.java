@@ -34,6 +34,7 @@ public class Server {
      */
     public void start(){
 
+        System.out.println("Server started ! Waiting for clients...");
         try {
             this.serverSocket = new ServerSocket(this.port);
             this.clients[0] = new ClientInterface(this.serverSocket.accept());
@@ -327,7 +328,18 @@ public class Server {
     public static void main(String[] args){
         boolean replay;
 
-        Server s = new Server(42000);
+        if (args.length != 1){
+            System.err.println("port missing ! Syntax is Server [port number]");
+            System.exit(-1);
+        }
+        int port = 42000;
+        try{
+            port = Integer.parseInt(args[0]);
+        }catch (NumberFormatException e){
+            System.err.println("Bad format port !");
+            System.exit(-1);
+        }
+        Server s = new Server(port);
         s.start();
         do{
             replay = false;

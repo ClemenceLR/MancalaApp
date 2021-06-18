@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * Class in charge to launch the app controllers
@@ -28,7 +29,11 @@ public class MancalaApp extends Application {
      */
     public void start(Stage primaryStage) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Game.fxml"));
+        URL location = getClass().getResource("/view/Game.fxml");
+        System.out.println(location);
+        FXMLLoader loader = new FXMLLoader(location);
+        // FXMLLoader loader = new FXMLLoader(new File("ressources/view/Game.fxml").toURI().toURL());
+
         Parent root = loader.load();
 
         primaryStage.setScene(new Scene(root));

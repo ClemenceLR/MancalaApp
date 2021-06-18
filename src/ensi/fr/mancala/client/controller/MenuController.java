@@ -22,7 +22,7 @@ public class MenuController {
     MainController mainController;
 
     public static boolean isCellNumbersHide = false;
-
+    private static boolean isAmbiantSound = true;
     /**
      * Access the main controller by stocking it
      * @param mainController : main controller
@@ -156,5 +156,21 @@ public class MenuController {
             menuItem.setText("Show seed number on mouse entered");
         }
 
+    }
+
+    /**
+     * Manage the playing of the sounds of the app
+     * @param actionEvent : trigger
+     */
+    public void playSound(ActionEvent actionEvent){
+        MenuItem menuItem = (MenuItem) actionEvent.getSource();
+
+        if(isAmbiantSound){
+            this.mainController.getAmbiantSound().pause();
+            isAmbiantSound = false;
+        }else{
+            this.mainController.getAmbiantSound().play();
+            isAmbiantSound = true;
+        }
     }
 }
