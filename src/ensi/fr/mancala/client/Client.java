@@ -176,14 +176,14 @@ public class Client {
 
                 case "R":
                     String r = receive();
-                    String result = (r.equals("=") ? "Egalité" : (r.equals("+") ? "Gagné !" : "Perdu..."));
+                    String result = (r.equals("=") ? "Equality" : (r.equals("+") ? "Win !" : "Loose..."));
 
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
                             Alert a = new Alert(Alert.AlertType.INFORMATION);
                             a.setContentText(result);
-                            a.setTitle("Jeu Terminé !");
+                            a.setTitle("Game is Over !");
                             a.showAndWait();
                         }
                     });

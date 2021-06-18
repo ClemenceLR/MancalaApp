@@ -192,25 +192,17 @@ public class MenuController {
 
     public String readRules(){
         String rules = "";
-        try
-        {
 
-            FileInputStream file =new FileInputStream(new File(getClass().getResource("/rules/rules.txt").toURI()));
-            Scanner scanner = new Scanner(file);
-            System.out.println("File :" + file);
+        InputStream file = getClass().getResourceAsStream("/rules/rules.txt");
+        Scanner scanner = new Scanner(file);
 
-            while(scanner.hasNextLine())
-            {
-                System.out.println(rules);
-                rules += scanner.nextLine();
-                rules += "\n\n";
-            }
-            scanner.close();
-        }
-        catch(IOException | URISyntaxException e)
+        while(scanner.hasNextLine())
         {
-            System.err.println(e);
+            System.out.println(rules);
+            rules += scanner.nextLine();
+            rules += "\n\n";
         }
+        scanner.close();
         return rules;
     }
 }
