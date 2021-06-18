@@ -31,6 +31,7 @@
                 <MenuItem onAction="#changeSeedDisplay" mnemonicParsing="false" text="Hide seeds numbers"/>
                 <MenuItem onAction="#changeOnMouseEnteredOption" mnemonicParsing="false"
                           text="Don't show seeds numbers on mouse entered"/>
+                <MenuItem onAction="#playMusic" mnemonicParsing="false" text="Stop music" />
                 <MenuItem onAction="#playSound" mnemonicParsing="false" text="Stop sounds" />
             </items>
           </Menu>

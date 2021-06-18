@@ -162,20 +162,29 @@ public class MenuController {
      * Manage the playing of the sounds of the app
      * @param actionEvent : trigger
      */
-    public void playSound(ActionEvent actionEvent){
+    public void playMusic(ActionEvent actionEvent){
         MenuItem menuItem = (MenuItem) actionEvent.getSource();
 
         if(isAmbiantSound){
             this.mainController.getAmbiantSound().pause();
-            this.mainController.getButtonSound().stop();
-            menuItem.setText("Play sounds");
+            menuItem.setText("Play music");
             isAmbiantSound = false;
-            BoardController.setIsAmbiantSound(false);
         }else{
             this.mainController.getAmbiantSound().play();
+            menuItem.setText("Stop music");
+            isAmbiantSound = true;
+        }
+    }
+
+    public void playSound(ActionEvent actionEvent){
+        MenuItem menuItem = (MenuItem) actionEvent.getSource();
+        if(BoardController.isAmbiantSound){
+            this.mainController.getButtonSound().stop();
+            menuItem.setText("Play sounds");
+            BoardController.setIsAmbiantSound(false);
+        }else{
             menuItem.setText("Stop sounds");
             BoardController.setIsAmbiantSound(true);
-            isAmbiantSound = true;
         }
     }
 
