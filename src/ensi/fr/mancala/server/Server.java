@@ -164,6 +164,7 @@ public class Server {
                     opponentPlayerMessage = receiveNB(opponentPlayerID);
                 }while(activePlayerMessage.equals("") && opponentPlayerMessage.equals(""));
 
+
                 if (!opponentPlayerMessage.equals("")){
                     switch (opponentPlayerMessage) {
                         case "G":

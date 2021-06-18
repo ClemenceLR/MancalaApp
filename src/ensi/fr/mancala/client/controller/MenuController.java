@@ -178,4 +178,39 @@ public class MenuController {
             isAmbiantSound = true;
         }
     }
+
+    public void showRules() {
+
+        String rules = this.readRules();
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setContentText(rules);
+        a.setTitle("Rules");
+        a.setHeaderText("Rules");
+        a.showAndWait();
+
+    }
+
+    public String readRules(){
+        String rules = "";
+        try
+        {
+
+            FileInputStream file =new FileInputStream(new File(getClass().getResource("/rules/rules.txt").toURI()));
+            Scanner scanner = new Scanner(file);
+            System.out.println("File :" + file);
+
+            while(scanner.hasNextLine())
+            {
+                System.out.println(rules);
+                rules += scanner.nextLine();
+                rules += "\n\n";
+            }
+            scanner.close();
+        }
+        catch(IOException | URISyntaxException e)
+        {
+            System.err.println(e);
+        }
+        return rules;
+    }
 }

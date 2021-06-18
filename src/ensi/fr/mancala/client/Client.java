@@ -195,6 +195,19 @@ public class Client {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
+                            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                            a.setContentText("Your opponent has rollback his moove");
+                            a.setTitle("Rollback");
+                            a.showAndWait();
+
+
+                        }
+                    });
+                    break;
+                case "r":
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
                             Alert a = new Alert(Alert.AlertType.INFORMATION);
                             a.setContentText("Would you like to rematch ?");
                             a.setTitle("Rematch ?");
@@ -210,19 +223,7 @@ public class Client {
                         }
                     });
                     break;
-                case "r":
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-                            a.setContentText("Your opponent has rollback his moove");
-                            a.setTitle("Rollback");
-                            a.showAndWait();
 
-
-                        }
-                    });
-                    break;
                 default:
                     break;
 

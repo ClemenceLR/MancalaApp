@@ -63,6 +63,6 @@ public class GranaryController {
      * @param matchNum : match num
      */
     public void updateMatchData(String scoreP0, String scoreP1, String matchNum){
-        this.matchData.setText("Match " + matchNum + " : score is " + scoreP0 + "-" + scoreP1);
+        this.matchData.setText("Game " + matchNum + " : score is " + scoreP0 + "-" + scoreP1);
     }
 }
