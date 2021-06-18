@@ -118,7 +118,6 @@ public class Client {
      */
     public void playGame() {
             String code = receive();
-
             switch (code){
                 case "B" :
                     this.updateGame();
@@ -249,7 +248,6 @@ public class Client {
      * @param isPriority : boolean
      */
     public void send(String toSend, Boolean isPriority){
-        System.out.println("Bonjour on envoie "+ toSend);
         int i;
         String[] messages = toSend.split("@");
         if(myTurn || isPriority){

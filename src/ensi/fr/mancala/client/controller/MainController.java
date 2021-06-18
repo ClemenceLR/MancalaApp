@@ -34,6 +34,7 @@ public class MainController {
     private BoardController boardController;
     private ClientConfigScreenController clientConfigScreenController;
     private MediaPlayer ambiantSound;
+    private AudioClip buttonSound;
     private Client client;
 
     /**
@@ -67,19 +68,23 @@ public class MainController {
         this.clientConfigScreenController.setMainController(this);
         mainPane.getChildren().add(configScreenNode);
 
-        URL musicFile = getClass().getResource("/sounds/eeeaaaooo_loop.mp3");
-
+        URL musicFile = getClass().getResource("/sounds/professor-layton-and-the-last-specter-puzzle.mp3");
+        URL musicButton = getClass().getResource("/sounds/gouttedo.mp3");
         Media sound = null;
+        AudioClip soundButton = null;
         try {
             sound = new Media(musicFile.toURI().toString());
+            soundButton = new AudioClip(musicButton.toURI().toString());
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         this.ambiantSound = mediaPlayer;
-        getAmbiantSound().setVolume(0.1);
         getAmbiantSound().setCycleCount(AudioClip.INDEFINITE);
 
+        AudioClip mediaB = soundButton;
+        this.buttonSound = mediaB;
+        getAmbiantSound().setCycleCount(1);
     }
 
     /**
@@ -210,8 +215,8 @@ public class MainController {
     public MediaPlayer getAmbiantSound() {
         return ambiantSound;
     }
-
-    public void setAmbiantSound(MediaPlayer ambiantSound) {
-        this.ambiantSound = ambiantSound;
+    public AudioClip getButtonSound() {
+        return buttonSound;
     }
+
 }

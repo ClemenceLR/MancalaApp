@@ -21,6 +21,9 @@ public class BoardController {
 
     public static boolean showOnMouseEntered = true;
 
+
+    public static boolean isAmbiantSound = true;
+
     @FXML private StackPane zero;
     @FXML private StackPane one;
     @FXML private StackPane two;
@@ -47,11 +50,13 @@ public class BoardController {
      * @param mouseEvent : click
      */
     public void play(MouseEvent mouseEvent) {
+        if(isAmbiantSound) {
+            this.mainController.getButtonSound().play();
+        }
         StackPane stackPane = (StackPane) mouseEvent.getSource();
         String stringToSend = (String) stackPane.getUserData();
         this.mainController.getClient().send("N@" + stringToSend, false);
         this.mainController.getClient().setMyTurn(false);
-        System.out.println("NOT MY TURN ANYMORE " + this.mainController.getClient().getMyTurn());
 
     }
 
@@ -152,4 +157,9 @@ public class BoardController {
         }
 
     }
+
+    public static void setIsAmbiantSound(boolean isAmbiantSound) {
+        BoardController.isAmbiantSound = isAmbiantSound;
+    }
+
 }

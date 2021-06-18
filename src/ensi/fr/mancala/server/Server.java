@@ -179,9 +179,7 @@ public class Server {
                             send(activePlayerID,"S");
                             break;
                         case "U":
-                            System.out.println("coucou");
                             if(gameSave != null) {
-                                System.out.println("cici");
                                 this.match.setGame(gameSave);
                                 send(activePlayerID, "C");
                                 send(opponentPlayerID, "C");
@@ -200,14 +198,12 @@ public class Server {
                 }
                 else{
                     if (!activePlayerMessage.equals("")) {
-                        System.out.println("Suisici");
                         switch(activePlayerMessage) {
                             case "N":
                                 input = Integer.parseInt(receive(activePlayerID));
                                 if (input > 11) {
                                     input = -1;
                                 }
-                                System.out.println("Play : " + this.match.getGame().toString());
                                 this.gameSave = new Game();
                                 this.gameSave.setBoard(new Board(this.match.getGame().getBoard().getHoles()));
                                 this.gameSave.setActivePlayer(new Player(this.match.getGame().getActivePlayer()));
@@ -250,8 +246,6 @@ public class Server {
                     }
 
                 }
-
-                System.out.println("Suisici fin");
 
             }
             while(lastVisitedCell == -1);

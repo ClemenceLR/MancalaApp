@@ -30,9 +30,7 @@ public class MancalaApp extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         URL location = getClass().getResource("/view/Game.fxml");
-        System.out.println(location);
         FXMLLoader loader = new FXMLLoader(location);
-        // FXMLLoader loader = new FXMLLoader(new File("ressources/view/Game.fxml").toURI().toURL());
 
         Parent root = loader.load();
 

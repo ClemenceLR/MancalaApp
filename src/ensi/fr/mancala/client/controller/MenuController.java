@@ -95,7 +95,6 @@ public class MenuController {
      * Undo
      */
     public void undo(){
-        System.out.println("UNDO " + this.mainController.getClient().getMyTurn());
         if(!this.mainController.getClient().getMyTurn()) {
             this.mainController.getClient().send("U", true);
         }else{
@@ -168,11 +167,14 @@ public class MenuController {
 
         if(isAmbiantSound){
             this.mainController.getAmbiantSound().pause();
+            this.mainController.getButtonSound().stop();
             menuItem.setText("Play sounds");
             isAmbiantSound = false;
+            BoardController.setIsAmbiantSound(false);
         }else{
             this.mainController.getAmbiantSound().play();
             menuItem.setText("Stop sounds");
+            BoardController.setIsAmbiantSound(true);
             isAmbiantSound = true;
         }
     }
