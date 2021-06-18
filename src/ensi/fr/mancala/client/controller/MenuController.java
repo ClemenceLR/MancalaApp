@@ -167,9 +167,11 @@ public class MenuController {
 
         if(isAmbiantSound){
             this.mainController.getAmbiantSound().pause();
+            menuItem.setText("Play sounds");
             isAmbiantSound = false;
         }else{
             this.mainController.getAmbiantSound().play();
+            menuItem.setText("Stop sounds");
             isAmbiantSound = true;
         }
     }
