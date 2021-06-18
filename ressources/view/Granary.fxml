@@ -22,7 +22,9 @@
         <Text  fx:id="granary0" strokeType="OUTSIDE" strokeWidth="0.0" text=""/>
     </StackPane>
 
-    <Text fx:id="matchData" layoutX="450.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0"  />
+    <Text fx:id="matchData" layoutX="455.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0"  />
+
+    <Text fx:id="turnData" layoutX="5.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Opponent turn" />
 
 
 </Pane>

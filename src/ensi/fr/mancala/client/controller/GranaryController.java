@@ -21,6 +21,8 @@ public class GranaryController {
 
     @FXML private Text matchData;
 
+    @FXML private Text turnData;
+
     MainController mainController;
 
     /**
@@ -64,5 +66,9 @@ public class GranaryController {
      */
     public void updateMatchData(String scoreP0, String scoreP1, String matchNum){
         this.matchData.setText("Game " + matchNum + " : score is " + scoreP0 + "-" + scoreP1);
+    }
+
+    public void updateTurnData(String string ){
+        this.turnData.setText(string);
     }
 }

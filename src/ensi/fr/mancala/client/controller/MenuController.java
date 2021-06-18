@@ -207,7 +207,6 @@ public class MenuController {
 
         while(scanner.hasNextLine())
         {
-            System.out.println(rules);
             rules += scanner.nextLine();
             rules += "\n\n";
         }

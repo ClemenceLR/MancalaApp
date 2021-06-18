@@ -125,6 +125,7 @@ public class Client {
 
                 case "?":
                     myTurn = true;
+                    this.mainController.getGranaryController().updateTurnData("Your turn");
                     break;
 
                 case "M":
