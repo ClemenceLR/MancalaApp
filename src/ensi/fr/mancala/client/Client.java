@@ -193,6 +193,7 @@ public class Client {
                     this.mainController.needSave();
                     break;
                 case "U":
+                    this.mainController.getGranaryController().updateTurnData("Opponent turn");
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
