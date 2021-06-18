@@ -200,19 +200,19 @@ public class Server {
                 }
                 else{
                     if (!activePlayerMessage.equals("")) {
-
+                        System.out.println("Suisici");
                         switch(activePlayerMessage) {
                             case "N":
                                 input = Integer.parseInt(receive(activePlayerID));
                                 if (input > 11) {
                                     input = -1;
                                 }
+                                System.out.println("Play : " + this.match.getGame().toString());
                                 this.gameSave = new Game();
                                 this.gameSave.setBoard(new Board(this.match.getGame().getBoard().getHoles()));
                                 this.gameSave.setActivePlayer(new Player(this.match.getGame().getActivePlayer()));
                                 this.gameSave.setPassivePlayer(new Player(this.match.getGame().getPassivePlayer()));
                                 lastVisitedCell = this.match.getGame().play(input);
-                                System.out.println("Play : " + this.match.getGame().toString());
                                 break;
                             case "L":
                                 loadMatch(activePlayerID,opponentPlayerID,activePlayerID);
@@ -251,6 +251,7 @@ public class Server {
 
                 }
 
+                System.out.println("Suisici fin");
 
             }
             while(lastVisitedCell == -1);

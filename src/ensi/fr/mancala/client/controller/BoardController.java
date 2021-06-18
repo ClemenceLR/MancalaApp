@@ -51,6 +51,7 @@ public class BoardController {
         String stringToSend = (String) stackPane.getUserData();
         this.mainController.getClient().send("N@" + stringToSend, false);
         this.mainController.getClient().setMyTurn(false);
+        System.out.println("NOT MY TURN ANYMORE " + this.mainController.getClient().getMyTurn());
 
     }
 

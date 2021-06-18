@@ -95,6 +95,7 @@ public class MenuController {
      * Undo
      */
     public void undo(){
+        System.out.println("UNDO " + this.mainController.getClient().getMyTurn());
         if(!this.mainController.getClient().getMyTurn()) {
             this.mainController.getClient().send("U", true);
         }else{
