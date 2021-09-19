@@ -1,0 +1,10 @@
+Rule 1 : Mancala is a two players game
+Rule 2 : The seeds are distributed in 12 holes at a rate of four seeds per hole
+Rule 3 : Each player takes turns, first one is random. Player will take seeds in one of his hole and distribute them, one by hole counterclockwise
+Rule 4 : If the last seed is placed in a hole of the opponent AND there is 2 or 3 seeds in this hole, the player will take these seeds and place them in his granary. Then player will look at the previous hole. Again if there is only 2 or 3 seeds, he will take the seeds and place them in his granary. Continue until you reach one of your holes or a hole with a different number of seeds than 2 or 3
+Rule 5 : Do not jump a hole unless it is the one in which the seeds have just been removed
+Rule 6 : The active player must give seeds to the opponent if he no longer has them. If it's not possible game is stopped and active player place the last seeds in his granary.
+Rule 7 : If a play allow you to capture all the opponent's seeds, it is played but the seeds are not captured
+Rule 8 : Game end when one of the player (which is the winner) has captured at least 25 seeds or there is at most 6 seeds on the game and one of the player is not able to play even if his opponent plays before him. The winner is the player
+Rule 9 : When there is at most 10 seeds on the board, active player may propose to abandon the game. If it's accepted, last seeds are equally distributed between the two players. If there is less than 6 seeds on the board and no player has more than 24 seeds in his granary, the game is draw.
+Rule 10 : A match is 6 games
